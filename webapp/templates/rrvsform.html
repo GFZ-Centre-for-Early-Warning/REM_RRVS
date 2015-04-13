@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>RRVS Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <strong><link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></strong>
+</head>
+<body>
+  <form action="{{ url_for('rrvsform') }}" method=post>
+    {{ rrvs_form.hidden_tag() }}
+ 
+    {{ rrvs_form.height_field.label }}
+    {{ rrvs_form.height_field }}
+ 
+    {{ rrvs_form.mat_prop_field.label }}
+    {{ rrvs_form.mat_prop_field }}
+ 
+    {{ rrvs_form.submit }}
+  </form>
+</body>
+</html>
