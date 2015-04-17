@@ -28,7 +28,7 @@ def pannellum():
 def rrvsform():
 	"""
 	This renders a template that displays all of the form objects if it's
-	a Get request. If the use is attempting to Post then this view will push
+	a Get request. If the user is attempting to Post then this view will push
 	the data to the database.
 	"""
 	rrvs_form = RrvsForm()
@@ -39,6 +39,13 @@ def rrvsform():
 		row.update({ve_resolution1.height_1: rrvs_form.height_field.data, 
 					ve_resolution1.mat_prop: rrvs_form.mat_prop_field.data.attribute_value}, synchronize_session=False)		
 		db.session.commit()
-		
-	# If no post request is send the template is rendered normally.	
+	
+	# TODO: this here would be one option to fill the form values based on a database query
+	# PROBLEM: how can i trigger an update of the form template onClick() in the map???
+	#value_height = None
+	#if rrvs_form.gid_field.data is not None:
+	#	value_height = ve_resolution1.query.filter_by(gid=rrvs_form.gid_field.data).first().height_1
+	#return render_template(template_name_or_list='rrvsform.html', rrvs_form=rrvs_form, value_height=value_height)
+
+	# If no post request is send the template is rendered normally	
 	return render_template(template_name_or_list='rrvsform.html', rrvs_form=rrvs_form)
