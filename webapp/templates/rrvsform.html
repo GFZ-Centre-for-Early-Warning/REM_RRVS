@@ -6,9 +6,13 @@
     <strong><link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></strong>
 </head>
 <body>
-  <form action="{{ url_for('rrvsform') }}" method=post>
+  <!--<p id="building_id">BuildingID: </p>-->
+  <form id="rrvsForm" action="{{ url_for('rrvsform') }}" method=post>
     {{ rrvs_form.hidden_tag() }}
  
+	{{ rrvs_form.gid_field.label }}
+    {{ rrvs_form.gid_field(readonly=true) }}
+    
     {{ rrvs_form.height_field.label }}
     {{ rrvs_form.height_field }}
  

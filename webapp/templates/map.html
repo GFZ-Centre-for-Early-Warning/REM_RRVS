@@ -16,7 +16,7 @@
 		//add map object
 		var map = L.map('map');
 		
-		//define layer variable
+		//define layer variables
 		var gpsJSON;
 		var buildingsJSON;
 	
@@ -24,12 +24,11 @@
 		var basemap = L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 			attribution: 'Processing &copy; <a href="http://www.gfz-potsdam.de/en/research/organizational-units/technology-transfer-centres/centre-for-early-warning-systems-ews/">GFZ Potsdam - Centre for Early Warning Systems</a>' +
-						 ' | Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, ' +
-						 ' | Imagery &copy; <a href="http://mapbox.com">Mapbox</a>, ',
+						 ' | Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, ',
 			id: 'examples.map-i875mjb7'
 		}).addTo(map);
 
-		//function for static polygon style
+		//function for static building style
 		function building_style(feature) {
 			return {
 				fillColor: '#efefef',
@@ -71,7 +70,7 @@
 			info.update();
 		}
 		
-		//function for interaction with panoImg iframe
+		//function for interaction between gps layer and panoImg iframe
 		function updatePanoImg(e) {
 			// zoom to feature in map
 			map.fitBounds(e.target.getBounds(), {maxZoom: 17});
@@ -81,8 +80,17 @@
 			ifrm.src = src.replace(/%26/g, "&amp;");
 		}
 		
-		//function for adding actions to mouse events
-		function onEachFeature(feature, layer) {
+		//function for interaction between building layer and rrvsForm iframe
+		function updateForm(e) {
+			// update content of iframe 3 (rrvsForm)
+			var ifrm = parent.document.getElementById('ifrm3');
+			var doc = ifrm.contentDocument? ifrm.contentDocument: ifrm.contentWindow.document;
+			//doc.getElementById('building_id').innerHTML = "BuildingID: " + e.target.feature.properties.gid;
+			doc.forms['rrvsForm'].elements['gid_field'].value = e.target.feature.properties.gid;
+		}
+		
+		//function for adding actions to mouse events on gps layer
+		function onEachFeatureGps(feature, layer) {
 			layer.on({
 				mouseover: highlightFeature,
 				mouseout: resetHighlight,
@@ -90,10 +98,17 @@
 			});
 		}
 		
+		//function for adding actions to mouse events on buildings layer
+		function onEachFeatureBuilding(feature, layer) {
+			layer.on({
+				click: updateForm
+			});
+		}
+		
 		//add gps layer
 		gpsJSON = L.geoJson(gps,{
 			style: style,
-			onEachFeature: onEachFeature,
+			onEachFeature: onEachFeatureGps,
 			pointToLayer: function (feature, latlng) {  
 				return L.circleMarker(latlng)
 				}
@@ -102,7 +117,8 @@
 		
 		//add buildings layer
 		buildingsJSON = L.geoJson(buildings,{
-			style: building_style
+			style: building_style,
+			onEachFeature: onEachFeatureBuilding
 			});			
 		buildingsJSON.addTo(map);
 		

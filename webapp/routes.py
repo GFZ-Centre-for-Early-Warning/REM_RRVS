@@ -34,11 +34,11 @@ def rrvsform():
 	rrvs_form = RrvsForm()
 		
 	if request.method == 'POST' and rrvs_form.validate():
-		# Write form content to database
-		result = ve_resolution1(
-			height_1=rrvs_form.height_field.data,
-			mat_prop='MATP99') #str(rrvs_form.mat_prop_field.data))
-		db.session.add(result)
+		# Update database with form content
+		row = ve_resolution1.query.filter_by(gid=rrvs_form.gid_field.data)
+		row.update({ve_resolution1.height_1: rrvs_form.height_field.data, 
+					ve_resolution1.mat_prop: rrvs_form.mat_prop_field.data.attribute_value}, synchronize_session=False)		
 		db.session.commit()
+		
 	# If no post request is send the template is rendered normally.	
 	return render_template(template_name_or_list='rrvsform.html', rrvs_form=rrvs_form)
