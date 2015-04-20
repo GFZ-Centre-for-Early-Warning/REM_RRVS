@@ -22,4 +22,5 @@ class ve_resolution1(db.Model):
 	
 	gid = db.Column(db.Integer, primary_key=True)
 	height_1 = db.Column(db.Integer)
+	mat_type = db.Column(db.String(254))
 	mat_prop = db.Column(db.String(254))

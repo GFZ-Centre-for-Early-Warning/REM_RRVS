@@ -15,6 +15,7 @@
           gid_val: $('input[name="gid_field"]').val()			// send gid_field value to server for database query
         }, function(data) {
           $('input[name="height_field"]').val(data.height_val);	// update fields with results from server
+          $('select[name="mat_type_field"]').val(data.mat_type_gid);
           $('select[name="mat_prop_field"]').val(data.mat_prop_gid);
         });
         return false;
@@ -30,6 +31,9 @@
     
     {{ rrvs_form.height_field.label }}
     {{ rrvs_form.height_field }}
+    
+    {{ rrvs_form.mat_type_field.label }}
+    {{ rrvs_form.mat_type_field }}
     
     {{ rrvs_form.mat_prop_field.label }}
     {{ rrvs_form.mat_prop_field }}

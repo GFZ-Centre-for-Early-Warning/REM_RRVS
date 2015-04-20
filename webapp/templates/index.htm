@@ -4,9 +4,9 @@
     <title>RRVS Webtool</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-<body> 
+<body style="background-color:#fafafa;"> 
 	<iframe title="pannellum panorama viewer" 
-			width="49%" height="390" webkitAllowFullScreen mozallowfullscreen allowFullScreen 
+			width="50%" height="390" webkitAllowFullScreen mozallowfullscreen allowFullScreen 
 			style="border-style:none;" 
 			src="{{ url_for('pannellum') }}?panorama=../static/panoimg/ladybug_panoramic_7.jpg&amp;title=FrameID: 7&amp;autoLoad=true"
 			id="ifrm1">
@@ -18,8 +18,8 @@
 			id="ifrm2">
 	</iframe>
 	<iframe title="rrvs form" 
-			width="98%" height="200" 
-			style="border-style:solid;" 
+			width="99%" height="200" 
+			style="border-style:none; padding: 5px;" 
 			src="{{ url_for('rrvsform') }}"
 			id="ifrm3">
 	</iframe>

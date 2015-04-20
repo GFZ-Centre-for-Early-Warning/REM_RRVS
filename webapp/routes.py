@@ -1,4 +1,4 @@
-from flask import render_template, request, flash, jsonify
+from flask import render_template, request, jsonify
 from webapp import app, db
 from models import ve_resolution1, dic_attribute_value
 from forms import RrvsForm
@@ -33,12 +33,14 @@ def update_rrvsform():
 	# get building gid value for queries
 	gid_val = request.args.get('gid_val', 0, type=int)
 	# query attribute_value for select fields
+	mat_type_val = ve_resolution1.query.filter_by(gid=gid_val).first().mat_type
 	mat_prop_val = ve_resolution1.query.filter_by(gid=gid_val).first().mat_prop
 	
 	return jsonify(
 		# query values for text fields
 		height_val = int(ve_resolution1.query.filter_by(gid=gid_val).first().height_1),
 		# query gid of attribute_values for select fields
+		mat_type_gid = dic_attribute_value.query.filter_by(attribute_value=mat_type_val).first().gid,
 		mat_prop_gid = dic_attribute_value.query.filter_by(attribute_value=mat_prop_val).first().gid
 	)
    
@@ -55,6 +57,7 @@ def rrvsform():
 		# update database with form content
 		row = ve_resolution1.query.filter_by(gid=rrvs_form.gid_field.data)
 		row.update({ve_resolution1.height_1: rrvs_form.height_field.data, 
+					ve_resolution1.mat_type: rrvs_form.mat_type_field.data.attribute_value,		
 					ve_resolution1.mat_prop: rrvs_form.mat_prop_field.data.attribute_value}, synchronize_session=False)		
 		db.session.commit()
 

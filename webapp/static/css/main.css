@@ -8,7 +8,6 @@ html, body, #map {
 	width: 100%;
 	padding: 0;
 	margin: 0;
-	background-color: #fafafa;
 }
 th {
 	text-align: left;
@@ -35,10 +34,8 @@ form label {
   display: block;
   padding: 5px;
 }
- 
-form input#name,
-form input#email,
-form input#subject {
+/*
+form input {
   width: 100px;
   background-color: #fafafa;
   -webkit-border-radius: 3px;
@@ -48,20 +45,7 @@ form input#subject {
   padding: 5px;
   font: 14px Arial, Helvetica, sans-serif;
 }
- 
-form textarea#message {
-  width: 100px;
-  height: 20px;
-  background-color: #fafafa;
-  -webkit-border-radius: 3px;
-	 -moz-border-radius: 3px;
-		  border-radius: 3px;
-  border: 1px solid #cccccc;
-  margin-bottom: 10px;
-  padding: 5px;
-  font: 14px Arial, Helvetica, sans-serif;
-}
- 
+
 form input#submit {
   display: block;
   -webkit-border-radius: 3px;
@@ -92,3 +76,4 @@ form input#submit:hover{
   background-image: -o-linear-gradient(top, #dbdbdb, #cccccc);
   background-image: linear-gradient(top, #dbdbdb, #cccccc);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#dbdbdb, endColorstr=#cccccc);
 }
+*/
