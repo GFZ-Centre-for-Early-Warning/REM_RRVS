@@ -1,6 +1,6 @@
 from flask import render_template, request, flash, jsonify
 from webapp import app, db
-from models import ve_resolution1
+from models import ve_resolution1, dic_attribute_value
 from forms import RrvsForm
  
 @app.route('/')
@@ -27,11 +27,20 @@ def pannellum():
 @app.route('/_update_rrvsform')
 def update_rrvsform():
 	"""
-	This updates the values of the rrvsform fields using jQuery.
+	This updates the values of the rrvsform fields using jQuery. Note that for 
+	QuerySelectFields the gid of the attribute_value needs to be returned by the function.
 	"""
-	gid_field = request.args.get('gid_field', 0, type=int)
-	height_field = int(ve_resolution1.query.filter_by(gid=gid_field).first().height_1)
-	return jsonify(result=height_field)
+	# get building gid value for queries
+	gid_val = request.args.get('gid_val', 0, type=int)
+	# query attribute_value for select fields
+	mat_prop_val = ve_resolution1.query.filter_by(gid=gid_val).first().mat_prop
+	
+	return jsonify(
+		# query values for text fields
+		height_val = int(ve_resolution1.query.filter_by(gid=gid_val).first().height_1),
+		# query gid of attribute_values for select fields
+		mat_prop_gid = dic_attribute_value.query.filter_by(attribute_value=mat_prop_val).first().gid
+	)
    
 @app.route('/rrvsform', methods=['GET', 'POST'])
 def rrvsform():
@@ -43,11 +52,11 @@ def rrvsform():
 	rrvs_form = RrvsForm()
 		
 	if request.method == 'POST' and rrvs_form.validate():
-		# Update database with form content
+		# update database with form content
 		row = ve_resolution1.query.filter_by(gid=rrvs_form.gid_field.data)
 		row.update({ve_resolution1.height_1: rrvs_form.height_field.data, 
 					ve_resolution1.mat_prop: rrvs_form.mat_prop_field.data.attribute_value}, synchronize_session=False)		
 		db.session.commit()
 
-	# If no post request is send the template is rendered normally	
+	# if no post request is send the template is rendered normally	
 	return render_template(template_name_or_list='rrvsform.html', rrvs_form=rrvs_form)
