@@ -30,9 +30,15 @@ def update_rrvsform():
 	This updates the values of the rrvsform fields using jQuery.
 	"""
 	gid_field = request.args.get('gid_field', 0, type=int)
-	height_field = int(ve_resolution1.query.filter_by(gid=gid_field).first().height_1)
-	return jsonify(result=height_field)
-   
+	height_field = ve_resolution1.query.filter_by(gid=gid_field).first().height_1
+	return jsonify(height_field)
+
+@app.route('/_add_numbers')
+def add_numbers():
+    a = request.args.get('a', 0, type=int)
+    b = request.args.get('b', 0, type=int)
+    return jsonify(result=a + b)
+	
 @app.route('/rrvsform', methods=['GET', 'POST'])
 def rrvsform():
 	"""

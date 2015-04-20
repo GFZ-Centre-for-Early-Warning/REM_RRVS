@@ -4,9 +4,28 @@
     <title>RRVS Form</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <strong><link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></strong>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript"> var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
 </head>
-<body>
-  <!--<p id="building_id">BuildingID: </p>-->
+<body>  
+
+  <script type="text/javascript">
+    $(function() {
+      //$('input[name="gid_field"]').change(function() {
+      //$('input[name="gid_field"]').bind('input', function() {	
+      $('a#calculate').bind('click', function() {	//TODO: change this line to trigger the function on change of the gid field
+		$.getJSON($SCRIPT_ROOT + '/_update_rrvsform', {
+          gid_field: $('input[name="gid_field"]').val()	// send gid_field value to server
+        }, function(data) {	
+          $('input[name="height_field"]').val(data.result);	// update fields with result from server 
+        });
+        return false;
+      });
+    });
+  </script>
+  
+<p><a href=# id="calculate">calculate server side</a>
+
   <form id="rrvsForm" action="{{ url_for('rrvsform') }}" method=post>
     {{ rrvs_form.hidden_tag() }}
  
@@ -15,12 +34,12 @@
     
     {{ rrvs_form.height_field.label }}
     {{ rrvs_form.height_field }}
-    <!--{{ rrvs_form.height_field(value=value_height) }}-->
- 
+    
     {{ rrvs_form.mat_prop_field.label }}
     {{ rrvs_form.mat_prop_field }}
  
     {{ rrvs_form.submit }}
   </form>
+  
 </body>
 </html>
