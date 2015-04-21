@@ -34,14 +34,20 @@ def update_rrvsform():
 	gid_val = request.args.get('gid_val', 0, type=int)
 	# query attribute_value for select fields
 	mat_type_val = ve_resolution1.query.filter_by(gid=gid_val).first().mat_type
+	mat_tech_val = ve_resolution1.query.filter_by(gid=gid_val).first().mat_tech
 	mat_prop_val = ve_resolution1.query.filter_by(gid=gid_val).first().mat_prop
+	llrs_val = ve_resolution1.query.filter_by(gid=gid_val).first().llrs
+	height_val = ve_resolution1.query.filter_by(gid=gid_val).first().height
 	
 	return jsonify(
 		# query values for text fields
-		height_val = int(ve_resolution1.query.filter_by(gid=gid_val).first().height_1),
+		height1_val = int(ve_resolution1.query.filter_by(gid=gid_val).first().height_1),
 		# query gid of attribute_values for select fields
 		mat_type_gid = dic_attribute_value.query.filter_by(attribute_value=mat_type_val).first().gid,
-		mat_prop_gid = dic_attribute_value.query.filter_by(attribute_value=mat_prop_val).first().gid
+		mat_tech_gid = dic_attribute_value.query.filter_by(attribute_value=mat_tech_val).first().gid,
+		mat_prop_gid = dic_attribute_value.query.filter_by(attribute_value=mat_prop_val).first().gid,
+		llrs_gid = dic_attribute_value.query.filter_by(attribute_value=llrs_val).first().gid,
+		height_gid = dic_attribute_value.query.filter_by(attribute_value=height_val).first().gid
 	)
    
 @app.route('/rrvsform', methods=['GET', 'POST'])
@@ -56,9 +62,13 @@ def rrvsform():
 	if request.method == 'POST' and rrvs_form.validate():
 		# update database with form content
 		row = ve_resolution1.query.filter_by(gid=rrvs_form.gid_field.data)
-		row.update({ve_resolution1.height_1: rrvs_form.height_field.data, 
-					ve_resolution1.mat_type: rrvs_form.mat_type_field.data.attribute_value,		
-					ve_resolution1.mat_prop: rrvs_form.mat_prop_field.data.attribute_value}, synchronize_session=False)		
+		row.update({ve_resolution1.mat_type: rrvs_form.mat_type_field.data.attribute_value,
+					ve_resolution1.mat_tech: rrvs_form.mat_tech_field.data.attribute_value,
+					ve_resolution1.mat_prop: rrvs_form.mat_prop_field.data.attribute_value,
+					ve_resolution1.llrs: rrvs_form.llrs_field.data.attribute_value,
+					ve_resolution1.height: rrvs_form.height_field.data.attribute_value,
+					ve_resolution1.height_1: rrvs_form.height1_field.data
+					}, synchronize_session=False)		
 		db.session.commit()
 
 	# if no post request is send the template is rendered normally	

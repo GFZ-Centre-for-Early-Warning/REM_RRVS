@@ -8,38 +8,95 @@
 	<script type="text/javascript"> var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
 </head>
 <body>  
-  <script type="text/javascript">
-    $(function() {
-      $('input[name="gid_field"]').focusout(function() {		// trigger the form update on focusout of the gid_field
+	<script type="text/javascript">
+	$(function() {
+	  $('input[name="gid_field"]').focusout(function() {		// trigger the form update on focusout of the gid_field
 		$.getJSON($SCRIPT_ROOT + '/_update_rrvsform', {
-          gid_val: $('input[name="gid_field"]').val()			// send gid_field value to server for database query
-        }, function(data) {
-          $('input[name="height_field"]').val(data.height_val);	// update fields with results from server
-          $('select[name="mat_type_field"]').val(data.mat_type_gid);
-          $('select[name="mat_prop_field"]').val(data.mat_prop_gid);
-        });
-        return false;
-      });
-    });
-  </script>
-  
-  <form id="rrvsForm" action="{{ url_for('rrvsform') }}" method=post>
-    {{ rrvs_form.hidden_tag() }}
- 
-	{{ rrvs_form.gid_field.label }}
-    {{ rrvs_form.gid_field(readonly=true)}}
-    
-    {{ rrvs_form.height_field.label }}
-    {{ rrvs_form.height_field }}
-    
-    {{ rrvs_form.mat_type_field.label }}
-    {{ rrvs_form.mat_type_field }}
-    
-    {{ rrvs_form.mat_prop_field.label }}
-    {{ rrvs_form.mat_prop_field }}
- 
-    {{ rrvs_form.submit }}
-  </form>
-  
+		  gid_val: $('input[name="gid_field"]').val()			// send gid_field value to server for database query
+		}, function(data) {
+		  $('select[name="mat_type_field"]').val(data.mat_type_gid);	// update fields with results from server
+		  $('select[name="mat_tech_field"]').val(data.mat_tech_gid);
+		  $('select[name="mat_prop_field"]').val(data.mat_prop_gid);
+		  $('select[name="llrs_field"]').val(data.llrs_gid);
+		  $('select[name="height_field"]').val(data.height_gid);
+		  $('input[name="height1_field"]').val(data.height1_val);
+		});
+		return false;
+	  });
+	});
+	</script>
+	<form id="rrvsForm" action="{{ url_for('rrvsform') }}" method=post>
+		{{ rrvs_form.hidden_tag() }}   				
+		<div class="tabs">
+		   <div class="formLayoutGeneral" style="background-color: #efefef; border: solid 1px #efefef;"> 
+				<img class="banner" src="{{ url_for('static', filename='img/banner.svg') }}" alt="RRVS tool">			
+				<br><br>
+				{{ rrvs_form.gid_field.label }}
+				{{ rrvs_form.gid_field(readonly=true)}}
+				<br>
+				{{ rrvs_form.submit }}
+		   </div>
+		   <div class="tab">
+			   <input type="radio" id="tab-1" name="tab-group-1" checked>
+			   <label class="tablabel" for="tab-1">Material</label>
+			   <div class="content">
+					<div class="formLayout">
+						{{ rrvs_form.mat_type_field.label }}
+						{{ rrvs_form.mat_type_field }}
+						
+						{{ rrvs_form.mat_tech_field.label }}
+						{{ rrvs_form.mat_tech_field }}
+
+						{{ rrvs_form.mat_prop_field.label }}
+						{{ rrvs_form.mat_prop_field }}
+					</div>
+					
+			   </div> 
+		   </div>
+		   <div class="tab">
+			   <input type="radio" id="tab-2" name="tab-group-1">
+			   <label class="tablabel" for="tab-2">LLRS</label>
+			   <div class="content">
+				   <div class="formLayout">					
+						{{ rrvs_form.llrs_field.label }}
+						{{ rrvs_form.llrs_field }}
+					</div>
+			   </div> 
+		   </div>
+		   <div class="tab">
+			   <input type="radio" id="tab-3" name="tab-group-1">
+			   <label class="tablabel" for="tab-3">Height</label>
+			   <div class="content">
+				    <div class="formLayout">					
+						{{ rrvs_form.height_field.label }}
+						{{ rrvs_form.height_field }}
+						{{ rrvs_form.height1_field.label }}
+						{{ rrvs_form.height1_field }}
+					</div>
+			   </div> 
+		   </div>
+		   <div class="tab">
+			   <input type="radio" id="tab-4" name="tab-group-1">
+			   <label class="tablabel" for="tab-4">Age</label>
+			   <div class="content">
+					tab 4
+			   </div> 
+		   </div>
+		   <div class="tab">
+			   <input type="radio" id="tab-5" name="tab-group-1">
+			   <label class="tablabel" for="tab-5">Occupancy</label>
+			   <div class="content">
+					tab 5
+			   </div> 
+		   </div>
+		   <div class="tab">
+			   <input type="radio" id="tab-6" name="tab-group-1">
+			   <label class="tablabel" for="tab-6">Exterior Walls</label>
+			   <div class="content">
+					tab 6
+			   </div> 
+		   </div>
+		</div>
+	</form>
 </body>
 </html>
