@@ -38,6 +38,10 @@ def update_rrvsform():
 	mat_prop_val = ve_resolution1.query.filter_by(gid=gid_val).first().mat_prop
 	llrs_val = ve_resolution1.query.filter_by(gid=gid_val).first().llrs
 	height_val = ve_resolution1.query.filter_by(gid=gid_val).first().height
+	yr_built_val = ve_resolution1.query.filter_by(gid=gid_val).first().yr_built
+	occupy_val = ve_resolution1.query.filter_by(gid=gid_val).first().occupy
+	occupy_dt_val = ve_resolution1.query.filter_by(gid=gid_val).first().occupy_dt
+	nonstrcexw_val = ve_resolution1.query.filter_by(gid=gid_val).first().nonstrcexw
 	
 	return jsonify(
 		# query values for text fields
@@ -47,7 +51,11 @@ def update_rrvsform():
 		mat_tech_gid = dic_attribute_value.query.filter_by(attribute_value=mat_tech_val).first().gid,
 		mat_prop_gid = dic_attribute_value.query.filter_by(attribute_value=mat_prop_val).first().gid,
 		llrs_gid = dic_attribute_value.query.filter_by(attribute_value=llrs_val).first().gid,
-		height_gid = dic_attribute_value.query.filter_by(attribute_value=height_val).first().gid
+		height_gid = dic_attribute_value.query.filter_by(attribute_value=height_val).first().gid,
+		yr_built_gid = dic_attribute_value.query.filter_by(attribute_value=yr_built_val).first().gid,
+		occupy_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_val).first().gid,
+		occupy_dt_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_dt_val).first().gid,
+		nonstrcexw_gid = dic_attribute_value.query.filter_by(attribute_value=nonstrcexw_val).first().gid
 	)
    
 @app.route('/rrvsform', methods=['GET', 'POST'])
@@ -67,8 +75,12 @@ def rrvsform():
 					ve_resolution1.mat_prop: rrvs_form.mat_prop_field.data.attribute_value,
 					ve_resolution1.llrs: rrvs_form.llrs_field.data.attribute_value,
 					ve_resolution1.height: rrvs_form.height_field.data.attribute_value,
-					ve_resolution1.height_1: rrvs_form.height1_field.data
-					}, synchronize_session=False)		
+					ve_resolution1.height_1: rrvs_form.height1_field.data,
+					ve_resolution1.yr_built: rrvs_form.yr_built_field.data.attribute_value,
+					ve_resolution1.occupy: rrvs_form.occupy_field.data.attribute_value,
+					ve_resolution1.occupy_dt: rrvs_form.occupy_dt_field.data.attribute_value,
+					ve_resolution1.nonstrcexw: rrvs_form.nonstrcexw_field.data.attribute_value
+					}, synchronize_session=False)	
 		db.session.commit()
 
 	# if no post request is send the template is rendered normally	

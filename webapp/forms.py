@@ -14,7 +14,14 @@ def getLlrs():
 	return dic_attribute_value.query.filter_by(attribute_type_code='LLRS')
 def getHeight():
 	return dic_attribute_value.query.filter_by(attribute_type_code='HEIGHT')
-
+def getYrBuilt():
+	return dic_attribute_value.query.filter_by(attribute_type_code='YR_BUILT')
+def getOccupy():
+	return dic_attribute_value.query.filter_by(attribute_type_code='OCCUPY')
+def getOccupyDt():
+	return dic_attribute_value.query.filter_by(attribute_type_code='OCCUPY_DT')
+def getNonstrcexw():
+	return dic_attribute_value.query.filter_by(attribute_type_code='NONSTRCEXW')
 
 class RrvsForm(Form):
 	"""
@@ -29,6 +36,10 @@ class RrvsForm(Form):
 	mat_prop_field = QuerySelectField("Material Property", query_factory=getMatProp, get_label='description', allow_blank=True)
 	llrs_field = QuerySelectField("Lat. Load Res. Sys.", query_factory=getLlrs, get_label='description', allow_blank=True)
 	height_field = QuerySelectField("Height Type", query_factory=getHeight, get_label='description', allow_blank=True)
-	
+	yr_built_field = QuerySelectField("Construction Date Type", query_factory=getYrBuilt, get_label='description', allow_blank=True)
+	occupy_field = QuerySelectField("Occupancy Type", query_factory=getOccupy, get_label='description', allow_blank=True)
+	occupy_dt_field = QuerySelectField("Occupancy Detail", query_factory=getOccupyDt, get_label='description', allow_blank=True)
+	nonstrcexw_field = QuerySelectField("Exterior Walls Material", query_factory=getNonstrcexw, get_label='description', allow_blank=True)
+		
 	# Submit field
 	submit = SubmitField("Update building")

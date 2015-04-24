@@ -20,6 +20,10 @@
 		  $('select[name="llrs_field"]').val(data.llrs_gid);
 		  $('select[name="height_field"]').val(data.height_gid);
 		  $('input[name="height1_field"]').val(data.height1_val);
+		  $('select[name="yr_built_field"]').val(data.yr_built_gid);
+		  $('select[name="occupy_field"]').val(data.occupy_gid);
+		  $('select[name="occupy_dt_field"]').val(data.occupy_dt_gid);
+		  $('select[name="nonstrcexw_field"]').val(data.nonstrcexw_gid);
 		});
 		return false;
 	  });
@@ -79,21 +83,33 @@
 			   <input type="radio" id="tab-4" name="tab-group-1">
 			   <label class="tablabel" for="tab-4">Age</label>
 			   <div class="content">
-					tab 4
+					<div class="formLayout">					
+						{{ rrvs_form.yr_built_field.label }}
+						{{ rrvs_form.yr_built_field }}
+					</div>
 			   </div> 
 		   </div>
 		   <div class="tab">
 			   <input type="radio" id="tab-5" name="tab-group-1">
 			   <label class="tablabel" for="tab-5">Occupancy</label>
 			   <div class="content">
-					tab 5
+					<div class="formLayout">
+						{{ rrvs_form.occupy_field.label }}
+						{{ rrvs_form.occupy_field }}
+						
+						{{ rrvs_form.occupy_dt_field.label }}
+						{{ rrvs_form.occupy_dt_field }}
+					</div>
 			   </div> 
 		   </div>
 		   <div class="tab">
 			   <input type="radio" id="tab-6" name="tab-group-1">
 			   <label class="tablabel" for="tab-6">Exterior Walls</label>
 			   <div class="content">
-					tab 6
+					<div class="formLayout">
+						{{ rrvs_form.nonstrcexw_field.label }}
+						{{ rrvs_form.nonstrcexw_field }}
+					</div>
 			   </div> 
 		   </div>
 		</div>

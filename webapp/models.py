@@ -21,12 +21,13 @@ class ve_resolution1(db.Model):
 	__table_args__ = {'schema':'object_res1'}
 	
 	gid = db.Column(db.Integer, primary_key=True)
-
 	mat_type = db.Column(db.String(254))
 	mat_tech = db.Column(db.String(254))
 	mat_prop = db.Column(db.String(254))
-	
 	llrs = db.Column(db.String(254))
-	
 	height = db.Column(db.String(254))
 	height_1 = db.Column(db.Integer)
+	occupy = db.Column(db.String(254))
+	occupy_dt = db.Column(db.String(254))
+	nonstrcexw = db.Column(db.String(254))
+	yr_built = db.Column(db.String(254))
