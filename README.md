@@ -18,7 +18,7 @@ A) Setup virtualenvironment and add the project source code
 
 B) Setup the database
 1. Create a new database in PostgreSQL >9.1 and run rrvstool_db.sql
-2. Populate the database tables
+2. Populate the database tables (you can use the rrvstool_testdata.sql script to add some testdata)
 
 
 MODIFYING DATAENTRY FORM
