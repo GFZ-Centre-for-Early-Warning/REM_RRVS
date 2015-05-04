@@ -1,3 +1,13 @@
+'''
+---------------------------
+    models.py 
+---------------------------                         
+Created on 24.04.2015
+Last modified on 24.04.2015
+Author: Marc Wieland
+Description: Defines the database model
+----
+'''
 from webapp import db
 
 class dic_attribute_value(db.Model):

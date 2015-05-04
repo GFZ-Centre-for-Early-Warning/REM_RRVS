@@ -1,3 +1,13 @@
+'''
+---------------------------
+    forms.py 
+---------------------------                         
+Created on 24.04.2015
+Last modified on 24.04.2015
+Author: Marc Wieland
+Description: Defines the WTForms fields
+----
+'''
 from flask.ext.wtf import Form
 from wtforms.fields import TextField, SubmitField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField

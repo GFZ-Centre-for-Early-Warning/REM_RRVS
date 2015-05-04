@@ -1,4 +1,30 @@
-This is a small step-by-step guideline on how to add a new QuerySelectField to the dataentry form:
+Remote Rapid Visual Screening (RRVS) Tool
+=========================================
+
+
+INSTALLATION
+------------
+
+In order to run the application locally do the following:
+
+A) Setup virtualenvironment and add the project source code
+1. $ sudo pip install virtualenv
+2. go to root of project folder and run $ virtualenv flaskapp
+   this creates a new folder to hold the virtualenvironment
+3. cd to flaskapp and run $ . bin/activate to start the enviroment ($ deactivate to stop it)
+   now you can install whatever you want (Python stuff) and it doesnt affect your system
+4. $ pip install Flask Flask-WTF Flask-SQLAlchemy
+5. copy the rrvstool/ folder into the virtualenvironment folder
+
+B) Setup the database
+1. Create a new database in PostgreSQL >9.1 and run rrvstool_db.sql
+2. Populate the database tables
+
+
+MODIFYING DATAENTRY FORM
+------------------------
+
+A short step-by-step guideline on how to add a new QuerySelectField to the dataentry form:
 
 1. models.py: 
 #define a new column in the db model
