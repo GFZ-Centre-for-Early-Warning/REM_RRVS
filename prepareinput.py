@@ -34,6 +34,7 @@ except:
 cur = conn.cursor()
 
 #create geojson file from buildings selection
+#TODO: add a where "gid IN (building_gid)" statement here
 cur.execute("DROP TABLE IF EXISTS panoimg.geojson;")
 cur.execute("SELECT * INTO panoimg.geojson FROM (" +
                 "SELECT row_to_json(fc) " +
@@ -50,7 +51,7 @@ cur.execute("COPY panoimg.geojson TO '/webapp/static/panoimg/buildings.js' USING
 cur.execute("SELECT a.gid FROM " +
                 "panoimg.gps a, " + 
                 "(SELECT st_buffer(the_geom, 0.0005) as buffer_geom FROM object_res1.ve_resolution1 " + 
-                    "WHERE gid IN (1743, 1744, 1745)) b " +
+                    "WHERE gid IN (" + building_gid + ")) b " +
                 "WHERE st_intersects(a.the_geom, b.buffer_geom) GROUP BY a.gid;")
 rows = cur.fetchall()
 h = np.asarray(rows)
