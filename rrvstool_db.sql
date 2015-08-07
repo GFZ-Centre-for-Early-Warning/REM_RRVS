@@ -10,7 +10,6 @@
 --		To activate multi-temporal support run sensum_db_AddMultiTemporalSupport.sql.
 -----------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------
-
 CREATE EXTENSION IF NOT EXISTS postgis;
 
 CREATE EXTENSION IF NOT EXISTS postgis_topology;
@@ -2625,7 +2624,7 @@ CREATE TABLE panoimg.gps
   azimuth numeric,
   abspeed numeric,
   the_geom geometry
-)
+);
 
 CREATE TABLE panoimg.img
 (
@@ -2633,5 +2632,5 @@ CREATE TABLE panoimg.img
   source text,
   acqdate character varying(254),
   acqtime character varying(254)
-)
+);
 

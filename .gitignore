@@ -1,2 +1,4 @@
-*~
+# files to ignore
 webapp/static/panoimg/*.jpg
+*.pyc
+venv

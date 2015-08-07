@@ -1,5 +1,9 @@
+
 Remote Rapid Visual Screening (RRVS) Tool
 =========================================
+
+Contact: Marc Wieland marc.wieland@gfz-potsdam.de
+         Michael Haas michael.haas@gfz-potsdam.de
 
 
 INSTALLATION
@@ -9,16 +13,55 @@ In order to run the application locally do the following:
 
 A) Setup virtualenvironment and add the project source code
 1. $ sudo pip install virtualenv
-2. go to root of project folder and run $ virtualenv flaskapp
-   this creates a new folder to hold the virtualenvironment
-3. cd to flaskapp and run $ . bin/activate to start the enviroment ($ deactivate to stop it)
-   now you can install whatever you want (Python stuff) and it doesnt affect your system
-4. $ pip install Flask Flask-WTF Flask-SQLAlchemy
-5. copy the rrvstool/ folder into the virtualenvironment folder
+2. go to root of project folder and run $ virtualenv venv
+   this creates a new folder venv to hold the virtualenvironment
+3. run $ venv/bin/activate to start the enviroment ($ deactivate to stop it)
+   now you can install python libraries localy in a virtual environment 
+   not affecting the host systems python libraries.
+4. $ venv/bin/pip install Flask Flask-WTF Flask-SQLAlchemy
 
 B) Setup the database
-1. Create a new database in PostgreSQL >9.1 and run rrvstool_db.sql
+1. Create a new database 'rrvstool_v01' in PostgreSQL >9.1
+   and run rrvstool_db.sql
 2. Populate the database tables (you can use the rrvstool_testdata.sql script to add some testdata)
+
+C) Run the flask application on an apache2 server with mod_wsgi
+1.Install mod_wsgi for apache2
+  $ sudo apt-get install libapach2-mod-wsgi
+2. Activate wsgi for apache2
+  $ sudo a2enmod wsgi
+3. Create a virtual host for the app
+  $ sudo touch /etc/apache2/sites-available/rrvs
+4.Add following content (to run on Port 8080):
+
+Listen 8080
+<VirtualHost *:8080>
+        ServerName localhost
+        WSGIScriptAlias / /var/www/rrvs/rrvs.wsgi
+        <Directory /var/www/rrvs/webapp>
+            Order allow,deny
+            Allow from all
+        </Directory>
+        Alias /static /var/www/rrvs/webapp/static
+        <Directory /var/www/rrvs/webapp/static/>
+            Order allow,deny
+            Allow from all
+        </Directory>
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        LogLevel warn
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+5. Activate the site
+  $ sudo a2ensite rrvs
+
+6. Reload apache2
+$ sudo service apache2 restart
+
+WARNING: Currently the app is designed as being open to all IP-Addresses!
+webapp/__init__.py app.run(host="0.0.0.0")
+
+You can enter the site via localhost:8080
 
 
 MODIFYING DATAENTRY FORM
