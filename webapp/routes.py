@@ -1,25 +1,25 @@
 '''
 ---------------------------
-    routes.py 
----------------------------                         
+    routes.py
+---------------------------
 Created on 24.04.2015
 Last modified on 24.04.2015
 Author: Marc Wieland
-Description: The main routes file
+Description: The main routes file setting up the flask application layout
 ----
 '''
 from flask import render_template, request, jsonify
 from webapp import app, db
 from models import ve_resolution1, dic_attribute_value
 from forms import RrvsForm
- 
+
 @app.route('/')
 def home():
 	"""
 	This will render a template that holds the main pagelayout.
 	"""
 	return render_template('index.htm')
-  
+
 @app.route('/map')
 def map():
 	"""
@@ -37,7 +37,7 @@ def pannellum():
 @app.route('/_update_rrvsform')
 def update_rrvsform():
 	"""
-	This updates the values of the rrvsform fields using jQuery. Note that for 
+	This updates the values of the rrvsform fields using jQuery. Note that for
 	QuerySelectFields the gid of the attribute_value needs to be returned by the function.
 	"""
 	# get building gid value for queries
@@ -52,7 +52,7 @@ def update_rrvsform():
 	occupy_val = ve_resolution1.query.filter_by(gid=gid_val).first().occupy
 	occupy_dt_val = ve_resolution1.query.filter_by(gid=gid_val).first().occupy_dt
 	nonstrcexw_val = ve_resolution1.query.filter_by(gid=gid_val).first().nonstrcexw
-	
+
 	return jsonify(
 		# query values for text fields
 		height1_val = int(ve_resolution1.query.filter_by(gid=gid_val).first().height_1),
@@ -67,7 +67,7 @@ def update_rrvsform():
 		occupy_dt_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_dt_val).first().gid,
 		nonstrcexw_gid = dic_attribute_value.query.filter_by(attribute_value=nonstrcexw_val).first().gid
 	)
-   
+
 @app.route('/rrvsform', methods=['GET', 'POST'])
 def rrvsform():
 	"""
@@ -76,7 +76,7 @@ def rrvsform():
 	the data to the database.
 	"""
 	rrvs_form = RrvsForm()
-		
+
 	if request.method == 'POST' and rrvs_form.validate():
 		# update database with form content
 		row = ve_resolution1.query.filter_by(gid=rrvs_form.gid_field.data)
@@ -90,8 +90,8 @@ def rrvsform():
 					ve_resolution1.occupy: rrvs_form.occupy_field.data.attribute_value,
 					ve_resolution1.occupy_dt: rrvs_form.occupy_dt_field.data.attribute_value,
 					ve_resolution1.nonstrcexw: rrvs_form.nonstrcexw_field.data.attribute_value
-					}, synchronize_session=False)	
+					}, synchronize_session=False)
 		db.session.commit()
 
-	# if no post request is send the template is rendered normally	
+	# if no post request is send the template is rendered normally
 	return render_template(template_name_or_list='rrvsform.html', rrvs_form=rrvs_form)

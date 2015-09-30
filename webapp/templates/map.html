@@ -21,11 +21,11 @@
 		var buildingsJSON;
 	
 		//add baselayer
-		var basemap = L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+		var basemap = L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 			attribution: 'Processing &copy; <a href="http://www.gfz-potsdam.de/en/research/organizational-units/technology-transfer-centres/centre-for-early-warning-systems-ews/">GFZ Potsdam - Centre for Early Warning Systems</a>' +
 						 ' | Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, ',
-			id: 'examples.map-i875mjb7'
+			subdomains: ['otile1','otile2','otile3','otile4']
 		}).addTo(map);
 
 		//function for dynamic building polygon style
@@ -87,7 +87,10 @@
 			gpsJSON.resetStyle(e.target);
 			info.update();
 		}
-		
+        
+        //object to keep gps location, and azimuth of selected image
+        var imgData = Object.create(null);
+
 		//function for interaction between gps layer and panoImg iframe
 		function updatePanoImg(e) {
 			// zoom to feature in map
@@ -96,7 +99,38 @@
 			var ifrm = parent.document.getElementById('ifrm1');
 			var src = "{{ url_for('pannellum') }}?panorama=../static/panoimg/ladybug_panoramic_" + e.target.feature.properties.img_id + ".jpg&title=FrameID: " + e.target.feature.properties.img_id + "&autoLoad=true";
 			ifrm.src = src.replace(/%26/g, "&amp;");
+            //store values
+            imgData.loc = e.target.getLatLng();
+            imgData.azi = e.target.feature.properties.azimuth;
 		}
+
+//        //function to get center of polygon
+//        var getCentroid = function (arr) {
+//            return arr.reduce(function (x,y) {
+//                return [x[0] + y[0]/arr.length, x[1] + y[1]/arr.length];
+//            }, [0,0])
+//        }
+
+        //function to calculate angle between two points in degrees p1 to p2
+        var angleDeg = function (p1,p2){
+            return Math.atan2(p2.lat - p1.lat, p2.lng - p1.lng) * 180 / Math.PI;
+        }
+
+        //function for interaction between building layer and panoImg iframe (updates yaw of panoImg wrt clicked building location)
+        function updatePanoImgYaw(e){
+            //get centroid of the selected building
+            var bdg_centroid = e.latlng;
+            var img_pos = imgData.loc;
+            //get angle between the two points
+            var ang = angleDeg(img_pos,bdg_centroid);
+            //add to azimuth of img
+            var azi = imgData.azi;
+            var yaw_val=(90-ang)-azi;
+            //update image yaw
+            var ifrm = parent.document.getElementById('ifrm1');
+            var src = ifrm.src+"&yaw="+String(yaw_val);
+            ifrm.src = src.replace(/%26/g, "&amp;");
+        }
 		
 		//function for interaction between building layer and rrvsForm iframe
 		function updateForm(e) {
@@ -109,6 +143,8 @@
 			// update building map styles
 			resetHighlightBuilding();
 			highlightBuilding(e);
+            // update panoramic image orientation
+            updatePanoImgYaw(e);
 		}
 		
 		//function for adding actions to mouse events on gps layer
