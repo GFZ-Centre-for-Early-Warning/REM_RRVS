@@ -1,7 +1,7 @@
 '''
 ---------------------------
-    models.py 
----------------------------                         
+    models.py
+---------------------------
 Created on 24.04.2015
 Last modified on 24.04.2015
 Author: Marc Wieland
@@ -9,6 +9,44 @@ Description: Defines the database model
 ----
 '''
 from webapp import db
+from flask.ext.security import RoleMixin, UserMixin
+
+roles_users = db.Table('roles_users',
+        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+
+class Role(db.Model, RoleMixin):
+    """
+    Role for database
+    """
+    id = db.Column(db.Integer(), primary_key=True)
+
+class User(db.Model, UserMixin):
+    """
+    User, i.e. Task for RRVS
+    """
+
+    id = db.Column(db.Integer(), primary_key=True)
+    authenticated = db.Column(db.Boolean, default=False)
+    password = ''
+
+    def is_active(self):
+        """True, as all users are active."""
+        return True
+
+    def get_id(self):
+        """Return the taskid to satisfy Flask-Login's requirements."""
+        return self.id
+
+    def is_authenticated(self):
+        """Return True if the user is authenticated."""
+        return self.authenticated
+
+    def is_anonymous(self):
+        """False, as anonymous users aren't supported."""
+        return False
+    roles = db.relationship('Role',secondary=roles_users,backref=db.backref('users', lazy='dynamic'))
+
 
 class dic_attribute_value(db.Model):
 	"""
@@ -16,20 +54,20 @@ class dic_attribute_value(db.Model):
 	"""
 	__tablename__ = "dic_attribute_value"
 	__table_args__ = {'schema':'taxonomy'}
-	
+
 	gid = db.Column(db.Integer, primary_key=True)
 	attribute_type_code = db.Column(db.String(254))
 	attribute_value = db.Column(db.String(254), unique=True)
 	description = db.Column(db.String(254))
 	extended_description = db.Column(db.String(1024))
-	
+
 class ve_resolution1(db.Model):
 	"""
 	Holds ve_resolution1 from the object schema.
 	"""
 	__tablename__ = "ve_resolution1"
 	__table_args__ = {'schema':'object_res1'}
-	
+
 	gid = db.Column(db.Integer, primary_key=True)
 	mat_type = db.Column(db.String(254))
 	mat_tech = db.Column(db.String(254))

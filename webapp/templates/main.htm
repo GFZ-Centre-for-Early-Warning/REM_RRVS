@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>RRVS Webtool {{task_id}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body style="background-color:#efefef;"> 
+	<iframe title="pannellum panorama viewer" 
+			width="50%" height="390" webkitAllowFullScreen mozallowfullscreen allowFullScreen 
+			style="border-style:none;" 
+			src="{{ url_for('pannellum') }}?panorama=../static/panoimg/.jpg&amp;title=FrameID: 0&amp"
+			id="ifrm1">
+    </iframe>
+    <iframe title="leaflet map viewer" 
+			width="49%" height="390" 
+			style="border-style:none;" 
+			src="{{ url_for('map') }}"
+			id="ifrm2">
+	</iframe>
+	<iframe title="rrvs form" 
+			width="99%" height="200" 
+			style="border-style:none; padding: 5px;" 
+			src="{{ url_for('rrvsform') }}"
+			id="ifrm3">
+	</iframe>
+</body>
+</html>

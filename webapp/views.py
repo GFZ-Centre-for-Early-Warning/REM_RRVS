@@ -8,31 +8,71 @@ Author: Marc Wieland
 Description: The main routes file setting up the flask application layout
 ----
 '''
-from flask import render_template, request, jsonify
+import flask
+#from flask import flash,g, redirect, render_template, request, jsonify
 from webapp import app, db
-from models import ve_resolution1, dic_attribute_value
-from forms import RrvsForm
+from models import ve_resolution1, dic_attribute_value,User
+from forms import RrvsForm,LoginForm
+from flask.ext.security import login_required,login_user,logout_user
 
-@app.route('/')
-def home():
+@app.route("/", methods=["GET", "POST"])
+def login():
+    """For GET requests, display the login form. For POSTS, login the current user
+    by processing the form."""
+    print db
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.get(form.taskid.data)
+        if user:
+            user.authenticated = True
+            db.session.add(user)
+            db.session.commit()
+            login_user(user, remember=True)
+            return flask.redirect(flask.url_for("main"))
+    return flask.render_template("index.htm", form=form)
+
+@app.route("/logout", methods=["GET"])
+def logout():
+    """Logout the current user."""
+    user = current_user
+    user.authenticated = False
+    db.session.add(user)
+    db.session.commit()
+    logout_user()
+    return flask.render_template("logout.html")
+
+#@app.route('/',methods=['GET','POST'])
+#def login():
+#    """
+#    This shows login form and asks for task_id and generates task_id specific home
+#    """
+#    form = LoginForm()
+#    if form.validate_on_submit():
+#        task_id = flask.request.form['taskid']
+#        return flask.redirect(flask.url_for('main'))
+#    else:
+#        return flask.render_template('index.htm',form=form)
+
+@app.route('/main')
+def main():
 	"""
 	This will render a template that holds the main pagelayout.
 	"""
-	return render_template('index.htm')
+	return flask.render_template('main.htm')
 
 @app.route('/map')
 def map():
 	"""
 	This will render a template that holds the map.
 	"""
-	return render_template('map.html')
+        return flask.render_template('map.html')
 
 @app.route('/pannellum')
 def pannellum():
 	"""
 	This will render a template that holds the panoimage viewer.
 	"""
-	return render_template('pannellum.htm')
+	return flask.render_template('pannellum.htm')
 
 @app.route('/_update_rrvsform')
 def update_rrvsform():
@@ -41,7 +81,7 @@ def update_rrvsform():
 	QuerySelectFields the gid of the attribute_value needs to be returned by the function.
 	"""
 	# get building gid value for queries
-	gid_val = request.args.get('gid_val', 0, type=int)
+	gid_val = flask.request.args.get('gid_val', 0, type=int)
 	# query attribute_value for select fields
 	mat_type_val = ve_resolution1.query.filter_by(gid=gid_val).first().mat_type
 	mat_tech_val = ve_resolution1.query.filter_by(gid=gid_val).first().mat_tech
@@ -53,7 +93,7 @@ def update_rrvsform():
 	occupy_dt_val = ve_resolution1.query.filter_by(gid=gid_val).first().occupy_dt
 	nonstrcexw_val = ve_resolution1.query.filter_by(gid=gid_val).first().nonstrcexw
 
-	return jsonify(
+	return flask.jsonify(
 		# query values for text fields
 		height1_val = int(ve_resolution1.query.filter_by(gid=gid_val).first().height_1),
 		# query gid of attribute_values for select fields
@@ -77,7 +117,7 @@ def rrvsform():
 	"""
 	rrvs_form = RrvsForm()
 
-	if request.method == 'POST' and rrvs_form.validate():
+	if flask.request.method == 'POST' and rrvs_form.validate():
 		# update database with form content
 		row = ve_resolution1.query.filter_by(gid=rrvs_form.gid_field.data)
 		row.update({ve_resolution1.mat_type: rrvs_form.mat_type_field.data.attribute_value,
@@ -94,4 +134,4 @@ def rrvsform():
 		db.session.commit()
 
 	# if no post request is send the template is rendered normally
-	return render_template(template_name_or_list='rrvsform.html', rrvs_form=rrvs_form)
+	return flask.render_template(template_name_or_list='rrvsform.html', rrvs_form=rrvs_form)

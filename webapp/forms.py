@@ -1,7 +1,7 @@
 '''
 ---------------------------
-    forms.py 
----------------------------                         
+    forms.py
+---------------------------
 Created on 24.04.2015
 Last modified on 24.04.2015
 Author: Marc Wieland
@@ -9,11 +9,11 @@ Description: Defines the WTForms fields
 ----
 '''
 from flask.ext.wtf import Form
-from wtforms.fields import TextField, SubmitField
+from wtforms import TextField, SubmitField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import wtforms.validators as validators
 from models import ve_resolution1, dic_attribute_value
-   
+
 def getMatType():
 	return dic_attribute_value.query.filter_by(attribute_type_code='MAT_TYPE')
 def getMatTech():
@@ -50,6 +50,12 @@ class RrvsForm(Form):
 	occupy_field = QuerySelectField("Occupancy Type", query_factory=getOccupy, get_label='description', allow_blank=True)
 	occupy_dt_field = QuerySelectField("Occupancy Detail", query_factory=getOccupyDt, get_label='description', allow_blank=True)
 	nonstrcexw_field = QuerySelectField("Exterior Walls Material", query_factory=getNonstrcexw, get_label='description', allow_blank=True)
-		
+
 	# Submit field
 	submit = SubmitField("Update building")
+
+class LoginForm(Form):
+    """
+    This Form class contains the login in form of task_id
+    """
+    taskid = TextField("taskid",[validators.Length(max=20)])
