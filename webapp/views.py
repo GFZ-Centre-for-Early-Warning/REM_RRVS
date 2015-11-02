@@ -61,6 +61,8 @@ def login():
             flask.session['taskid']=form.taskid.data
             #get all buildings gids from task and storing in session
             flask.session['bdg_gids'] = task.query.filter_by(id=flask.session['taskid']).first().bdg_gids
+            #get all img gids from task and storing in session
+            flask.session['img_gids'] = task.query.filter_by(id=flask.session['taskid']).first().img_ids
             #flags for screened buildings
             flask.session['screened'] = [False]*len(flask.session['bdg_gids'])
             return flask.redirect(flask.url_for("main"))
@@ -104,7 +106,8 @@ def map():
             bdgs.append(feature)
         bdgs_json = dumps(FeatureCollection(bdgs))
         #get img_gids
-        rows = gps.query.all()
+        img_gids = flask.session['img_gids']
+        rows = gps.query.filter(gps.img_id.in_(img_gids)).all()
         img_gps = []
         for row in rows:
             geometry = json.loads(db.session.scalar(func.ST_AsGeoJSON(row.the_geom)))

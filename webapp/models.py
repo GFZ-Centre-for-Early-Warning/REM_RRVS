@@ -53,6 +53,7 @@ class task(db.Model):
     __tablename__="task"
     id = db.Column(db.Integer, primary_key=True)
     bdg_gids = db.Column(postgresql.ARRAY(db.Integer))
+    img_ids = db.Column(postgresql.ARRAY(db.Integer))
 
 class dic_attribute_value(db.Model):
 	"""
