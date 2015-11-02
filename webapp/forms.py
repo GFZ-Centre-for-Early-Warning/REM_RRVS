@@ -4,7 +4,7 @@
 ---------------------------
 Created on 24.04.2015
 Last modified on 24.04.2015
-Author: Marc Wieland
+Author: Marc Wieland, Michael Haas
 Description: Defines the WTForms fields
 ----
 '''
@@ -54,8 +54,10 @@ class RrvsForm(Form):
 	# Submit field
 	submit = SubmitField("Update building")
 
+
 class LoginForm(Form):
     """
     This Form class contains the login in form of task_id
     """
+    userid = TextField("userid",[validators.Length(max=20)])
     taskid = TextField("taskid",[validators.Length(max=20)])

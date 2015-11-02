@@ -4,12 +4,14 @@
 ---------------------------
 Created on 24.04.2015
 Last modified on 24.04.2015
-Author: Marc Wieland
+Author: Marc Wieland, Michael Haas
 Description: Defines the database model
 ----
 '''
 from webapp import db
 from flask.ext.security import RoleMixin, UserMixin
+from geoalchemy2 import Geometry
+from sqlalchemy.dialects import postgresql
 
 roles_users = db.Table('roles_users',
         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
@@ -23,7 +25,7 @@ class Role(db.Model, RoleMixin):
 
 class User(db.Model, UserMixin):
     """
-    User, i.e. Task for RRVS
+    User for RRVS
     """
 
     id = db.Column(db.Integer(), primary_key=True)
@@ -47,6 +49,10 @@ class User(db.Model, UserMixin):
         return False
     roles = db.relationship('Role',secondary=roles_users,backref=db.backref('users', lazy='dynamic'))
 
+class task(db.Model):
+    __tablename__="task"
+    id = db.Column(db.Integer, primary_key=True)
+    bdg_gids = db.Column(postgresql.ARRAY(db.Integer))
 
 class dic_attribute_value(db.Model):
 	"""
@@ -79,3 +85,28 @@ class ve_resolution1(db.Model):
 	occupy_dt = db.Column(db.String(254))
 	nonstrcexw = db.Column(db.String(254))
 	yr_built = db.Column(db.String(254))
+        the_geom = db.Column(Geometry(geometry_type='POLYGON', srid=4326))
+
+class pan_imgs(db.Model):
+    """
+    Holds panoramic images from the database
+    NOTE: right now only name of file on hdd
+    """
+    __tablename__ = "img"
+    __table_args__ = {'schema':'panoimg'}
+
+    gid = db.Column(db.Integer, primary_key=True)
+    source = db.Column(db.String(254))
+
+class gps(db.Model):
+    """
+    Holds locations of the panoramic images from the database
+    """
+    __tablename__ = "gps"
+    __table_args__ = {'schema':'panoimg'}
+
+    gid = db.Column(db.Integer, primary_key=True)
+    img_id = db.Column(db.Integer)
+    azimuth = db.Column(db.Float)
+    the_geom = db.Column(Geometry(geometry_type='POINT',srid=4326))
+

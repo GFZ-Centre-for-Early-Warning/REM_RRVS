@@ -1,33 +1,68 @@
 '''
 ---------------------------
-    routes.py
+    views.py
 ---------------------------
 Created on 24.04.2015
 Last modified on 24.04.2015
-Author: Marc Wieland
-Description: The main routes file setting up the flask application layout
+Author: Marc Wieland, Michael Haas
+Description: The main views file setting up the flask application layout, defining all routes
 ----
 '''
 import flask
-#from flask import flash,g, redirect, render_template, request, jsonify
 from webapp import app, db
-from models import ve_resolution1, dic_attribute_value,User
+from models import ve_resolution1, dic_attribute_value,gps,pan_imgs,User,task
 from forms import RrvsForm,LoginForm
 from flask.ext.security import login_required,login_user,logout_user
+import geoalchemy2.functions as func
+import json
+from geojson import Feature, FeatureCollection, dumps
 
+
+########################################################
+# REST interface getting task related buildings as json
+########################################################
+#@app.route("/bdgs/api/<int:taskid>",methods=["GET"])
+#def get_task(taskid):
+#    geom = ve_resolution1.query.filter_by(gid=taskid).first().the_geom
+#    #geom_json= json.loads(db.session.scalar(geoalchemy2.functions.ST_AsGeoJSON(geom)))
+#    geom_json = json.loads(db.session.scalar(func.ST_AsGeoJSON(geom)))
+#    geom_json["gid"]=taskid
+#    print geom_json
+#    return flask.jsonify(geom_json['coordinates'][0])
+
+#def byteify(input):
+#    if isinstance(input, dict):
+#        return {byteify(key):byteify(value) for key,value in input.iteritems()}
+#    elif isinstance(input, list):
+#        return [byteify(element) for element in input]
+#    elif isinstance(input, unicode):
+#        return input.encode('utf-8')
+#    else:
+#        return input
+
+#######################################
+# Login landing page
+#######################################
 @app.route("/", methods=["GET", "POST"])
 def login():
     """For GET requests, display the login form. For POSTS, login the current user
-    by processing the form."""
-    print db
+    by processing the form and storing the taskid."""
+    #print db
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.get(form.taskid.data)
+        user = User.query.get(form.userid.data)
         if user:
             user.authenticated = True
             db.session.add(user)
             db.session.commit()
+            #log the user in
             login_user(user, remember=True)
+            #set up task
+            flask.session['taskid']=form.taskid.data
+            #get all buildings gids from task and storing in session
+            flask.session['bdg_gids'] = task.query.filter_by(id=flask.session['taskid']).first().bdg_gids
+            #flags for screened buildings
+            flask.session['screened'] = [False]*len(flask.session['bdg_gids'])
             return flask.redirect(flask.url_for("main"))
     return flask.render_template("index.htm", form=form)
 
@@ -41,19 +76,11 @@ def logout():
     logout_user()
     return flask.render_template("logout.html")
 
-#@app.route('/',methods=['GET','POST'])
-#def login():
-#    """
-#    This shows login form and asks for task_id and generates task_id specific home
-#    """
-#    form = LoginForm()
-#    if form.validate_on_submit():
-#        task_id = flask.request.form['taskid']
-#        return flask.redirect(flask.url_for('main'))
-#    else:
-#        return flask.render_template('index.htm',form=form)
-
+######################################
+# Data entry/ Visualization interface
+#####################################
 @app.route('/main')
+@login_required
 def main():
 	"""
 	This will render a template that holds the main pagelayout.
@@ -64,8 +91,28 @@ def main():
 def map():
 	"""
 	This will render a template that holds the map.
+        Displaying buildings with gids contained in taskid
 	"""
-        return flask.render_template('map.html')
+        #get bdg_gids
+        bdg_gids = flask.session['bdg_gids']
+        #get FeatureCollection with corresponding building footprints
+        rows = ve_resolution1.query.filter(ve_resolution1.gid.in_(bdg_gids)).all()
+        bdgs = []
+        for row in rows:
+            geometry = json.loads(db.session.scalar(func.ST_AsGeoJSON(row.the_geom)))#func.ST_AsGeoJSON(row.the_geom)
+            feature = Feature(id=row.gid,geometry=geometry,properties={"gid":row.gid})
+            bdgs.append(feature)
+        bdgs_json = dumps(FeatureCollection(bdgs))
+        #get img_gids
+        rows = gps.query.all()
+        img_gps = []
+        for row in rows:
+            geometry = json.loads(db.session.scalar(func.ST_AsGeoJSON(row.the_geom)))
+            feature = Feature(id=row.gid,geometry=geometry,properties={"img_id":row.img_id,"azimuth":row.azimuth})
+            img_gps.append(feature)
+        gps_json = dumps(FeatureCollection(img_gps))
+
+        return flask.render_template('map.html',bdgs=bdgs_json,gps=gps_json)
 
 @app.route('/pannellum')
 def pannellum():
@@ -132,6 +179,8 @@ def rrvsform():
 					ve_resolution1.nonstrcexw: rrvs_form.nonstrcexw_field.data.attribute_value
 					}, synchronize_session=False)
 		db.session.commit()
+                #update session variable for screened buildings
+                flask.session['screened'][flask.session['bdg_gids'].index(int(rrvs_form.gid_field.data))]=True
 
-	# if no post request is send the template is rendered normally
-	return flask.render_template(template_name_or_list='rrvsform.html', rrvs_form=rrvs_form)
+	# if no post request is send the template is rendered normally showing numbers of completed bdgs
+	return flask.render_template(template_name_or_list='rrvsform.html', rrvs_form=rrvs_form,n=len(flask.session['bdg_gids']),c=len([x for x in flask.session['screened'] if x==True]))

@@ -3,6 +3,13 @@
 <head>
     <title>RRVS Webtool {{task_id}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript">
+        // Open iframe in new window function
+        function runFullscreen(objFrame){
+            window.open(objFrame.src);
+            objFrame.parentNode.removeChild(objFrame);
+        }
+    </script>
 </head>
 <body style="background-color:#efefef;"> 
 	<iframe title="pannellum panorama viewer" 

@@ -8,7 +8,7 @@ app.config.from_object('rrvs_config')
 
 db = SQLAlchemy(app)
 
-import webapp.routes
+import webapp.views
 db.init_app(app)
 
 

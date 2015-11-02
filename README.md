@@ -18,7 +18,7 @@ A) Setup virtualenvironment and add the project source code
 3. run $ venv/bin/activate to start the enviroment ($ deactivate to stop it)
    now you can install python libraries localy in a virtual environment 
    not affecting the host systems python libraries.
-4. $ venv/bin/pip install Flask Flask-WTF Flask-SQLAlchemy
+4. $ venv/bin/pip install Flask Flask-WTF Flask-SQLAlchemy Flask-Security Flask-Login Flask-RESTful geoalchemy geojson
 
 B) Setup the database
 1. Create a new database 'rrvstool_v01' in PostgreSQL >9.1

@@ -31,7 +31,7 @@
 		//function for dynamic building polygon style
 		function building_style(feature) {
 			return {
-				fillColor: '#efefef',
+				fillColor: '#66ccff',
 				fillOpacity: 0.6,
 				weight: 1,
                 opacity: 1,
@@ -57,35 +57,33 @@
 			buildingsJSON.resetStyle(buildingsJSON);
 		}
 		
-		//functions for dynamic gps point layer style and get-feature-info
-		function style(feature) {
-			return {
+		//variable for dynamic gps point layer style and get-feature-info
+		var gpsDefaultStyle = {
 				radius: 4,
 				fillColor: '#0B0B3B',
 				color: '#0B0B3B',
 				opacity: 0.8,
 				fillOpacity: 0.6
-			};
 		}		
-		
-		function highlightFeature(e) {
-			var layer = e.target;
-			layer.setStyle({
+
+        //variable with highlighted GPS img marker style
+        var gpsHighlightStyle = {
 				radius: 8,
 				fillColor: '#0B0B3B',
 				color: '#2E9AFE',
 				opacity: 1,
 				fillOpacity: 0.6
-			});
-			if (!L.Browser.ie && !L.Browser.opera) {
-				layer.bringToFront();
-			}
-			info.update(layer.feature.properties);
-		}
-		
-		function resetHighlight(e) {
-			gpsJSON.resetStyle(e.target);
-			info.update();
+        }
+
+        //variable to keep track of highlighted gps img marker
+        var highlightedGPS = null;
+
+	    //function removing highlight from GPS image marker if set
+		function resetHighlightGPS() {
+            if (highlightedGPS != null){
+                highlightedGPS.setStyle(gpsDefaultStyle);
+                highlightedGPS = null;
+            }
 		}
         
         //object to keep gps location, and azimuth of selected image
@@ -96,20 +94,18 @@
 			// zoom to feature in map
 			map.fitBounds(e.target.getBounds(), {maxZoom: 17});
 			// update src of iframe 1 (panoImg)
-			var ifrm = parent.document.getElementById('ifrm1');
+            // destinguish between frame mode or multi window mode
+            if(self==top){
+			    var ifrm = opener.document.getElementById('ifrm1');
+            }else{
+			    var ifrm = parent.document.getElementById('ifrm1');
+            }
 			var src = "{{ url_for('pannellum') }}?panorama=../static/panoimg/ladybug_panoramic_" + e.target.feature.properties.img_id + ".jpg&title=FrameID: " + e.target.feature.properties.img_id + "&autoLoad=true";
 			ifrm.src = src.replace(/%26/g, "&amp;");
             //store values
             imgData.loc = e.target.getLatLng();
             imgData.azi = e.target.feature.properties.azimuth;
 		}
-
-//        //function to get center of polygon
-//        var getCentroid = function (arr) {
-//            return arr.reduce(function (x,y) {
-//                return [x[0] + y[0]/arr.length, x[1] + y[1]/arr.length];
-//            }, [0,0])
-//        }
 
         //function to calculate angle between two points in degrees p1 to p2
         var angleDeg = function (p1,p2){
@@ -146,13 +142,21 @@
             // update panoramic image orientation
             updatePanoImgYaw(e);
 		}
-		
+        
+        //function to highlight clicked img and update panellum frame
+        function clickedImg(e){
+            updatePanoImg(e);
+		    resetHighlightGPS(); 
+            e.target.setStyle(gpsHighlightStyle);
+            highlightedGPS=e.target
+        }
+
 		//function for adding actions to mouse events on gps layer
 		function onEachFeatureGps(feature, layer) {
 			layer.on({
-				mouseover: highlightFeature,
-				mouseout: resetHighlight,
-				click: updatePanoImg
+				//mouseover: highlightFeature,
+				//mouseout: resetHighlight,
+                click: clickedImg
 			});
 		}
 		
@@ -164,8 +168,8 @@
 		}
 		
 		//add gps layer
-		gpsJSON = L.geoJson(gps,{
-			style: style,
+gpsJSON = L.geoJson({{gps|safe}},{
+			style: gpsDefaultStyle,
 			onEachFeature: onEachFeatureGps,
 			pointToLayer: function (feature, latlng) {  
 				return L.circleMarker(latlng)
@@ -174,10 +178,14 @@
 		gpsJSON.addTo(map);
 		
 		//add buildings layer
-		buildingsJSON = L.geoJson(buildings,{
-			style: building_style,
-			onEachFeature: onEachFeatureBuilding
-			});			
+		//buildingsJSON = L.geoJson(buildings,{
+		//	style: building_style,
+		//	onEachFeature: onEachFeatureBuilding
+		//	});			
+        buildingsJSON = L.geoJson({{bdgs|safe}},{
+            style: building_style,
+            onEachFeature: onEachFeatureBuilding
+            });
 		buildingsJSON.addTo(map);
 		
 		//focus map on layer extent

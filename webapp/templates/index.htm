@@ -4,12 +4,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body style="background-color:#efefef;">
-    <h1>Welcome to the RRVS Webtool - Please login with the task_id to start</h1>
+    <h1>Welcome to the RRVS Webtool - Please login with your user and task id to start</h1>
     <form name="login" method='POST'>
         {{ form.hidden_tag() }}
         <dl>
+        {{ render_field(form.userid) }}
+        </dl>
+        <dl>
         {{ render_field(form.taskid) }}
         </dl>
+        <input type="submit" value="Submit">
     </form>
 </body>
 </html>
