@@ -1,4 +1,10 @@
-# files to ignore
+#ignore temp files
+*~
+#ignore panoimage files
 webapp/static/panoimg/*.jpg
+#ignore compiled python files
 *.pyc
-venv
+#ignore eclipse project files
+*.project
+*.pydevproject
+*.settings/
