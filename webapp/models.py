@@ -3,7 +3,7 @@
     models.py
 ---------------------------
 Created on 24.04.2015
-Last modified on 24.04.2015
+Last modified on 12.01.2016
 Author: Marc Wieland, Michael Haas
 Description: Defines the database model
 ----
@@ -22,6 +22,7 @@ class Role(db.Model, RoleMixin):
     Role for database
     """
     id = db.Column(db.Integer(), primary_key=True)
+    name = ''
 
 class User(db.Model, UserMixin):
     """

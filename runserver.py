@@ -3,7 +3,7 @@
     runserver.py
 ---------------------------
 Created on 24.04.2015
-Last modified on 24.04.2015
+Last modified on 12.01.2016
 Author: Marc Wieland
 Description: Starts the application
 ----
@@ -24,4 +24,4 @@ user_datastore = SQLAlchemyUserDatastore(db,models.User,models.Role)
 security = Security(app, user_datastore)
 
 app.secret_key = '42'
-app.run(debug=True)
+app.run(debug=True, use_reloader=False)
