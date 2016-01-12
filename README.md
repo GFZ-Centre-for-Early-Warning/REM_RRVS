@@ -18,16 +18,17 @@ A) Setup virtualenvironment and add the project source code
 3. run $ venv/bin/activate to start the enviroment ($ deactivate to stop it)
    now you can install python libraries localy in a virtual environment 
    not affecting the host systems python libraries.
-4. $ venv/bin/pip install Flask Flask-WTF Flask-SQLAlchemy Flask-Security Flask-Login Flask-RESTful geoalchemy geojson
+4. $ venv/bin/pip install Flask Flask-WTF Flask-SQLAlchemy Flask-Security Flask-Login Flask-RESTful geoalchemy2 geojson
+5. copy the rrvstool folder that holds the flask application into the the venv directory
 
 B) Setup the database
-1. Create a new database 'rrvstool_v01' in PostgreSQL >9.1
+1. Create a new database 'rrvstool_v02' in PostgreSQL >9.1
    and run rrvstool_db.sql
 2. Populate the database tables (you can use the rrvstool_testdata.sql script to add some testdata)
 
-C) Run the flask application on an apache2 server with mod_wsgi
+C) OPTIONAL: Run the application on an apache2 server with mod_wsgi
 1.Install mod_wsgi for apache2
-  $ sudo apt-get install libapach2-mod-wsgi
+  $ sudo apt-get install libapache2-mod-wsgi
 2. Activate wsgi for apache2
   $ sudo a2enmod wsgi
 3. Create a virtual host for the app
@@ -62,6 +63,9 @@ WARNING: Currently the app is designed as being open to all IP-Addresses!
 webapp/__init__.py app.run(host="0.0.0.0")
 
 You can enter the site via localhost:8080
+
+D) Run the application
+1. $ python runserver.py
 
 
 MODIFYING DATAENTRY FORM
