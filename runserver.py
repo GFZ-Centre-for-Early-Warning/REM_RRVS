@@ -12,7 +12,6 @@ from webapp import app, db, models
 from flask.ext.login import LoginManager
 from flask.ext.security import Security,SQLAlchemyUserDatastore
 
-
 #create database stuff
 db.create_all()
 
