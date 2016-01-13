@@ -2265,16 +2265,16 @@ ALTER SEQUENCE dic_taxonomy_gid_seq OWNED BY dic_taxonomy.gid;
 SET search_path = users, pg_catalog;
 
 --
--- Name: role; Type: TABLE; Schema: users; Owner: postgres; Tablespace: 
+-- Name: roles; Type: TABLE; Schema: users; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE role (
+CREATE TABLE roles (
     id integer NOT NULL,
     name character varying(254)
 );
 
 
-ALTER TABLE users.role OWNER TO postgres;
+ALTER TABLE users.roles OWNER TO postgres;
 
 --
 -- Name: roles_users; Type: TABLE; Schema: users; Owner: postgres; Tablespace: 
@@ -2289,17 +2289,29 @@ CREATE TABLE roles_users (
 ALTER TABLE users.roles_users OWNER TO postgres;
 
 --
--- Name: task; Type: TABLE; Schema: users; Owner: postgres; Tablespace: 
+-- Name: tasks; Type: TABLE; Schema: users; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE task (
+CREATE TABLE tasks (
     id integer NOT NULL,
     bdg_gids integer[],
     img_ids integer[]
 );
 
 
-ALTER TABLE users.task OWNER TO postgres;
+ALTER TABLE users.tasks OWNER TO postgres;
+
+--
+-- Name: tasks_users; Type: TABLE; Schema: users; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tasks_users (
+    users_id integer,
+    task_id integer
+);
+
+
+ALTER TABLE users.tasks_users OWNER TO postgres;
 
 --
 -- Name: users; Type: TABLE; Schema: users; Owner: postgres; Tablespace: 
@@ -3287,10 +3299,10 @@ COPY topology (id, name, srid, "precision", hasz) FROM stdin;
 SET search_path = users, pg_catalog;
 
 --
--- Data for Name: role; Type: TABLE DATA; Schema: users; Owner: postgres
+-- Data for Name: roles; Type: TABLE DATA; Schema: users; Owner: postgres
 --
 
-COPY role (id, name) FROM stdin;
+COPY roles (id, name) FROM stdin;
 \.
 
 
@@ -3303,10 +3315,18 @@ COPY roles_users (users_id, role_id) FROM stdin;
 
 
 --
--- Data for Name: task; Type: TABLE DATA; Schema: users; Owner: postgres
+-- Data for Name: tasks; Type: TABLE DATA; Schema: users; Owner: postgres
 --
 
-COPY task (id, bdg_gids, img_ids) FROM stdin;
+COPY tasks (id, bdg_gids, img_ids) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tasks_users; Type: TABLE DATA; Schema: users; Owner: postgres
+--
+
+COPY tasks_users (users_id, task_id) FROM stdin;
 \.
 
 
@@ -3510,7 +3530,7 @@ SET search_path = users, pg_catalog;
 -- Name: role_pkey; Type: CONSTRAINT; Schema: users; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY role
+ALTER TABLE ONLY roles
     ADD CONSTRAINT role_pkey PRIMARY KEY (id);
 
 
@@ -3518,7 +3538,7 @@ ALTER TABLE ONLY role
 -- Name: task_pkey; Type: CONSTRAINT; Schema: users; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY task
+ALTER TABLE ONLY tasks
     ADD CONSTRAINT task_pkey PRIMARY KEY (id);
 
 
@@ -3776,7 +3796,7 @@ SET search_path = users, pg_catalog;
 --
 
 ALTER TABLE ONLY roles_users
-    ADD CONSTRAINT roles_users_role_id_fkey FOREIGN KEY (role_id) REFERENCES role(id);
+    ADD CONSTRAINT roles_users_role_id_fkey FOREIGN KEY (role_id) REFERENCES roles(id);
 
 
 --
@@ -3785,6 +3805,22 @@ ALTER TABLE ONLY roles_users
 
 ALTER TABLE ONLY roles_users
     ADD CONSTRAINT roles_users_users_id_fkey FOREIGN KEY (users_id) REFERENCES users(id);
+
+
+--
+-- Name: tasks_users_task_id_fkey; Type: FK CONSTRAINT; Schema: users; Owner: postgres
+--
+
+ALTER TABLE ONLY tasks_users
+    ADD CONSTRAINT tasks_users_task_id_fkey FOREIGN KEY (task_id) REFERENCES tasks(id);
+
+
+--
+-- Name: tasks_users_users_id_fkey; Type: FK CONSTRAINT; Schema: users; Owner: postgres
+--
+
+ALTER TABLE ONLY tasks_users
+    ADD CONSTRAINT tasks_users_users_id_fkey FOREIGN KEY (users_id) REFERENCES users(id);
 
 
 --
