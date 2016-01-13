@@ -70,6 +70,15 @@ CREATE SCHEMA topology;
 ALTER SCHEMA topology OWNER TO postgres;
 
 --
+-- Name: users; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA users;
+
+
+ALTER SCHEMA users OWNER TO postgres;
+
+--
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -2253,6 +2262,56 @@ ALTER TABLE taxonomy.dic_taxonomy_gid_seq OWNER TO postgres;
 ALTER SEQUENCE dic_taxonomy_gid_seq OWNED BY dic_taxonomy.gid;
 
 
+SET search_path = users, pg_catalog;
+
+--
+-- Name: role; Type: TABLE; Schema: users; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE role (
+    id integer NOT NULL
+);
+
+
+ALTER TABLE users.role OWNER TO postgres;
+
+--
+-- Name: roles_users; Type: TABLE; Schema: users; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE roles_users (
+    users_id integer,
+    role_id integer
+);
+
+
+ALTER TABLE users.roles_users OWNER TO postgres;
+
+--
+-- Name: task; Type: TABLE; Schema: users; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE task (
+    id integer NOT NULL,
+    bdg_gids integer[],
+    img_ids integer[]
+);
+
+
+ALTER TABLE users.task OWNER TO postgres;
+
+--
+-- Name: users; Type: TABLE; Schema: users; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    authenticated boolean
+);
+
+
+ALTER TABLE users.users OWNER TO postgres;
+
 SET search_path = asset, pg_catalog;
 
 --
@@ -3223,6 +3282,40 @@ COPY topology (id, name, srid, "precision", hasz) FROM stdin;
 \.
 
 
+SET search_path = users, pg_catalog;
+
+--
+-- Data for Name: role; Type: TABLE DATA; Schema: users; Owner: postgres
+--
+
+COPY role (id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: roles_users; Type: TABLE DATA; Schema: users; Owner: postgres
+--
+
+COPY roles_users (users_id, role_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: task; Type: TABLE DATA; Schema: users; Owner: postgres
+--
+
+COPY task (id, bdg_gids, img_ids) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: users; Owner: postgres
+--
+
+COPY users (id, authenticated) FROM stdin;
+\.
+
+
 SET search_path = asset, pg_catalog;
 
 --
@@ -3407,6 +3500,32 @@ ALTER TABLE ONLY dic_hazard
 
 ALTER TABLE ONLY dic_qualifier_type
     ADD CONSTRAINT pk_qualifier_type PRIMARY KEY (gid);
+
+
+SET search_path = users, pg_catalog;
+
+--
+-- Name: role_pkey; Type: CONSTRAINT; Schema: users; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY role
+    ADD CONSTRAINT role_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: task_pkey; Type: CONSTRAINT; Schema: users; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY task
+    ADD CONSTRAINT task_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: users; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
 
 SET search_path = asset, pg_catalog;
@@ -3646,6 +3765,24 @@ ALTER TABLE ONLY dic_attribute_type
 
 ALTER TABLE ONLY dic_qualifier_value
     ADD CONSTRAINT fk_dic_qualifier_value FOREIGN KEY (qualifier_type_code) REFERENCES dic_qualifier_type(code);
+
+
+SET search_path = users, pg_catalog;
+
+--
+-- Name: roles_users_role_id_fkey; Type: FK CONSTRAINT; Schema: users; Owner: postgres
+--
+
+ALTER TABLE ONLY roles_users
+    ADD CONSTRAINT roles_users_role_id_fkey FOREIGN KEY (role_id) REFERENCES role(id);
+
+
+--
+-- Name: roles_users_users_id_fkey; Type: FK CONSTRAINT; Schema: users; Owner: postgres
+--
+
+ALTER TABLE ONLY roles_users
+    ADD CONSTRAINT roles_users_users_id_fkey FOREIGN KEY (users_id) REFERENCES users(id);
 
 
 --

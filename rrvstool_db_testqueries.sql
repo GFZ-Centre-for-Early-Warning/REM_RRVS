@@ -40,7 +40,7 @@ update asset.ve_object set description='modified_corrected' where gid=2898;
 
 --DELETE an object cause of a real world destruction: 1. mark the object change type as 'DESTR'; 2. set the date of destruction; 3. delete it
 update asset.ve_object set description='deleted', yr_built_vt='DESTR', yr_built_vt1='01-01-2014' where gid=2898;
-delete from asset.ve_object where gid=2899;
+delete from asset.ve_object where gid=2898;
 
 -----------------------------------------------------------------
 ------------ Example of a "spatio-temporal query" ---------------
