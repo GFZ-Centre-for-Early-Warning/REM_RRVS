@@ -2281,7 +2281,7 @@ ALTER TABLE users.roles OWNER TO postgres;
 --
 
 CREATE TABLE roles_users (
-    users_id integer,
+    user_id integer,
     role_id integer
 );
 
@@ -2306,7 +2306,7 @@ ALTER TABLE users.tasks OWNER TO postgres;
 --
 
 CREATE TABLE tasks_users (
-    users_id integer,
+    user_id integer,
     task_id integer
 );
 
@@ -3310,7 +3310,7 @@ COPY roles (id, name) FROM stdin;
 -- Data for Name: roles_users; Type: TABLE DATA; Schema: users; Owner: postgres
 --
 
-COPY roles_users (users_id, role_id) FROM stdin;
+COPY roles_users (user_id, role_id) FROM stdin;
 \.
 
 
@@ -3326,7 +3326,7 @@ COPY tasks (id, bdg_gids, img_ids) FROM stdin;
 -- Data for Name: tasks_users; Type: TABLE DATA; Schema: users; Owner: postgres
 --
 
-COPY tasks_users (users_id, task_id) FROM stdin;
+COPY tasks_users (user_id, task_id) FROM stdin;
 \.
 
 
@@ -3804,7 +3804,7 @@ ALTER TABLE ONLY roles_users
 --
 
 ALTER TABLE ONLY roles_users
-    ADD CONSTRAINT roles_users_users_id_fkey FOREIGN KEY (users_id) REFERENCES users(id);
+    ADD CONSTRAINT roles_users_users_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
 
 
 --
@@ -3820,7 +3820,7 @@ ALTER TABLE ONLY tasks_users
 --
 
 ALTER TABLE ONLY tasks_users
-    ADD CONSTRAINT tasks_users_users_id_fkey FOREIGN KEY (users_id) REFERENCES users(id);
+    ADD CONSTRAINT tasks_users_users_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
 
 
 --

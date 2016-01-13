@@ -1084,10 +1084,11 @@ INSERT INTO users.users(id, authenticated, name) VALUES (1, TRUE, 'user 1');
 INSERT INTO users.users(id, authenticated, name) VALUES (2, TRUE, 'user 2');
 
 INSERT INTO users.roles(id, name) VALUES (1, 'public');
-INSERT INTO users.roles_users(users_id, role_id) VALUES (1, 1);
-INSERT INTO users.roles_users(users_id, role_id) VALUES (2, 1);
+INSERT INTO users.roles_users(user_id, role_id) VALUES (1, 1);
+INSERT INTO users.roles_users(user_id, role_id) VALUES (2, 1);
 
-INSERT INTO users.tasks(id, bdg_gids, img_ids) VALUES (1, (SELECT ARRAY(SELECT gid FROM asset.object WHERE gid <= 2427)), (SELECT ARRAY(SELECT gid FROM image.img)));
-INSERT INTO users.tasks(id, bdg_gids, img_ids) VALUES (2, (SELECT ARRAY(SELECT gid FROM asset.object WHERE gid > 2427)), (SELECT ARRAY(SELECT gid FROM image.img)));
-INSERT INTO users.tasks_users(users_id, task_id) VALUES (1, 1);
-INSERT INTO users.tasks_users(users_id, task_id) VALUES (1, 2);
+INSERT INTO users.tasks(id, bdg_gids, img_ids) VALUES (1, (SELECT ARRAY(SELECT gid FROM asset.object LIMIT 100)), (SELECT ARRAY(SELECT gid FROM image.img)));
+INSERT INTO users.tasks(id, bdg_gids, img_ids) VALUES (2, (SELECT ARRAY(SELECT gid FROM asset.object LIMIT 100 OFFSET 100)), (SELECT ARRAY(SELECT gid FROM image.img)));
+INSERT INTO users.tasks_users(user_id, task_id) VALUES (1, 1);
+INSERT INTO users.tasks_users(user_id, task_id) VALUES (1, 2);
+
