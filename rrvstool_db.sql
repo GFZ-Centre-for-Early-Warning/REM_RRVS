@@ -2269,7 +2269,8 @@ SET search_path = users, pg_catalog;
 --
 
 CREATE TABLE role (
-    id integer NOT NULL
+    id integer NOT NULL,
+    name character varying(254)
 );
 
 
@@ -2306,7 +2307,8 @@ ALTER TABLE users.task OWNER TO postgres;
 
 CREATE TABLE users (
     id integer NOT NULL,
-    authenticated boolean
+    authenticated boolean,
+    name character varying(25)
 );
 
 
@@ -3288,7 +3290,7 @@ SET search_path = users, pg_catalog;
 -- Data for Name: role; Type: TABLE DATA; Schema: users; Owner: postgres
 --
 
-COPY role (id) FROM stdin;
+COPY role (id, name) FROM stdin;
 \.
 
 
@@ -3312,7 +3314,7 @@ COPY task (id, bdg_gids, img_ids) FROM stdin;
 -- Data for Name: users; Type: TABLE DATA; Schema: users; Owner: postgres
 --
 
-COPY users (id, authenticated) FROM stdin;
+COPY users (id, authenticated, name) FROM stdin;
 \.
 
 
