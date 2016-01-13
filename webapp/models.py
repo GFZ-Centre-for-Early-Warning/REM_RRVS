@@ -3,7 +3,7 @@
     models.py
 ---------------------------
 Created on 24.04.2015
-Last modified on 12.01.2016
+Last modified on 13.01.2016
 Author: Marc Wieland, Michael Haas
 Description: Defines the database model
 ----
@@ -14,13 +14,17 @@ from geoalchemy2 import Geometry
 from sqlalchemy.dialects import postgresql
 
 roles_users = db.Table('roles_users',
-        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+        db.Column('user_id', db.Integer(), db.ForeignKey('users.users.id')),
+        db.Column('role_id', db.Integer(), db.ForeignKey('users.roles.id')),
+        schema = 'users')
 
 class Role(db.Model, RoleMixin):
     """
     Role for database
     """
+    __tablename__="roles"
+    __table_args__ = {'schema':'users'}
+ 
     id = db.Column(db.Integer(), primary_key=True)
     name = ''
 
@@ -28,7 +32,9 @@ class User(db.Model, UserMixin):
     """
     User for RRVS
     """
-
+    __tablename__="users"
+    __table_args__ = {'schema':'users'}
+ 
     id = db.Column(db.Integer(), primary_key=True)
     authenticated = db.Column(db.Boolean, default=False)
     password = ''
@@ -48,10 +54,15 @@ class User(db.Model, UserMixin):
     def is_anonymous(self):
         """False, as anonymous users aren't supported."""
         return False
-    roles = db.relationship('Role',secondary=roles_users,backref=db.backref('users', lazy='dynamic'))
+    roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
 
 class task(db.Model):
-    __tablename__="task"
+    """
+    Holds the tasks from the users schema.
+    """
+    __tablename__="tasks"
+    __table_args__ = {'schema':'users'}
+ 
     id = db.Column(db.Integer, primary_key=True)
     bdg_gids = db.Column(postgresql.ARRAY(db.Integer))
     img_ids = db.Column(postgresql.ARRAY(db.Integer))
@@ -69,12 +80,12 @@ class dic_attribute_value(db.Model):
     description = db.Column(db.String(254))
     extended_description = db.Column(db.String(1024))
 
-class ve_resolution1(db.Model):
+class ve_object(db.Model):
     """
-    Holds ve_resolution1 from the object schema.
+    Holds ve_object from the asset schema.
     """
-    __tablename__ = "ve_resolution1"
-    __table_args__ = {'schema':'object_res1'}
+    __tablename__ = "ve_object"
+    __table_args__ = {'schema':'asset'}
 
     gid = db.Column(db.Integer, primary_key=True)
     mat_type = db.Column(db.String(254))
@@ -95,7 +106,7 @@ class pan_imgs(db.Model):
     NOTE: right now only name of file on hdd
     """
     __tablename__ = "img"
-    __table_args__ = {'schema':'panoimg'}
+    __table_args__ = {'schema':'image'}
 
     gid = db.Column(db.Integer, primary_key=True)
     source = db.Column(db.String(254))
@@ -105,7 +116,7 @@ class gps(db.Model):
     Holds locations of the panoramic images from the database
     """
     __tablename__ = "gps"
-    __table_args__ = {'schema':'panoimg'}
+    __table_args__ = {'schema':'image'}
 
     gid = db.Column(db.Integer, primary_key=True)
     img_id = db.Column(db.Integer)
