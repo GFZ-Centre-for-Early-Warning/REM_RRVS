@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html style=""><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
-	<title>CARAVAN Leaflet Test</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="../static/leaflet/leaflet.css">
+<html>
+<head>
+	<title>RRVS Webtool - Map</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
 	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
+	<link rel="stylesheet" href="../static/leaflet/leaflet.css">
 	<script src="../static/leaflet/leaflet.js"></script>
-	<script src="../static/panoimg/gps.js" type="text/javascript"></script>
-	<script src="../static/panoimg/buildings.js" type="text/javascript"></script>
 </head>
-<body class="">
+<body>
 	<div id="map"></div>	
 	<script>
 		//add map object
@@ -22,7 +20,7 @@
 		//add baselayer
 		var basemap = L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
 			maxZoom: 18,
-			attribution: 'Processing &copy; <a href="http://www.gfz-potsdam.de/en/research/organizational-units/technology-transfer-centres/centre-for-early-warning-systems-ews/">GFZ Potsdam - Centre for Early Warning Systems</a>' +
+			attribution: 'Processing &copy; <a href="http://www.gfz-potsdam.de/en/section/ews/">GFZ Potsdam - Centre for Early Warning Systems</a>' +
 						 ' | Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, ',
 			subdomains: ['otile1','otile2','otile3','otile4']
 		}).addTo(map);
@@ -41,8 +39,8 @@
 		function highlightBuilding(e) {
 			var layer = e.target;
 			layer.setStyle({
-				fillColor: '#ff0000',
-				fillOpacity: 0.6,
+				//fillColor: '#ff0000',
+				//fillOpacity: 0.6,
 				weight: 1,
                 opacity: 1,
                 color: '#afafaf'
@@ -93,7 +91,7 @@
 			// zoom to feature in map
 			map.fitBounds(e.target.getBounds(), {maxZoom: 17});
 			// update src of iframe 1 (panoImg)
-            // destinguish between frame mode or multi window mode
+            // distinguish between frame mode or multi window mode
             if(self==top){
 			    var ifrm = opener.document.getElementById('ifrm1');
             }else{
@@ -111,7 +109,8 @@
             return Math.atan2(p2.lat - p1.lat, p2.lng - p1.lng) * 180 / Math.PI;
         }
 
-        //function for interaction between building layer and panoImg iframe (updates yaw of panoImg wrt clicked building location)
+        //function for interaction between building layer and panoImg iframe 
+        //updates yaw of panoImg wrt clicked building location
         function updatePanoImgYaw(e){
             //get centroid of the selected building
             var bdg_centroid = e.latlng;

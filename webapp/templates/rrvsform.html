@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>RRVS Form</title>
+    <title>RRVS Webtool - Form</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <strong><link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></strong>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
@@ -32,7 +32,7 @@
 	<form id="rrvsForm" action="{{ url_for('rrvsform') }}" method=post>
 		{{ rrvs_form.hidden_tag() }}   				
 		<div class="tabs">
-		   <div class="formLayoutGeneral" style="background-color: #efefef; border: solid 1px #efefef;"> 
+		   <div class="formLayoutGeneral"> 
 				<img class="banner" src="{{ url_for('static', filename='img/banner.svg') }}" alt="RRVS tool">			
 				<br><br>
 				{{ rrvs_form.gid_field.label }}
