@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html style=""><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
-	<title>CARAVAN Leaflet Test</title>
+	<title>RRVS Map</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="../static/leaflet/leaflet.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
 	<script src="../static/leaflet/leaflet.js"></script>
-	<script src="../static/panoimg/gps.js" type="text/javascript"></script>
-	<script src="../static/panoimg/buildings.js" type="text/javascript"></script>
-	<!--<script src="http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.js"></script>-->
 </head>
 <body class="">
 	<div id="map"></div>	
@@ -88,7 +85,7 @@
         
         //object to keep gps location, and azimuth of selected image
         var imgData = Object.create(null);
-
+        
 		//function for interaction between gps layer and panoImg iframe
 		function updatePanoImg(e) {
 			// zoom to feature in map
@@ -100,11 +97,17 @@
             }else{
 			    var ifrm = parent.document.getElementById('ifrm1');
             }
-			var src = "{{ url_for('pannellum') }}?panorama=../static/panoimg/ladybug_panoramic_" + e.target.feature.properties.img_id + ".jpg&title=FrameID: " + e.target.feature.properties.img_id + "&autoLoad=true";
-			ifrm.src = src.replace(/%26/g, "&amp;");
+            var config = new Object();
+            config.panorama = "/panellum/../static/panoimg/ladybug_panoramic_" + e.target.feature.properties.img_id + ".jpg";
+            config.title = "FrameID: " + e.target.feature.properties.img_id;
+            config.autoLoad = true;
+            var config_json = JSON.stringify(config);
+            config_json = encodeURIComponent(config_json);
+            ifrm.src = "{{ url_for('pannellum') }}?config="+config_json;
             //store values
             imgData.loc = e.target.getLatLng();
             imgData.azi = e.target.feature.properties.azimuth;
+            imgData.img_id = e.target.feature.properties.img_id;
 		}
 
         //function to calculate angle between two points in degrees p1 to p2
@@ -112,7 +115,8 @@
             return Math.atan2(p2.lat - p1.lat, p2.lng - p1.lng) * 180 / Math.PI;
         }
 
-        //function for interaction between building layer and panoImg iframe (updates yaw of panoImg wrt clicked building location)
+        //function for interaction between building layer and panoImg iframe (updates yaw of panoImg wrt clicked building location) and adds a hotspot 
+        //at the location of the building in the img
         function updatePanoImgYaw(e){
             //get centroid of the selected building
             var bdg_centroid = e.latlng;
@@ -121,11 +125,19 @@
             var ang = angleDeg(img_pos,bdg_centroid);
             //add to azimuth of img
             var azi = imgData.azi;
-            var yaw_val=(90-ang)-azi;
+            //JSON config
+            var config = new Object();
+            config.panorama = "/panellum/../static/panoimg/ladybug_panoramic_" + imgData.img_id + ".jpg";
+            config.title = "FrameID: " + imgData.img_id;
+            config.autoLoad = true;
+            config.yaw = (90-ang)-azi;
+            //add hotspot at building location
+            config.hotSpots = [{pitch:'0',yaw:config.yaw,type:'info',text:e.gid}]
+            var config_json = JSON.stringify(config);
+            config_json = encodeURIComponent(config_json);
             //update image yaw
             var ifrm = parent.document.getElementById('ifrm1');
-            var src = ifrm.src+"&yaw="+String(yaw_val);
-            ifrm.src = src.replace(/%26/g, "&amp;");
+            ifrm.src = "{{ url_for('pannellum') }}?config="+config_json;
         }
 		
 		//function for interaction between building layer and rrvsForm iframe

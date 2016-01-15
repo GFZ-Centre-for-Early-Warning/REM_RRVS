@@ -17,7 +17,6 @@ import geoalchemy2.functions as func
 import json
 from geojson import Feature, FeatureCollection, dumps
 
-
 ########################################################
 # REST interface getting task related buildings as json
 ########################################################
@@ -123,6 +122,16 @@ def pannellum():
 	This will render a template that holds the panoimage viewer.
 	"""
 	return flask.render_template('pannellum.htm')
+
+#@app.route('/pano_config',methods=['GET','POST'])
+#def pano_config():
+#        """
+#        This serves the json config for the panoramic image viewer
+#        """
+#        if reqest.method == 'POST':
+#            print (reqest.get_json(force=False))
+#        #return flask.render_template('config.json')
+
 
 @app.route('/_update_rrvsform')
 def update_rrvsform():
