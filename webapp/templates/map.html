@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="../static/leaflet/leaflet.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
 	<script src="../static/leaflet/leaflet.js"></script>
+	<script src="../static/leaflet-knn.js"></script>
 </head>
 <body class="">
 	<div id="map"></div>	
@@ -83,13 +84,31 @@
             }
 		}
         
-        //object to keep gps location, and azimuth of selected image
-        var imgData = Object.create(null);
+        //object to keep gps location, azimuth of selected image and location of selected bdg
+        var imgBdgData = Object.create(null);
+
+        //object to keep panoramic image configuration
+        var configPano = new Object();
+        configPano.autoLoad=true;
+
+        //update image related parameters
+        function updateImgParams(e){
+            //update imgBdgData object
+            console.log(e);
+            console.log(highlightedGPS);
+            imgBdgData.imgLoc = e.getLatLng();
+            imgBdgData.imgAzi = e.feature.properties.azimuth;
+            imgBdgData.img_id = e.feature.properties.img_id;
+            console.log(imgBdgData);
+            //update configPano
+            configPano.panorama = "/panellum/../static/panoimg/ladybug_panoramic_" + imgBdgData.img_id + ".jpg";
+            configPano.title = "FrameID: " + imgBdgData.img_id;
+        }
         
 		//function for interaction between gps layer and panoImg iframe
-		function updatePanoImg(e) {
+		function updatePanoImg() {
 			// zoom to feature in map
-			map.fitBounds(e.target.getBounds(), {maxZoom: 17});
+			map.fitBounds(highlightedGPS.getBounds(), {maxZoom: 17});
 			// update src of iframe 1 (panoImg)
             // destinguish between frame mode or multi window mode
             if(self==top){
@@ -97,17 +116,11 @@
             }else{
 			    var ifrm = parent.document.getElementById('ifrm1');
             }
-            var config = new Object();
-            config.panorama = "/panellum/../static/panoimg/ladybug_panoramic_" + e.target.feature.properties.img_id + ".jpg";
-            config.title = "FrameID: " + e.target.feature.properties.img_id;
-            config.autoLoad = true;
-            var config_json = JSON.stringify(config);
+            //convert json to URI
+            var config_json = JSON.stringify(configPano);
             config_json = encodeURIComponent(config_json);
+            //reset panellum image source
             ifrm.src = "{{ url_for('pannellum') }}?config="+config_json;
-            //store values
-            imgData.loc = e.target.getLatLng();
-            imgData.azi = e.target.feature.properties.azimuth;
-            imgData.img_id = e.target.feature.properties.img_id;
 		}
 
         //function to calculate angle between two points in degrees p1 to p2
@@ -115,32 +128,14 @@
             return Math.atan2(p2.lat - p1.lat, p2.lng - p1.lng) * 180 / Math.PI;
         }
 
-        //function for interaction between building layer and panoImg iframe (updates yaw of panoImg wrt clicked building location) and adds a hotspot 
-        //at the location of the building in the img
-        function updatePanoImgYaw(e){
-            //get centroid of the selected building
-            var bdg_centroid = e.latlng;
-            var img_pos = imgData.loc;
-            //get angle between the two points
-            var ang = angleDeg(img_pos,bdg_centroid);
-            //add to azimuth of img
-            var azi = imgData.azi;
-            //JSON config
-            var config = new Object();
-            config.panorama = "/panellum/../static/panoimg/ladybug_panoramic_" + imgData.img_id + ".jpg";
-            config.title = "FrameID: " + imgData.img_id;
-            config.autoLoad = true;
-            config.yaw = (90-ang)-azi;
-            //add hotspot at building location
-            config.hotSpots = [{pitch:'0',yaw:config.yaw,type:'info',text:e.gid}]
-            var config_json = JSON.stringify(config);
-            config_json = encodeURIComponent(config_json);
-            //update image yaw
-            var ifrm = parent.document.getElementById('ifrm1');
-            ifrm.src = "{{ url_for('pannellum') }}?config="+config_json;
+        // function to calculate image building location parameters
+        function imgBdgInteraction(){
+            var ang = angleDeg(imgBdgData.imgLoc,imgBdgData.bdgLoc);
+            configPano.yaw = (90-ang)-imgBdgData.imgAzi;
+            configPano.hotSpots = [{pitch:'0',yaw:configPano.yaw,type:'info',text:'Selected building'}];
         }
-		
-		//function for interaction between building layer and rrvsForm iframe
+
+		//function for interaction between building layer, rrvsForm iframe and the pannellum iframe
 		function updateForm(e) {
 			// update content of iframe 3 (rrvsForm)
 			var ifrm = parent.document.getElementById('ifrm3');
@@ -151,23 +146,41 @@
 			// update building map styles
 			resetHighlightBuilding();
 			highlightBuilding(e);
-            // update panoramic image orientation
-            updatePanoImgYaw(e);
+            //store the building location
+            imgBdgData.bdgLoc=e.latlng;
+            // update panoramic image
+            // find closest img 
+            //var closestImg = L.GeometryUtil.closestLayer(map, [gpsJSON], imgBdgData.bdgLoc);
+            var closestImg = leafletKnn(gpsJSON).nearestLayer(imgBdgData.bdgLoc,1);
+            closestImg = closestImg[0].layer;
+            //highlight this feature
+            resetHighlightGPS();
+            closestImg.setStyle(gpsHighlightStyle);
+            highlightedGPS=closestImg;
+            //set configPano and imgBdgData accordingly
+            updateImgParams(closestImg);
+            imgBdgInteraction();
+            //update the image
+            updatePanoImg();
 		}
         
         //function to highlight clicked img and update panellum frame
         function clickedImg(e){
-            updatePanoImg(e);
 		    resetHighlightGPS(); 
             e.target.setStyle(gpsHighlightStyle);
-            highlightedGPS=e.target
+            highlightedGPS=e.target;
+            //update the image related parameters
+            updateImgParams(highlightedGPS);
+            //In case a building was selected before calculate yaw
+            if(imgBdgData.bdgLoc != undefined){
+                imgBdgInteraction();
+            }
+            updatePanoImg();
         }
 
 		//function for adding actions to mouse events on gps layer
 		function onEachFeatureGps(feature, layer) {
 			layer.on({
-				//mouseover: highlightFeature,
-				//mouseout: resetHighlight,
                 click: clickedImg
 			});
 		}
@@ -190,10 +203,6 @@ gpsJSON = L.geoJson({{gps|safe}},{
 		gpsJSON.addTo(map);
 		
 		//add buildings layer
-		//buildingsJSON = L.geoJson(buildings,{
-		//	style: building_style,
-		//	onEachFeature: onEachFeatureBuilding
-		//	});			
         buildingsJSON = L.geoJson({{bdgs|safe}},{
             style: building_style,
             onEachFeature: onEachFeatureBuilding
@@ -202,14 +211,6 @@ gpsJSON = L.geoJson({{gps|safe}},{
 		
 		//focus map on layer extent
 		map.fitBounds(gpsJSON.getBounds());
-		
-		//add osm geocoder search bar
-		//var osmGeocoder = new L.Control.OSMGeocoder({
-            //collapsed: false,
-            //position: 'topright',
-            //text: 'Find',
-		//});
-		//osmGeocoder.addTo(map);
 		
 		//control that shows info on hover
 		var info = L.control();
