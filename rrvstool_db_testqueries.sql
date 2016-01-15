@@ -42,9 +42,21 @@ update asset.ve_object set description='modified_corrected' where gid=2898;
 update asset.ve_object set description='deleted', yr_built_vt='DESTR', yr_built_vt1='01-01-2014' where gid=2898;
 delete from asset.ve_object where gid=2898;
 
------------------------------------------------------------------
------------- Example of a "spatio-temporal query" ---------------
------------------------------------------------------------------
+---------------------------------------------------------------------------------
+-- Example for "get transaction time history" ttime_gethistory(tbl_in, tbl_out)--
+---------------------------------------------------------------------------------
+-- This gives the transaction time history of a table/view and writes it to a view (all the logged changes)
+SELECT * FROM history.ttime_gethistory('asset.ve_object', 'history.ttime_history');
+
+-- transaction time query (timestamp): get history of a single object
+SELECT * FROM history.ttime_history WHERE gid = 2053 ORDER BY gid, transaction_timestamp ASC;
+
+------------------------------------------------------------
+-- Example for "get valid time history" vtime_gethistory()--
+------------------------------------------------------------
+-- This gives the valid time history of a table/view and writes it to a view (only the real world changes - it gives the latest version of the object primitives at each real world change time)
+SELECT * FROM history.vtime_gethistory('asset.ve_object', 'history.vtime_history', 'yr_built_vt', 'yr_built_vt1');
+
 -- This performs a spatio-temporal query that selects all the buildings that
 -- Valid time: were modified between 2013-12-01 and 2014-12-01,
 -- Spatial: are located inside a buffer of 50m to a street,

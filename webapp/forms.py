@@ -59,5 +59,5 @@ class LoginForm(Form):
     """
     This Form class contains the login in form of task_id
     """
-    userid = TextField("userid",[validators.Length(max=20)])
-    taskid = TextField("taskid",[validators.Length(max=20)])
+    userid = TextField(label="UserID", validators=[validators.Length(max=20)])
+    taskid = TextField(label="TaskID", validators=[validators.Length(max=20)])
