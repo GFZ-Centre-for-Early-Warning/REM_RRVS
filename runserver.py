@@ -19,7 +19,7 @@ db.create_all()
 login_manager = LoginManager()
 login_manager.init_app(app)
 #setup flask security
-user_datastore = SQLAlchemyUserDatastore(db,models.User,models.Role)
+user_datastore = SQLAlchemyUserDatastore(db, models.User, models.Role)
 security = Security(app, user_datastore)
 
 app.secret_key = '42'

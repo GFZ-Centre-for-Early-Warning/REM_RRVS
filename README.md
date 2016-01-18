@@ -22,7 +22,7 @@ A) Setup virtualenvironment and add the project source code
 5. copy the rrvstool folder that holds the flask application into the the venv directory
 
 B) Setup the database
-1. Create a new database 'rrvstool_v01' in PostgreSQL >9.1
+1. Create a new database 'rrvstool_db' in PostgreSQL >9.1
    and run rrvstool_db.sql
 2. Populate the database tables (you can use the rrvstool_testdata.sql script to add some testdata)
 

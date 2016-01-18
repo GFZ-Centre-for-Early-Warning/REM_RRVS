@@ -1,19 +1,33 @@
 {% from "_formhelpers.html" import render_field %}
+<!DOCTYPE HTML>
+<html>
 <head>
-    <title>RRVS Webtool - Login Page</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>RRVS Webtool - Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <strong><link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></strong>
 </head>
 <body style="background-color:#efefef;">
-    <h1>Welcome to the RRVS Webtool - Please login with your user and task id to start</h1>
-    <form name="login" method='POST'>
-        {{ form.hidden_tag() }}
-        <dl>
-        {{ render_field(form.userid) }}
-        </dl>
-        <dl>
-        {{ render_field(form.taskid) }}
-        </dl>
-        <input type="submit" value="Submit">
-    </form>
+    <div class="logform"> 
+		<div class="logformLayout">						
+		<img class="banner" src="{{ url_for('static', filename='img/banner.svg') }}" alt="RRVS tool">	
+		<p>Please login with your user and task id to start a survey</p>
+			<form name="login" method='POST'>
+				{{ form.hidden_tag() }}
+				<dl>
+				{{ render_field(form.userid) }}
+				</dl>
+				<br>
+				<dl>
+				{{ render_field(form.taskid) }}
+				</dl>
+				<br>
+				<br>
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+		<div class="footer">
+			&copy; <a href="http://www.gfz-potsdam.de/en/section/ews/">GFZ Potsdam - Centre for Early Warning Systems</a>
+		</div>
+	</div>
 </body>
 </html>

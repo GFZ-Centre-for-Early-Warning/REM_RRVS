@@ -1,12 +1,23 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
+<html style=""><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+	<title>RRVS Map</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../static/leaflet/leaflet.css">
+=======
 <html>
 <head>
 	<title>RRVS Webtool - Map</title>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+>>>>>>> devmarc
 	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
-	<link rel="stylesheet" href="../static/leaflet/leaflet.css">	
+	<link rel="stylesheet" href="../static/leaflet/leaflet.css">
 	<script src="../static/leaflet/leaflet.js"></script>
+<<<<<<< HEAD
 	<script src="../static/leaflet-knn.js"></script>
+=======
+>>>>>>> devmarc
 </head>
 <body>
 	<div id="map"></div>	
@@ -40,8 +51,8 @@
 		function highlightBuilding(e) {
 			var layer = e.target;
 			layer.setStyle({
-				fillColor: '#ff0000',
-				fillOpacity: 0.6,
+				//fillColor: '#ff0000',
+				//fillOpacity: 0.6,
 				weight: 1,
                 opacity: 1,
                 color: '#afafaf'
@@ -128,11 +139,29 @@
             return Math.atan2(p2.lat - p1.lat, p2.lng - p1.lng) * 180 / Math.PI;
         }
 
+<<<<<<< HEAD
         // function to calculate image building location parameters
         function imgBdgInteraction(){
             var ang = angleDeg(imgBdgData.imgLoc,imgBdgData.bdgLoc);
             configPano.yaw = (90-ang)-imgBdgData.imgAzi;
             configPano.hotSpots = [{pitch:'0',yaw:configPano.yaw,type:'info',text:'Selected building'}];
+=======
+        //function for interaction between building layer and panoImg iframe 
+        //updates yaw of panoImg wrt clicked building location
+        function updatePanoImgYaw(e){
+            //get centroid of the selected building
+            var bdg_centroid = e.latlng;
+            var img_pos = imgData.loc;
+            //get angle between the two points
+            var ang = angleDeg(img_pos,bdg_centroid);
+            //add to azimuth of img
+            var azi = imgData.azi;
+            var yaw_val=(90-ang)-azi;
+            //update image yaw
+            var ifrm = parent.document.getElementById('ifrm1');
+            var src = ifrm.src+"&yaw="+String(yaw_val);
+            ifrm.src = src.replace(/%26/g, "&amp;");
+>>>>>>> devmarc
         }
 
 		//function for interaction between building layer, rrvsForm iframe and the pannellum iframe
@@ -166,7 +195,6 @@
         
         //function to highlight clicked img and update panellum frame
         function clickedImg(e){
-            updatePanoImg(e);
 		    resetHighlightGPS(); 
             e.target.setStyle(gpsHighlightStyle);
             highlightedGPS=e.target;
@@ -182,8 +210,6 @@
 		//function for adding actions to mouse events on gps layer
 		function onEachFeatureGps(feature, layer) {
 			layer.on({
-				//mouseover: highlightFeature,
-				//mouseout: resetHighlight,
                 click: clickedImg
 			});
 		}
@@ -196,7 +222,7 @@
 		}
 		
 		//add gps layer
-		gpsJSON = L.geoJson({{gps|safe}},{
+gpsJSON = L.geoJson({{gps|safe}},{
 			style: gpsDefaultStyle,
 			onEachFeature: onEachFeatureGps,
 			pointToLayer: function (feature, latlng) {  
@@ -206,10 +232,6 @@
 		gpsJSON.addTo(map);
 		
 		//add buildings layer
-		//buildingsJSON = L.geoJson(buildings,{
-		//	style: building_style,
-		//	onEachFeature: onEachFeatureBuilding
-		//	});			
         buildingsJSON = L.geoJson({{bdgs|safe}},{
             style: building_style,
             onEachFeature: onEachFeatureBuilding
@@ -218,14 +240,6 @@
 		
 		//focus map on layer extent
 		map.fitBounds(gpsJSON.getBounds());
-		
-		//add osm geocoder search bar
-		//var osmGeocoder = new L.Control.OSMGeocoder({
-            //collapsed: false,
-            //position: 'topright',
-            //text: 'Find',
-		//});
-		//osmGeocoder.addTo(map);
 		
 		//control that shows info on hover
 		var info = L.control();

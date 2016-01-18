@@ -17,6 +17,55 @@ th {
 .banner {
 	height: 60px;
 }
+
+/* Login page */
+.logform {
+  position: fixed; 
+  top: 10%; 
+  left: 50%; 
+  margin-left: -200px;
+  font: 14px Arial, Helvetica, sans-serif;
+  color: #0B2F3A;
+}
+
+.logformLayout
+{
+	float: left;
+	background-color: #fff;
+	border: solid 1px #fff;
+	padding: 20px;
+	width: 350px;
+}
+
+.logformLayout label
+{
+	display: block;
+	width: 100px;
+	float: left;
+	margin-bottom: 5px;
+	font: 14px Arial, Helvetica, sans-serif;
+	text-align: right;
+	padding-right: 20px;
+	padding-top: 4px;
+}
+
+.logformLayout input
+{
+	display: block;
+	width: 100px;
+	float: left;
+	font: 14px Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+
+.footer, .footer a
+{
+	font: 10px Arial, Helvetica, sans-serif;
+	text-align: center;
+	color: #008000;
+	text-decoration: none;
+}
+
 /* Leaflet map */
 .info {
 	padding: 6px 8px;
@@ -36,6 +85,9 @@ th {
 {
 	float: left;
 	width: 250px;
+	border: solid;
+	border-width: 1px;
+	border-color: #efefef;
 }
 
 .formLayoutGeneral label
@@ -45,10 +97,6 @@ th {
 	float: left;
 	margin-bottom: 5px;
 	font: 14px Arial, Helvetica, sans-serif;
-}
-
-.formLayoutGeneral label
-{
 	text-align: left;
 	padding-right: 20px;
 	padding-top: 4px;
@@ -77,10 +125,6 @@ th {
 	float: left;
 	margin-bottom: 5px;
 	font: 14px Arial, Helvetica, sans-serif;
-}
-
-.formLayout label
-{
 	text-align: right;
 	padding-right: 20px;
 	padding-top: 4px;

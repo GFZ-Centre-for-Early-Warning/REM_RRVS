@@ -3,16 +3,16 @@
     views.py
 ---------------------------
 Created on 24.04.2015
-Last modified on 24.04.2015
+Last modified on 15.01.2016
 Author: Marc Wieland, Michael Haas
 Description: The main views file setting up the flask application layout, defining all routes
 ----
 '''
 import flask
 from webapp import app, db
-from models import ve_resolution1, dic_attribute_value,gps,pan_imgs,User,task
-from forms import RrvsForm,LoginForm
-from flask.ext.security import login_required,login_user,logout_user
+from models import ve_object, dic_attribute_value, gps, User, task
+from forms import RrvsForm, LoginForm
+from flask.ext.security import login_required, login_user, logout_user
 import geoalchemy2.functions as func
 import json
 from geojson import Feature, FeatureCollection, dumps
@@ -22,7 +22,7 @@ from geojson import Feature, FeatureCollection, dumps
 ########################################################
 #@app.route("/bdgs/api/<int:taskid>",methods=["GET"])
 #def get_task(taskid):
-#    geom = ve_resolution1.query.filter_by(gid=taskid).first().the_geom
+#    geom = ve_object.query.filter_by(gid=taskid).first().the_geom
 #    #geom_json= json.loads(db.session.scalar(geoalchemy2.functions.ST_AsGeoJSON(geom)))
 #    geom_json = json.loads(db.session.scalar(func.ST_AsGeoJSON(geom)))
 #    geom_json["gid"]=taskid
@@ -46,7 +46,6 @@ from geojson import Feature, FeatureCollection, dumps
 def login():
     """For GET requests, display the login form. For POSTS, login the current user
     by processing the form and storing the taskid."""
-    #print db
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.get(form.userid.data)
@@ -83,45 +82,45 @@ def logout():
 @app.route('/main')
 @login_required
 def main():
-	"""
+    """
 	This will render a template that holds the main pagelayout.
 	"""
-	return flask.render_template('main.htm')
+    return flask.render_template('main.htm')
 
 @app.route('/map')
 def map():
-	"""
+    """
 	This will render a template that holds the map.
-        Displaying buildings with gids contained in taskid
+    Displaying buildings with gids contained in taskid
 	"""
-        #get bdg_gids
-        bdg_gids = flask.session['bdg_gids']
-        #get FeatureCollection with corresponding building footprints
-        rows = ve_resolution1.query.filter(ve_resolution1.gid.in_(bdg_gids)).all()
-        bdgs = []
-        for row in rows:
-            geometry = json.loads(db.session.scalar(func.ST_AsGeoJSON(row.the_geom)))#func.ST_AsGeoJSON(row.the_geom)
-            feature = Feature(id=row.gid,geometry=geometry,properties={"gid":row.gid})
-            bdgs.append(feature)
-        bdgs_json = dumps(FeatureCollection(bdgs))
-        #get img_gids
-        img_gids = flask.session['img_gids']
-        rows = gps.query.filter(gps.img_id.in_(img_gids)).all()
-        img_gps = []
-        for row in rows:
-            geometry = json.loads(db.session.scalar(func.ST_AsGeoJSON(row.the_geom)))
-            feature = Feature(id=row.gid,geometry=geometry,properties={"img_id":row.img_id,"azimuth":row.azimuth})
-            img_gps.append(feature)
-        gps_json = dumps(FeatureCollection(img_gps))
+    #get bdg_gids
+    bdg_gids = flask.session['bdg_gids']
+    #get FeatureCollection with corresponding building footprints
+    rows = ve_object.query.filter(ve_object.gid.in_(bdg_gids)).all()
+    bdgs = []
+    for row in rows:
+        geometry = json.loads(db.session.scalar(func.ST_AsGeoJSON(row.the_geom)))
+        feature = Feature(id=row.gid,geometry=geometry,properties={"gid":row.gid})
+        bdgs.append(feature)
+    bdgs_json = dumps(FeatureCollection(bdgs))
+    #get img_gids
+    img_gids = flask.session['img_gids']
+    rows = gps.query.filter(gps.img_id.in_(img_gids)).all()
+    img_gps = []
+    for row in rows:
+        geometry = json.loads(db.session.scalar(func.ST_AsGeoJSON(row.the_geom)))
+        feature = Feature(id=row.gid,geometry=geometry,properties={"img_id":row.img_id,"azimuth":row.azimuth})
+        img_gps.append(feature)
+    gps_json = dumps(FeatureCollection(img_gps))
 
-        return flask.render_template('map.html',bdgs=bdgs_json,gps=gps_json)
+    return flask.render_template('map.html',bdgs=bdgs_json,gps=gps_json)
 
 @app.route('/pannellum')
 def pannellum():
-	"""
+    """
 	This will render a template that holds the panoimage viewer.
 	"""
-	return flask.render_template('pannellum.htm')
+    return flask.render_template('pannellum.htm')
 
 #@app.route('/pano_config',methods=['GET','POST'])
 #def pano_config():
@@ -135,26 +134,26 @@ def pannellum():
 
 @app.route('/_update_rrvsform')
 def update_rrvsform():
-	"""
+    """
 	This updates the values of the rrvsform fields using jQuery. Note that for
 	QuerySelectFields the gid of the attribute_value needs to be returned by the function.
 	"""
-	# get building gid value for queries
-	gid_val = flask.request.args.get('gid_val', 0, type=int)
-	# query attribute_value for select fields
-	mat_type_val = ve_resolution1.query.filter_by(gid=gid_val).first().mat_type
-	mat_tech_val = ve_resolution1.query.filter_by(gid=gid_val).first().mat_tech
-	mat_prop_val = ve_resolution1.query.filter_by(gid=gid_val).first().mat_prop
-	llrs_val = ve_resolution1.query.filter_by(gid=gid_val).first().llrs
-	height_val = ve_resolution1.query.filter_by(gid=gid_val).first().height
-	yr_built_val = ve_resolution1.query.filter_by(gid=gid_val).first().yr_built
-	occupy_val = ve_resolution1.query.filter_by(gid=gid_val).first().occupy
-	occupy_dt_val = ve_resolution1.query.filter_by(gid=gid_val).first().occupy_dt
-	nonstrcexw_val = ve_resolution1.query.filter_by(gid=gid_val).first().nonstrcexw
+    # get building gid value for queries
+    gid_val = flask.request.args.get('gid_val', 0, type=int)
+    # query attribute_value for select fields
+    mat_type_val = ve_object.query.filter_by(gid=gid_val).first().mat_type
+    mat_tech_val = ve_object.query.filter_by(gid=gid_val).first().mat_tech
+    mat_prop_val = ve_object.query.filter_by(gid=gid_val).first().mat_prop
+    llrs_val = ve_object.query.filter_by(gid=gid_val).first().llrs
+    height_val = ve_object.query.filter_by(gid=gid_val).first().height
+    yr_built_val = ve_object.query.filter_by(gid=gid_val).first().yr_built
+    occupy_val = ve_object.query.filter_by(gid=gid_val).first().occupy
+    occupy_dt_val = ve_object.query.filter_by(gid=gid_val).first().occupy_dt
+    nonstrcexw_val = ve_object.query.filter_by(gid=gid_val).first().nonstrcexw
 
-	return flask.jsonify(
+    return flask.jsonify(
 		# query values for text fields
-		height1_val = int(ve_resolution1.query.filter_by(gid=gid_val).first().height_1),
+		height1_val = int(ve_object.query.filter_by(gid=gid_val).first().height_1),
 		# query gid of attribute_values for select fields
 		mat_type_gid = dic_attribute_value.query.filter_by(attribute_value=mat_type_val).first().gid,
 		mat_tech_gid = dic_attribute_value.query.filter_by(attribute_value=mat_tech_val).first().gid,
@@ -169,30 +168,30 @@ def update_rrvsform():
 
 @app.route('/rrvsform', methods=['GET', 'POST'])
 def rrvsform():
-	"""
+    """
 	This renders a template that displays all of the form objects if it's
 	a Get request. If the user is attempting to Post then this view will push
 	the data to the database.
 	"""
-	rrvs_form = RrvsForm()
+    rrvs_form = RrvsForm()
 
-	if flask.request.method == 'POST' and rrvs_form.validate():
-		# update database with form content
-		row = ve_resolution1.query.filter_by(gid=rrvs_form.gid_field.data)
-		row.update({ve_resolution1.mat_type: rrvs_form.mat_type_field.data.attribute_value,
-					ve_resolution1.mat_tech: rrvs_form.mat_tech_field.data.attribute_value,
-					ve_resolution1.mat_prop: rrvs_form.mat_prop_field.data.attribute_value,
-					ve_resolution1.llrs: rrvs_form.llrs_field.data.attribute_value,
-					ve_resolution1.height: rrvs_form.height_field.data.attribute_value,
-					ve_resolution1.height_1: rrvs_form.height1_field.data,
-					ve_resolution1.yr_built: rrvs_form.yr_built_field.data.attribute_value,
-					ve_resolution1.occupy: rrvs_form.occupy_field.data.attribute_value,
-					ve_resolution1.occupy_dt: rrvs_form.occupy_dt_field.data.attribute_value,
-					ve_resolution1.nonstrcexw: rrvs_form.nonstrcexw_field.data.attribute_value
+    if flask.request.method == 'POST' and rrvs_form.validate():
+        # update database with form content
+        row = ve_object.query.filter_by(gid=rrvs_form.gid_field.data)
+        row.update({ve_object.mat_type: rrvs_form.mat_type_field.data.attribute_value,
+					ve_object.mat_tech: rrvs_form.mat_tech_field.data.attribute_value,
+					ve_object.mat_prop: rrvs_form.mat_prop_field.data.attribute_value,
+					ve_object.llrs: rrvs_form.llrs_field.data.attribute_value,
+					ve_object.height: rrvs_form.height_field.data.attribute_value,
+					ve_object.height_1: rrvs_form.height1_field.data,
+					ve_object.yr_built: rrvs_form.yr_built_field.data.attribute_value,
+					ve_object.occupy: rrvs_form.occupy_field.data.attribute_value,
+					ve_object.occupy_dt: rrvs_form.occupy_dt_field.data.attribute_value,
+					ve_object.nonstrcexw: rrvs_form.nonstrcexw_field.data.attribute_value
 					}, synchronize_session=False)
-		db.session.commit()
-                #update session variable for screened buildings
-                flask.session['screened'][flask.session['bdg_gids'].index(int(rrvs_form.gid_field.data))]=True
+        db.session.commit()
+        #update session variable for screened buildings
+        flask.session['screened'][flask.session['bdg_gids'].index(int(rrvs_form.gid_field.data))]=True
 
-	# if no post request is send the template is rendered normally showing numbers of completed bdgs
-	return flask.render_template(template_name_or_list='rrvsform.html', rrvs_form=rrvs_form,n=len(flask.session['bdg_gids']),c=len([x for x in flask.session['screened'] if x==True]))
+    # if no post request is send the template is rendered normally showing numbers of completed bdgs
+    return flask.render_template(template_name_or_list='rrvsform.html', rrvs_form=rrvs_form,n=len(flask.session['bdg_gids']),c=len([x for x in flask.session['screened'] if x==True]))

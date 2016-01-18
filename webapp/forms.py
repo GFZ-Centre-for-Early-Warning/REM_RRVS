@@ -12,7 +12,7 @@ from flask.ext.wtf import Form
 from wtforms import TextField, SubmitField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import wtforms.validators as validators
-from models import ve_resolution1, dic_attribute_value
+from models import dic_attribute_value
 
 def getMatType():
 	return dic_attribute_value.query.filter_by(attribute_type_code='MAT_TYPE')
@@ -59,5 +59,5 @@ class LoginForm(Form):
     """
     This Form class contains the login in form of task_id
     """
-    userid = TextField("userid",[validators.Length(max=20)])
-    taskid = TextField("taskid",[validators.Length(max=20)])
+    userid = TextField(label="UserID", validators=[validators.Length(max=20)])
+    taskid = TextField(label="TaskID", validators=[validators.Length(max=20)])
