@@ -27,24 +27,25 @@
 		}).addTo(map);
 
 		//function for dynamic building polygon style
+		//TODO: add here sample layout according to modification level (written in db)
 		function building_style(feature) {
 			return {
-				fillColor: '#66ccff',
-				fillOpacity: 0.6,
+				fillColor: '#ff0000',
+				fillOpacity: 0.5,
 				weight: 1,
-                opacity: 1,
-                color: '#afafaf'
+                opacity: 0.5,
+                color: '#ff0000'
 			};
 		}
 		
 		function highlightBuilding(e) {
 			var layer = e.target;
 			layer.setStyle({
-				fillColor: '#ff0000',
-				fillOpacity: 0.6,
-				weight: 1,
+				//fillColor: '#ff0000',
+				//fillOpacity: 0.6,
+				weight: 3,
                 opacity: 1,
-                color: '#afafaf'
+                color: '#ff0000'
 			});
 			if (!L.Browser.ie && !L.Browser.opera) {
 				layer.bringToFront();
@@ -206,11 +207,7 @@
 		gpsJSON.addTo(map);
 		
 		//add buildings layer
-		//buildingsJSON = L.geoJson(buildings,{
-		//	style: building_style,
-		//	onEachFeature: onEachFeatureBuilding
-		//	});			
-        buildingsJSON = L.geoJson({{bdgs|safe}},{
+		buildingsJSON = L.geoJson({{bdgs|safe}},{
             style: building_style,
             onEachFeature: onEachFeatureBuilding
             });
@@ -218,28 +215,20 @@
 		
 		//focus map on layer extent
 		map.fitBounds(gpsJSON.getBounds());
-		
-		//add osm geocoder search bar
-		//var osmGeocoder = new L.Control.OSMGeocoder({
-            //collapsed: false,
-            //position: 'topright',
-            //text: 'Find',
-		//});
-		//osmGeocoder.addTo(map);
-		
+
 		//control that shows info on hover
-		var info = L.control();
-		info.onAdd = function (map) {
-			this._div = L.DomUtil.create('div', 'info');
-			this.update();
-			return this._div;
-		};
-		info.update = function (props) {
-			this._div.innerHTML = (props ?
-				'<b>FrameID: ' + props.img_id + '</b><br/>Azimuth: ' + props.azimuth + '</sup>'
-				: 'PanoImage Information');
-		};
-		info.addTo(map);
+		//var info = L.control();
+		//info.onAdd = function (map) {
+			//this._div = L.DomUtil.create('div', 'info');
+			//this.update();
+			//return this._div;
+		//};
+		//info.update = function (props) {
+			//this._div.innerHTML = (props ?
+				//'<b>FrameID: ' + props.img_id + '</b><br/>Azimuth: ' + props.azimuth + '</sup>'
+				//: 'PanoImage Information');
+		//};
+		//info.addTo(map);
 
 		//add layer control
 		L.control.layers({'OpenStreetMap': basemap},
