@@ -27,10 +27,27 @@
 		}).addTo(map);
 
 		//function for dynamic building polygon style
-		//TODO: add here sample layout according to modification level (written in db)
+		//TODO: here i need to make the class assignment working (if else?)
+		//function getColor(c) {
+			//return c = 'MODIFIED'  ? '#BD0026' :
+				//   c = 'UNMODIFIED' ? '#00ff00' :
+				  // c = 'COMPLETED'  ? '#E31A1C' :
+				   //'#000000';
+		//}
+		function getColor(feature) {
+			var status = feature.properties.rrvs_status;
+			switch(status) {
+				case "MODIFIED": return "#ffffb2";
+				case "UNMODIFIED": return "#00ff00";
+				case "COMPLETED": return "#993404";
+			}
+		}
+		
 		function building_style(feature) {
 			return {
-				fillColor: '#ff0000',
+				//TODO: here i need to access the rrvs_status column of the buildingsJSON data
+				//TODO: doesnt work when i click on building -> feature is not known than?!
+				fillColor: getColor(feature),
 				fillOpacity: 0.5,
 				weight: 1,
                 opacity: 0.5,

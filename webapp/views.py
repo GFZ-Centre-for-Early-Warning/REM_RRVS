@@ -100,7 +100,7 @@ def map():
     bdgs = []
     for row in rows:
         geometry = json.loads(db.session.scalar(func.ST_AsGeoJSON(row.the_geom)))
-        feature = Feature(id=row.gid,geometry=geometry,properties={"gid":row.gid})
+        feature = Feature(id=row.gid,geometry=geometry,properties={"gid":row.gid, "rrvs_status":row.rrvs_status})
         bdgs.append(feature)
     bdgs_json = dumps(FeatureCollection(bdgs))
     #get img_gids
