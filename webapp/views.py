@@ -135,8 +135,9 @@ def pannellum():
 @app.route('/_update_rrvsform')
 def update_rrvsform():
     """
-	This updates the values of the rrvsform fields using jQuery. Note that for
-	QuerySelectFields the gid of the attribute_value needs to be returned by the function.
+	This updates the values of the rrvsform fields using jQuery. The function sends a json
+	string with all values to the rrvsform.html template for populating the fields. 
+	Note that for QuerySelectFields the gid of the attribute_value needs to be returned by the function.
 	"""
     # get building gid value for queries
     gid_val = flask.request.args.get('gid_val', 0, type=int)
@@ -150,7 +151,7 @@ def update_rrvsform():
     occupy_val = ve_object.query.filter_by(gid=gid_val).first().occupy
     occupy_dt_val = ve_object.query.filter_by(gid=gid_val).first().occupy_dt
     nonstrcexw_val = ve_object.query.filter_by(gid=gid_val).first().nonstrcexw
-
+    
     return flask.jsonify(
 		# query values for text fields
 		height1_val = int(ve_object.query.filter_by(gid=gid_val).first().height_1),
@@ -163,7 +164,9 @@ def update_rrvsform():
 		yr_built_gid = dic_attribute_value.query.filter_by(attribute_value=yr_built_val).first().gid,
 		occupy_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_val).first().gid,
 		occupy_dt_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_dt_val).first().gid,
-		nonstrcexw_gid = dic_attribute_value.query.filter_by(attribute_value=nonstrcexw_val).first().gid
+		nonstrcexw_gid = dic_attribute_value.query.filter_by(attribute_value=nonstrcexw_val).first().gid,
+        # query values for checkbox fields
+        rrvs_status_val = str(ve_object.query.filter_by(gid=gid_val).first().rrvs_status)
 	)
 
 @app.route('/rrvsform', methods=['GET', 'POST'])
@@ -176,6 +179,11 @@ def rrvsform():
     rrvs_form = RrvsForm()
 
     if flask.request.method == 'POST' and rrvs_form.validate():
+        # check if checkbox for rrvs status is ticked and assign values to be used for database update
+        if rrvs_form.rrvs_status_field.data == True:
+            rrvs_status_val = 'COMPLETED'
+        else:
+            rrvs_status_val = 'MODIFIED'
         # update database with form content
         row = ve_object.query.filter_by(gid=rrvs_form.gid_field.data)
         row.update({ve_object.mat_type: rrvs_form.mat_type_field.data.attribute_value,
@@ -187,11 +195,12 @@ def rrvsform():
 					ve_object.yr_built: rrvs_form.yr_built_field.data.attribute_value,
 					ve_object.occupy: rrvs_form.occupy_field.data.attribute_value,
 					ve_object.occupy_dt: rrvs_form.occupy_dt_field.data.attribute_value,
-					ve_object.nonstrcexw: rrvs_form.nonstrcexw_field.data.attribute_value
-					}, synchronize_session=False)
+					ve_object.nonstrcexw: rrvs_form.nonstrcexw_field.data.attribute_value,
+                    ve_object.rrvs_status: rrvs_status_val
+                    }, synchronize_session=False)
         db.session.commit()
         #update session variable for screened buildings
-        flask.session['screened'][flask.session['bdg_gids'].index(int(rrvs_form.gid_field.data))]=True
-
+        flask.session['screened'][flask.session['bdg_gids'].index(int(rrvs_form.gid_field.data))]=True 
+                            
     # if no post request is send the template is rendered normally showing numbers of completed bdgs
     return flask.render_template(template_name_or_list='rrvsform.html', rrvs_form=rrvs_form,n=len(flask.session['bdg_gids']),c=len([x for x in flask.session['screened'] if x==True]))

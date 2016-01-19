@@ -9,7 +9,7 @@ Description: Defines the WTForms fields
 ----
 '''
 from flask.ext.wtf import Form
-from wtforms import TextField, SubmitField
+from wtforms import TextField, BooleanField, SubmitField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import wtforms.validators as validators
 from models import dic_attribute_value
@@ -34,26 +34,26 @@ def getNonstrcexw():
 	return dic_attribute_value.query.filter_by(attribute_type_code='NONSTRCEXW')
 
 class RrvsForm(Form):
-	"""
-	This Form class contains all of the fields in the RRVS form.
-	"""
-	# Text fields
-	gid_field = TextField(label="BuildingID")
-	height1_field = TextField(label="Height Value", validators=[validators.Length(max=10), validators.Required()])
-	# Select fields
-	mat_type_field = QuerySelectField("Material Type", query_factory=getMatType, get_label='description', allow_blank=True)
-	mat_tech_field = QuerySelectField("Material Technology", query_factory=getMatTech, get_label='description', allow_blank=True)
-	mat_prop_field = QuerySelectField("Material Property", query_factory=getMatProp, get_label='description', allow_blank=True)
-	llrs_field = QuerySelectField("Lat. Load Res. Sys.", query_factory=getLlrs, get_label='description', allow_blank=True)
-	height_field = QuerySelectField("Height Type", query_factory=getHeight, get_label='description', allow_blank=True)
-	yr_built_field = QuerySelectField("Construction Date Type", query_factory=getYrBuilt, get_label='description', allow_blank=True)
-	occupy_field = QuerySelectField("Occupancy Type", query_factory=getOccupy, get_label='description', allow_blank=True)
-	occupy_dt_field = QuerySelectField("Occupancy Detail", query_factory=getOccupyDt, get_label='description', allow_blank=True)
-	nonstrcexw_field = QuerySelectField("Exterior Walls Material", query_factory=getNonstrcexw, get_label='description', allow_blank=True)
-
-	# Submit field
-	submit = SubmitField("Update building")
-
+    """
+    This Form class contains all of the fields in the RRVS form.
+    """
+    # Text fields
+    gid_field = TextField(label="BuildingID")
+    height1_field = TextField(label="Height Value", validators=[validators.Length(max=10), validators.Required()])
+    # Select fields
+    mat_type_field = QuerySelectField("Material Type", query_factory=getMatType, get_label='description', allow_blank=True)
+    mat_tech_field = QuerySelectField("Material Technology", query_factory=getMatTech, get_label='description', allow_blank=True)
+    mat_prop_field = QuerySelectField("Material Property", query_factory=getMatProp, get_label='description', allow_blank=True)
+    llrs_field = QuerySelectField("Lat. Load Res. Sys.", query_factory=getLlrs, get_label='description', allow_blank=True)
+    height_field = QuerySelectField("Height Type", query_factory=getHeight, get_label='description', allow_blank=True)
+    yr_built_field = QuerySelectField("Construction Date Type", query_factory=getYrBuilt, get_label='description', allow_blank=True)
+    occupy_field = QuerySelectField("Occupancy Type", query_factory=getOccupy, get_label='description', allow_blank=True)
+    occupy_dt_field = QuerySelectField("Occupancy Detail", query_factory=getOccupyDt, get_label='description', allow_blank=True)
+    nonstrcexw_field = QuerySelectField("Exterior Walls Material", query_factory=getNonstrcexw, get_label='description', allow_blank=True)
+    # Checkbox fields
+    rrvs_status_field = BooleanField(label="Completed")
+    # Submit field
+    submit = SubmitField("Update building")
 
 class LoginForm(Form):
     """

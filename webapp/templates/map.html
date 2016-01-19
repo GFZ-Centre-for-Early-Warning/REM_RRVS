@@ -26,43 +26,32 @@
 			subdomains: ['otile1','otile2','otile3','otile4']
 		}).addTo(map);
 
-		//function for dynamic building polygon style
-		//TODO: here i need to make the class assignment working (if else?)
-		//function getColor(c) {
-			//return c = 'MODIFIED'  ? '#BD0026' :
-				//   c = 'UNMODIFIED' ? '#00ff00' :
-				  // c = 'COMPLETED'  ? '#E31A1C' :
-				   //'#000000';
-		//}
+		//functions for dynamic building polygon styles
 		function getColor(feature) {
 			var status = feature.properties.rrvs_status;
 			switch(status) {
-				case "MODIFIED": return "#ffffb2";
-				case "UNMODIFIED": return "#00ff00";
-				case "COMPLETED": return "#993404";
+				case "UNMODIFIED": return "#fc8d59";
+				case "MODIFIED": return "#ffffbf";
+				case "COMPLETED": return "#91cf60";
 			}
 		}
 		
 		function building_style(feature) {
 			return {
-				//TODO: here i need to access the rrvs_status column of the buildingsJSON data
-				//TODO: doesnt work when i click on building -> feature is not known than?!
 				fillColor: getColor(feature),
 				fillOpacity: 0.5,
 				weight: 1,
                 opacity: 0.5,
-                color: '#ff0000'
+                color: getColor(feature)
 			};
 		}
 		
 		function highlightBuilding(e) {
 			var layer = e.target;
 			layer.setStyle({
-				//fillColor: '#ff0000',
-				//fillOpacity: 0.6,
 				weight: 3,
                 opacity: 1,
-                color: '#ff0000'
+                color: '#008000'
 			});
 			if (!L.Browser.ie && !L.Browser.opera) {
 				layer.bringToFront();
@@ -70,7 +59,7 @@
 		}
 		
 		function resetHighlightBuilding() {
-			buildingsJSON.resetStyle(buildingsJSON);
+			buildingsJSON.setStyle(building_style);		
 		}
 		
 		//variable for dynamic gps point layer style and get-feature-info
@@ -160,9 +149,9 @@
 			var doc = ifrm.contentDocument? ifrm.contentDocument: ifrm.contentWindow.document;
 			doc.forms['rrvsForm'].elements['gid_field'].focus();	// focus in and out of the gid_field is needed by rrvsform.html to trigger the form update function (on focusout)
 			doc.forms['rrvsForm'].elements['gid_field'].value = e.target.feature.properties.gid;
-			doc.forms['rrvsForm'].elements['height_field'].focus();	
+			doc.forms['rrvsForm'].elements['rrvs_status_field'].focus();	
 			// update building map styles
-			resetHighlightBuilding();
+			resetHighlightBuilding(e);
 			highlightBuilding(e);
             //store the building location
             imgBdgData.bdgLoc=e.latlng;
@@ -171,7 +160,7 @@
             //var closestImg = L.GeometryUtil.closestLayer(map, [gpsJSON], imgBdgData.bdgLoc);
             var closestImg = leafletKnn(gpsJSON).nearestLayer(imgBdgData.bdgLoc,1);
             closestImg = closestImg[0].layer;
-            //highlight this feature
+            //update gps map styles
             resetHighlightGPS();
             closestImg.setStyle(gpsHighlightStyle);
             highlightedGPS=closestImg;
@@ -184,8 +173,7 @@
         
         //function to highlight clicked img and update panellum frame
         function clickedImg(e){
-            updatePanoImg(e);
-		    resetHighlightGPS(); 
+            resetHighlightGPS(); 
             e.target.setStyle(gpsHighlightStyle);
             highlightedGPS=e.target;
             //update the image related parameters
@@ -222,13 +210,25 @@
 				}
 			});	
 		gpsJSON.addTo(map);
-		
+			
 		//add buildings layer
 		buildingsJSON = L.geoJson({{bdgs|safe}},{
-            style: building_style,
-            onEachFeature: onEachFeatureBuilding
-            });
+		style: building_style,
+		onEachFeature: onEachFeatureBuilding
+		});
 		buildingsJSON.addTo(map);
+		
+		//TODO: remove: this doesnt work!
+		/*function refreshBuildingsJSON() {
+			console.log('access');
+			map.removeLayer(buildingsJSON);
+			//buildingsJSON.clearLayers();
+			buildingsJSON = L.geoJson({{bdgs|safe}},{
+			style: building_style,
+			onEachFeature: onEachFeatureBuilding
+			});
+			buildingsJSON.addTo(map);
+		}*/
 		
 		//focus map on layer extent
 		map.fitBounds(gpsJSON.getBounds());

@@ -10,11 +10,14 @@
 <body>  
 	<script type="text/javascript">
 	$(function() {
-	  $('input[name="gid_field"]').focusout(function() {		// trigger the form update on focusout of the gid_field
+	  // trigger the form update on focusout of the gid_field
+	  $('input[name="gid_field"]').focusout(function() {		
 		$.getJSON($SCRIPT_ROOT + '/_update_rrvsform', {
-		  gid_val: $('input[name="gid_field"]').val()			// send gid_field value to server for database query
+		  // send gid_field value to server for database query
+		  gid_val: $('input[name="gid_field"]').val()
 		}, function(data) {
-		  $('select[name="mat_type_field"]').val(data.mat_type_gid);	// update fields with results from server
+		  // update fields with results from server
+		  $('select[name="mat_type_field"]').val(data.mat_type_gid);
 		  $('select[name="mat_tech_field"]').val(data.mat_tech_gid);
 		  $('select[name="mat_prop_field"]').val(data.mat_prop_gid);
 		  $('select[name="llrs_field"]').val(data.llrs_gid);
@@ -24,11 +27,31 @@
 		  $('select[name="occupy_field"]').val(data.occupy_gid);
 		  $('select[name="occupy_dt_field"]').val(data.occupy_dt_gid);
 		  $('select[name="nonstrcexw_field"]').val(data.nonstrcexw_gid);
+		  // reformat the rrvs_status_val to fit the needs of a boolean checkbox field
+		  if(data.rrvs_status_val == "COMPLETED"){
+			  $("#rrvs_status_field").attr('checked', true);
+		  } else{
+			  $("#rrvs_status_field").attr('checked', false);
+		  }
 		});
 		return false;
 	  });
 	});
+		   
+	$(function() {
+      // trigger map update on click of the submit button
+      // note: needed to refresh map layer rendering after data was modified by rrvsform
+      // note: a timeout of 1 ms is needed before the refresh
+      //TODO: check that this function is ONLY executed on click and NOT also on initial site load
+      $("#submit").click( setTimeout(function() {
+		  var ifrm = parent.document.getElementById('ifrm2');
+		  ifrm.src = ifrm.src;
+		  //ifrm.contentWindow.refreshBuildingsJSON()	
+		  // TODO: this doesnt work well -> idea: after refresh iframe, zoom to selected building again
+	  }, 1));
+	});
 	</script>
+
 	<form id="rrvsForm" action="{{ url_for('rrvsform') }}" method=post>
 		{{ rrvs_form.hidden_tag() }}   				
 		<div class="tabs">
@@ -36,10 +59,13 @@
 				<img class="banner" src="{{ url_for('static', filename='img/banner.svg') }}" alt="RRVS tool">			
 				<br><br>
 				{{ rrvs_form.gid_field.label }}
-				{{ rrvs_form.gid_field(readonly=true)}}
+				{{ rrvs_form.gid_field(readonly=true)}}						
+				<br>
+				{{ rrvs_form.rrvs_status_field.label }}
+				{{ rrvs_form.rrvs_status_field }}								
 				<br>
 				{{ rrvs_form.submit }}
-                <p>
+				<p>
                 {{c}} of {{n}} buildings screened
                 </p>
 		   </div>
