@@ -3,9 +3,11 @@
 <head>
     <title>RRVS Webtool - Form</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <strong><link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></strong>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-	<script type="text/javascript"> var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+	<link rel="stylesheet" type="text/css" href="../static/datatables/media/css/jquery.dataTables.css">
+	<script type="text/javascript" src="../static/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="../static/datatables/media/js/jquery.dataTables.js"></script>
+    <script type="text/javascript"> var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
 </head>
 <body>  
 	<script type="text/javascript">
@@ -46,10 +48,24 @@
       $("#submit").click( setTimeout(function() {
 		  var ifrm = parent.document.getElementById('ifrm2');
 		  ifrm.src = ifrm.src;
-		  //ifrm.contentWindow.refreshBuildingsJSON()	
-		  // TODO: this doesnt work well -> idea: after refresh iframe, zoom to selected building again
+		  // TODO: after refresh iframe, zoom to selected building again
+		  //ifrm.contentWindow.refreshBuildingsJSON()
 	  }, 1));
 	});
+	
+	// generate data table with building ids and rrvs status columns
+	var dataSet = {{bdgs|safe}};
+	$(document).ready(function() {
+		$('#rrvsFormTable').DataTable( {
+			scrollY: 135,
+			paging: false,
+			data: dataSet,
+			columns: [
+				{ title: "BuildingID" },
+				{ title: "RRVS Status" }
+			]
+		} );
+	} );	
 	</script>
 
 	<form id="rrvsForm" action="{{ url_for('rrvsform') }}" method=post>
@@ -59,15 +75,17 @@
 				<img class="banner" src="{{ url_for('static', filename='img/banner.svg') }}" alt="RRVS tool">			
 				<br><br>
 				{{ rrvs_form.gid_field.label }}
-				{{ rrvs_form.gid_field(readonly=true)}}						
+				{{ rrvs_form.gid_field(readonly=True)}}						
 				<br>
 				{{ rrvs_form.rrvs_status_field.label }}
 				{{ rrvs_form.rrvs_status_field }}								
 				<br>
 				{{ rrvs_form.submit }}
-				<p>
-                {{c}} of {{n}} buildings screened
-                </p>
+				<!--<p>{{c}} of {{n}} buildings screened</p>-->
+		   </div>
+		   <div class="formLayoutTable">
+			   <!--the actual data table with building ids and rrvs status columns-->
+			   <table id="rrvsFormTable" class="hover"></table>
 		   </div>
 		   <div class="tab">
 			   <input type="radio" id="tab-1" name="tab-group-1" checked>
@@ -76,10 +94,10 @@
 					<div class="formLayout">
 						{{ rrvs_form.mat_type_field.label }}
 						{{ rrvs_form.mat_type_field }}
-						
+						<br>
 						{{ rrvs_form.mat_tech_field.label }}
 						{{ rrvs_form.mat_tech_field }}
-
+						<br>
 						{{ rrvs_form.mat_prop_field.label }}
 						{{ rrvs_form.mat_prop_field }}
 					</div>
@@ -103,6 +121,7 @@
 				    <div class="formLayout">					
 						{{ rrvs_form.height_field.label }}
 						{{ rrvs_form.height_field }}
+						<br>
 						{{ rrvs_form.height1_field.label }}
 						{{ rrvs_form.height1_field }}
 					</div>
@@ -125,7 +144,7 @@
 					<div class="formLayout">
 						{{ rrvs_form.occupy_field.label }}
 						{{ rrvs_form.occupy_field }}
-						
+						<br>
 						{{ rrvs_form.occupy_dt_field.label }}
 						{{ rrvs_form.occupy_dt_field }}
 					</div>

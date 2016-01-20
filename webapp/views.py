@@ -203,4 +203,15 @@ def rrvsform():
         flask.session['screened'][flask.session['bdg_gids'].index(int(rrvs_form.gid_field.data))]=True 
                             
     # if no post request is send the template is rendered normally showing numbers of completed bdgs
-    return flask.render_template(template_name_or_list='rrvsform.html', rrvs_form=rrvs_form,n=len(flask.session['bdg_gids']),c=len([x for x in flask.session['screened'] if x==True]))
+    # get the data for the rrvsFormTable from the database
+    bdg_gids = flask.session['bdg_gids']
+    rows = ve_object.query.filter(ve_object.gid.in_(bdg_gids)).all()
+    bdgs = []
+    for row in rows:
+        data = [str(row.gid), str(row.rrvs_status)]
+        bdgs.append(data)
+    return flask.render_template(template_name_or_list='rrvsform.html', 
+                                 rrvs_form=rrvs_form,
+                                 bdgs=bdgs,
+                                 n=len(flask.session['bdg_gids']),
+                                 c=len([x for x in flask.session['screened'] if x==True]))

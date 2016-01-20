@@ -54,7 +54,7 @@ class RrvsForm(Form):
     rrvs_status_field = BooleanField(label="Completed")
     # Submit field
     submit = SubmitField("Update building")
-
+    
 class LoginForm(Form):
     """
     This Form class contains the login in form of task_id
