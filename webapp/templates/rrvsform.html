@@ -134,7 +134,7 @@
 			$('input[name="gid_field"]').val(data[0]);
 			$('#rrvs_status_field').focus();
 			// update map and panoviewer
-			console.log('rrvsform: ' + $('input[name="gid_field"]').val());
+			//console.log('rrvsform: ' + $('input[name="gid_field"]').val());
 			var ifrm = parent.document.getElementById('ifrm2');
 			ifrm.contentWindow.updateMap($('input[name="gid_field"]').val());
 		} );
@@ -173,14 +173,14 @@
 	// trigger map update on click of the submit button
 	// note: needed to refresh map layer rendering after data was modified by rrvsform
 	// note: a timeout of 1 ms is needed before the refresh
-	//TODO: check that this function is ONLY executed on click and NOT also on initial site load
-	$("#submit").click( setTimeout(function() {
-		//TODO: Works in principal but make sure that all goes smoothly and no conflicts appear 
-		//with recalling same functions over and over again
-		//var ifrm = parent.document.getElementById('ifrm2');
-		//ifrm.src = ifrm.src;
-		//ifrm.contentWindow.updateMap($('input[name="gid_field"]').val());
-	  }, 1));
+	$("#submit").click(setTimeout(function() {
+		var ifrm = parent.document.getElementById('ifrm2');
+		ifrm.src = ifrm.src;
+	  }), 1);
+	$(parent.document.getElementById('ifrm2')).on("load", function () {
+		var ifrm = parent.document.getElementById('ifrm2');
+		ifrm.contentWindow.updateMap($('input[name="gid_field"]').val());
+	});
 	</script>
 </body>
 </html>
