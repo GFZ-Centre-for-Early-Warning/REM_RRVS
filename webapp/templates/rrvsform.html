@@ -3,10 +3,10 @@
 <head>
     <title>RRVS Webtool - Form</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
-	<link rel="stylesheet" type="text/css" href="../static/datatables/media/css/jquery.dataTables.css">
-	<script type="text/javascript" src="../static/jquery-1.12.0.min.js"></script>
-	<script type="text/javascript" charset="utf8" src="../static/datatables/media/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='datatables/media/css/jquery.dataTables.css') }}">
+	<script type="text/javascript" src="{{ url_for('static', filename='jquery-1.12.0.min.js') }}"></script>
+	<script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='datatables/media/js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript"> var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
 </head>
 <body>  
