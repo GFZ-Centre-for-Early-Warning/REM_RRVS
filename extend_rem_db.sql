@@ -607,14 +607,7 @@ ALTER VIEW ve_object ALTER COLUMN rrvs_status SET DEFAULT 'UNMODIFIED'::characte
 
 ALTER TABLE ve_object ALTER COLUMN rrvs_status SET DEFAULT 'UNMODIFIED'::character varying;
 
-SET search_path = image, pg_catalog;
-
-ALTER TABLE gpano_metadata
-	DROP COLUMN stitchingsoftware,
-	DROP COLUMN fullpanowidthpixels,
-	ADD COLUMN stichingsoftware character varying;
-
-COMMENT ON COLUMN gpano_metadata.stichingsoftware IS 'The software that was used to create the final photo sphere. This may sometimes be the same value as that of  GPano:CaptureSoftware.';
+CREATE TRIGGER object_trigger INSTEAD OF INSERT OR DELETE OR UPDATE ON ve_object FOR EACH ROW EXECUTE PROCEDURE edit_object_view();
 
 SET search_path = users, pg_catalog;
 
