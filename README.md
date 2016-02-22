@@ -22,6 +22,15 @@ A) Setup virtualenvironment and add the project source code
 5. copy the rrvstool folder that holds the flask application into the the venv directory
 
 B) Setup the database
+For production:
+1. Create and connect to a database called rem on the server (or adjust the name accordingly in the rrvs_config.py)
+2. run the templating script for a rem database from within the database (https://github.com/GFZ-Centre-for-Early-Warning/REM_DBschema)
+3. run the extend_rem_db.sql script to extend the schema for the rrvs functionality
+4. populate the database with image and survey information (metadata.sql files as created with the PERManEnt makalu.gfz-potsdam.de:/media/EWC/git/permanent.git)
+5. populate the database with assets (building footprints) by using fp2rem_db.py
+6. create users and tasks in the users schema of the database
+
+For demo:
 1. Create a new database 'rrvstool_db' in PostgreSQL >9.1
    and run rrvstool_db.sql
 2. Populate the database tables (you can use the rrvstool_testdata.sql script to add some testdata)
@@ -56,7 +65,7 @@ Listen 8080
 5. Activate the site
   $ sudo a2ensite rrvs
 
-6. Panoramic images are served to the app on a virtual directory called /pano from a different place than document root, you'll have to write an Alias in the alias_module part of the apache httpd.conf:
+6. Panoramic images are served to the app on a virtual directory called /pano which can be a different place than document root, you'll have to write an Alias in the alias_module part of the apache httpd.conf (to the virtual host you created above in Point 4):
 
     Alias /pano /path/to/your/directory
     <Directory /path/to/your/directory/>
@@ -64,12 +73,14 @@ Listen 8080
         Require all granted
     </Directory>
 
-Make sure the permissions for this directory (and all it's parents) ar set to 755:
+Make sure the permissions for this directory (and all it's parents) are set to 755:
 chmod 755 /path
 chmod 755 /path/to 
 ...
 
 The directory should also have it's own index.html
+Make sure that in your database image.img.repository is the path to the images relative to /path/to/your/directory. If for example your
+images are at /path/to/your/directory/survey image.img.repository would be '/survey'.
 
 7. Reload apache2
 $ sudo service apache2 restart
