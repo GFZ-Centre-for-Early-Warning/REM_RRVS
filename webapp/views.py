@@ -10,7 +10,7 @@ Description: The main views file setting up the flask application layout, defini
 '''
 import flask
 from webapp import app, db
-from models import ve_object, dic_attribute_value, gps, User, task
+from models import ve_object, dic_attribute_value, pan_imgs,gps, User, task
 from forms import RrvsForm, LoginForm
 from flask.ext.security import login_required, login_user, logout_user
 import geoalchemy2.functions as func
@@ -83,8 +83,8 @@ def logout():
 @login_required
 def main():
     """
-	This will render a template that holds the main pagelayout.
-	"""
+    This will render a template that holds the main pagelayout.
+    """
     return flask.render_template('main.htm')
 
 @app.route('/map')
@@ -105,11 +105,15 @@ def map():
     bdgs_json = dumps(FeatureCollection(bdgs))
     #get img_gids
     img_gids = flask.session['img_gids']
-    rows = gps.query.filter(gps.img_id.in_(img_gids)).all()
+    #get metadata related to these images
+    image_rows = pan_imgs.query.filter(pan_imgs.gid.in_(img_gids)).all()
+    gps_ids = [row.gps for row in image_rows]
+    gps_rows = gps.query.filter(gps.gid.in_(gps_ids)).all()
+    #create a json object
     img_gps = []
-    for row in rows:
-        geometry = json.loads(db.session.scalar(func.ST_AsGeoJSON(row.the_geom)))
-        feature = Feature(id=row.gid,geometry=geometry,properties={"img_id":row.img_id,"azimuth":row.azimuth})
+    for i,image in enumerate(image_rows):
+        geometry = json.loads(db.session.scalar(func.ST_AsGeoJSON(gps_rows[i].the_geom)))
+        feature = Feature(id=image.gid,geometry=geometry,properties={"img_id":image.gid,"repository":image.repository,"filename":image.filename,"frame_id":image.frame_id,"azimuth":gps_rows[i].azimuth})
         img_gps.append(feature)
     gps_json = dumps(FeatureCollection(img_gps))
 
@@ -118,25 +122,15 @@ def map():
 @app.route('/pannellum')
 def pannellum():
     """
-	This will render a template that holds the panoimage viewer.
-	"""
+    This will render a template that holds the panoimage viewer.
+    """
     return flask.render_template('pannellum.htm')
-
-#@app.route('/pano_config',methods=['GET','POST'])
-#def pano_config():
-#        """
-#        This serves the json config for the panoramic image viewer
-#        """
-#        if reqest.method == 'POST':
-#            print (reqest.get_json(force=False))
-#        #return flask.render_template('config.json')
-
 
 @app.route('/_update_rrvsform')
 def update_rrvsform():
     """
 	This updates the values of the rrvsform fields using jQuery. The function sends a json
-	string with all values to the rrvsform.html template for populating the fields. 
+	string with all values to the rrvsform.html template for populating the fields.
 	Note that for QuerySelectFields the gid of the attribute_value needs to be returned by the function.
 	"""
     # get building gid value for queries
@@ -151,7 +145,7 @@ def update_rrvsform():
     occupy_val = ve_object.query.filter_by(gid=gid_val).first().occupy
     occupy_dt_val = ve_object.query.filter_by(gid=gid_val).first().occupy_dt
     nonstrcexw_val = ve_object.query.filter_by(gid=gid_val).first().nonstrcexw
-    
+
     return flask.jsonify(
 		# query values for text fields
 		height1_val = int(ve_object.query.filter_by(gid=gid_val).first().height_1),
@@ -200,8 +194,8 @@ def rrvsform():
                     }, synchronize_session=False)
         db.session.commit()
         #update session variable for screened buildings
-        flask.session['screened'][flask.session['bdg_gids'].index(int(rrvs_form.gid_field.data))]=True 
-                            
+        flask.session['screened'][flask.session['bdg_gids'].index(int(rrvs_form.gid_field.data))]=True
+
     # if no post request is send the template is rendered normally showing numbers of completed bdgs
     # get the data for the rrvsFormTable from the database
     bdg_gids = flask.session['bdg_gids']
@@ -210,7 +204,7 @@ def rrvsform():
     for row in rows:
         data = [str(row.gid), str(row.rrvs_status)]
         bdgs.append(data)
-    return flask.render_template(template_name_or_list='rrvsform.html', 
+    return flask.render_template(template_name_or_list='rrvsform.html',
                                  rrvs_form=rrvs_form,
                                  bdgs=bdgs,
                                  n=len(flask.session['bdg_gids']),

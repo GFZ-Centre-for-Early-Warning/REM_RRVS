@@ -24,7 +24,7 @@ class Role(db.Model, RoleMixin):
     """
     __tablename__="roles"
     __table_args__ = {'schema':'users'}
- 
+
     id = db.Column(db.Integer(), primary_key=True)
     name = ''
 
@@ -34,7 +34,7 @@ class User(db.Model, UserMixin):
     """
     __tablename__="users"
     __table_args__ = {'schema':'users'}
- 
+
     id = db.Column(db.Integer(), primary_key=True)
     authenticated = db.Column(db.Boolean, default=False)
     password = ''
@@ -62,7 +62,7 @@ class task(db.Model):
     """
     __tablename__="tasks"
     __table_args__ = {'schema':'users'}
- 
+
     id = db.Column(db.Integer, primary_key=True)
     bdg_gids = db.Column(postgresql.ARRAY(db.Integer))
     img_ids = db.Column(postgresql.ARRAY(db.Integer))
@@ -110,6 +110,10 @@ class pan_imgs(db.Model):
     __table_args__ = {'schema':'image'}
 
     gid = db.Column(db.Integer, primary_key=True)
+    gps = db.Column(db.Integer)
+    repository = db.Column(db.String(255))
+    filename = db.Column(db.String(100))
+    frame_id = db.Column(db.Integer)
     source = db.Column(db.String(254))
 
 class gps(db.Model):
@@ -120,7 +124,7 @@ class gps(db.Model):
     __table_args__ = {'schema':'image'}
 
     gid = db.Column(db.Integer, primary_key=True)
-    img_id = db.Column(db.Integer)
+    #img_id = db.Column(db.Integer)
     azimuth = db.Column(db.Float)
     the_geom = db.Column(Geometry(geometry_type='POINT',srid=4326))
 

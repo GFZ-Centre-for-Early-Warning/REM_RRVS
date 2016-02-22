@@ -69,6 +69,8 @@ chmod 755 /path
 chmod 755 /path/to 
 ...
 
+The directory should also have it's own index.html
+
 7. Reload apache2
 $ sudo service apache2 restart
 
