@@ -56,7 +56,22 @@ Listen 8080
 5. Activate the site
   $ sudo a2ensite rrvs
 
-6. Reload apache2
+6. Panoramic images are served to the app on a virtual directory called /pano from a different place than document root, you'll have to write an Alias in the alias_module part of the apache httpd.conf:
+
+    Alias /pano /path/to/your/directory
+    <Directory /path/to/your/directory/>
+        Options Indexes FollowSymLinks MultiViews
+        Require all granted
+    </Directory>
+
+Make sure the permissions for this directory (and all it's parents) ar set to 755:
+chmod 755 /path
+chmod 755 /path/to 
+...
+
+The directory should also have it's own index.html
+
+7. Reload apache2
 $ sudo service apache2 restart
 
 WARNING: Currently the app is designed as being open to all IP-Addresses!
