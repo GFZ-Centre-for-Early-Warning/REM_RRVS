@@ -620,7 +620,7 @@ CREATE TABLE roles_users (
 );
 
 CREATE TABLE tasks (
-    id integer NOT NULL,
+    id serial primary key,
     bdg_gids integer[],
     img_ids integer[]
 );
@@ -638,9 +638,6 @@ CREATE TABLE users (
 
 ALTER TABLE roles
     ADD CONSTRAINT role_pkey PRIMARY KEY (id);
-
-ALTER TABLE tasks
-    ADD CONSTRAINT task_pkey PRIMARY KEY (id);
 
 ALTER TABLE users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);

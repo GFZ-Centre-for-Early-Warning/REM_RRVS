@@ -39,6 +39,7 @@ from geojson import Feature, FeatureCollection, dumps
 #    else:
 #        return input
 
+
 #######################################
 # Login landing page
 #######################################
@@ -48,7 +49,7 @@ def login():
     by processing the form and storing the taskid."""
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.get(form.userid.data)
+        user = User.query.get(int(form.userid.data))
         if user:
             user.authenticated = True
             db.session.add(user)

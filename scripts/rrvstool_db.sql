@@ -1305,7 +1305,7 @@ CREATE TABLE gpano_metadata (
     gid integer NOT NULL,
     usepanoramaviewer boolean,
     capturesoftware character varying,
-    stichingsoftware character varying,
+    stitchingsoftware character varying,
     projectiontype character varying DEFAULT 'equirectangular'::character varying NOT NULL,
     poseheadingdegrees real,
     posepitchdegrees real DEFAULT 0,
@@ -1319,6 +1319,7 @@ CREATE TABLE gpano_metadata (
     exposurelockused boolean,
     croppedareaimagewidthpixels integer NOT NULL,
     croppedareaimageheightpixels integer NOT NULL,
+    fullpanowidthpixels integer NOT NULL,
     fullpanoheightpixels integer NOT NULL,
     croppedarealeftpixels integer NOT NULL,
     croppedareatoppixels integer NOT NULL,
@@ -1357,10 +1358,10 @@ COMMENT ON COLUMN gpano_metadata.capturesoftware IS 'If capture was done using a
 
 
 --
--- Name: COLUMN gpano_metadata.stichingsoftware; Type: COMMENT; Schema: image; Owner: postgres
+-- Name: COLUMN gpano_metadata.stitchingsoftware; Type: COMMENT; Schema: image; Owner: postgres
 --
 
-COMMENT ON COLUMN gpano_metadata.stichingsoftware IS 'The software that was used to create the final photo sphere. This may sometimes be the same value as that of  GPano:CaptureSoftware.';
+COMMENT ON COLUMN gpano_metadata.stitchingsoftware IS 'The software that was used to create the final photo sphere. This may sometimes be the same value as that of  GPano:CaptureSoftware.';
 
 
 --
@@ -1508,7 +1509,7 @@ ALTER SEQUENCE gpano_metadata_gid_seq OWNED BY gpano_metadata.gid;
 --
 
 CREATE TABLE gps (
-    gid integer,
+    gid serial,
     img_id integer,
     altitude real,
     azimuth real,
@@ -2681,7 +2682,7 @@ SET search_path = image, pg_catalog;
 -- Data for Name: gpano_metadata; Type: TABLE DATA; Schema: image; Owner: postgres
 --
 
-COPY gpano_metadata (gid, usepanoramaviewer, capturesoftware, stichingsoftware, projectiontype, poseheadingdegrees, posepitchdegrees, poserolldegrees, initialviewheadingdegrees, initialviewpitchdegrees, initialviewrolldegrees, initialhorizontalfovdegrees, firstphotodate, sourcephotoscount, exposurelockused, croppedareaimagewidthpixels, croppedareaimageheightpixels, fullpanoheightpixels, croppedarealeftpixels, croppedareatoppixels, initialcameradolly) FROM stdin;
+COPY gpano_metadata (gid, usepanoramaviewer, capturesoftware, stitchingsoftware, projectiontype, poseheadingdegrees, posepitchdegrees, poserolldegrees, initialviewheadingdegrees, initialviewpitchdegrees, initialviewrolldegrees, initialhorizontalfovdegrees, firstphotodate, sourcephotoscount, exposurelockused, croppedareaimagewidthpixels, croppedareaimageheightpixels, fullpanoheightpixels, croppedarealeftpixels, croppedareatoppixels, initialcameradolly) FROM stdin;
 \.
 
 

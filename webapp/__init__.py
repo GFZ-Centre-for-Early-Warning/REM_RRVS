@@ -2,9 +2,15 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.security import Security,SQLAlchemyUserDatastore
+from flask_kvsession import KVSessionExtension
+import redis
+from simplekv.memory.redisstore import RedisStore
+
+store=RedisStore(redis.StrictRedis())
 
 app = Flask(__name__)
 app.config.from_object('rrvs_config')
+KVSessionExtension(store, app)
 
 db = SQLAlchemy(app)
 
@@ -24,4 +30,4 @@ if __name__== "__main__":
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User.get(user_id)
+        return User.get(int(user_id))

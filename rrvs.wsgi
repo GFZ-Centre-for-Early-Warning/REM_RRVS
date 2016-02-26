@@ -7,6 +7,6 @@ from webapp import app as application,db
 
 from werkzeug.debug import DebuggedApplication 
 
-application.secret_key = "development key"
-application = DebuggedApplication(application, True)
 db.create_all()
+application.secret_key = '42'
+application = DebuggedApplication(application, True)
