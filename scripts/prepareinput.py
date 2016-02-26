@@ -1,11 +1,12 @@
 ﻿'''
 -----------------------------------------------------------------------------
-    Prepare input files for RRVS survey 
------------------------------------------------------------------------------                         
+WARNING: OUTDATED SCRIPT but might be of value for some (M.Haas 26.02.16)
+    Prepare input files for RRVS survey
+-----------------------------------------------------------------------------
 Created on 24.04.2015
 Last modified on 24.04.2015
 Author: Marc Wieland
-Description: this script produces the gps.js and buildings.js files for a specific application 
+Description: this script produces the gps.js and buildings.js files for a specific application
              based on user selection of buildings to be surveyed.
 Input: gids of buildings that need to be surveyed
 Output: gps.js and buildings.js in /webapp/static/panoimg
@@ -16,7 +17,7 @@ TODO: This is a rather static solution with writing to files.
       -> dont write to file but directly to the variable in the map file (like I did before with php!)
 ----
 '''
-import os 
+import os
 import psycopg2
 import numpy as np
 
@@ -49,8 +50,8 @@ cur.execute("COPY panoimg.geojson TO '/webapp/static/panoimg/buildings.js' USING
 
 #select gps points within radius of 50m (ca 0.0005 degrees) of selected buildings
 cur.execute("SELECT a.gid FROM " +
-                "panoimg.gps a, " + 
-                "(SELECT st_buffer(the_geom, 0.0005) as buffer_geom FROM object_res1.ve_resolution1 " + 
+                "panoimg.gps a, " +
+                "(SELECT st_buffer(the_geom, 0.0005) as buffer_geom FROM object_res1.ve_resolution1 " +
                     "WHERE gid IN (" + building_gid + ")) b " +
                 "WHERE st_intersects(a.the_geom, b.buffer_geom) GROUP BY a.gid;")
 rows = cur.fetchall()
@@ -66,7 +67,7 @@ cur.execute("DROP TABLE IF EXISTS panoimg.geojson;")
 cur.execute("SELECT * INTO panoimg.geojson FROM (" +
                 "SELECT row_to_json(fc) " +
                     "FROM (SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features " +
-                    "FROM (SELECT 'Feature' AS type, ST_AsGeoJSON(lg.the_geom)::json AS geometry, " + 
+                    "FROM (SELECT 'Feature' AS type, ST_AsGeoJSON(lg.the_geom)::json AS geometry, " +
                         "row_to_json((SELECT l FROM (SELECT img_id, azimuth) AS l)) AS properties " +
                             "FROM panoimg.gps AS lg where gid in (" + gps_gid + ") AS f)  AS fc " +
              ") a;")

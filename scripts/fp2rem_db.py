@@ -1,6 +1,7 @@
 ###############################################
 # Script that creates an SQL script to write
 # footprints from a shapefile to a REM database
+# Author: M.Haas mhaas@gfz-potsdam.de
 # input: 1) shapefile with footprints
 #        2) name of survey in REM db for which
 #           these footprints should be used

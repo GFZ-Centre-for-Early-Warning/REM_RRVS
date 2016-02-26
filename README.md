@@ -4,7 +4,13 @@
 Contact: Marc Wieland marc.wieland@gfz-potsdam.de 
          Michael Haas michael.haas@gfz-potsdam.de
 
-##INSTALLATION
+##Structure
+The main application is in the folder webapp. In the root directory are the
+scripts for running the application (rrvs.wsgi/runserver.py and rrvs_config.py).
+In scripts are some useful scripts for the application (creation of the database,
+populating the database and creating tasks).
+
+##Installation
 
 The installation as described here for Ubuntu 14.04, but should be similar on other linux distributions.
 In order to run the application locally do the following:
@@ -49,8 +55,9 @@ For demo:
    ```
    sudo touch /etc/apache2/sites-available/rrvs
    ```
-4.Add following content (e.g. to run on Port 8080 if you want to keep free 80):
+4.Add following content (e.g. to run on Port 8080 if you want to keep 80 free):
 
+   ```
    Listen 8080  
    <VirtualHost *:8080>  
            ServerName localhost  
@@ -68,6 +75,7 @@ For demo:
            LogLevel warn  
            CustomLog ${APACHE_LOG_DIR}/access.log combined  
    </VirtualHost>
+   ```
 
 5. Activate the site  
    ```
@@ -78,11 +86,13 @@ For demo:
    than document root, you'll have to write an Alias in the alias_module part of the apache httpd.conf 
    (add it to the virtual host you created above in Point 4):
 
+   ```
     Alias /pano /path/to/your/directory  
     <Directory /path/to/your/directory/> 
     Options Indexes FollowSymLinks MultiViews 
         Require all granted 
     </Directory> 
+   ```
 
 Make sure the permissions for this directory (and all it's parents) are set to 755:
    ```
@@ -106,7 +116,7 @@ If for example your images are at /path/to/your/directory/survey image.img.repos
 
 You can enter the site via the port you defined int the virtual host, e.g. localhost:8080 in a webbrowser
 
-D) If not implemented as wsgi you can have to run the application via
+###D) If not implemented as recommended via wsgi you can have to run the application via
    ```
    python runserver.py
    ```
@@ -162,7 +172,7 @@ A short step-by-step guideline on how to add a new QuerySelectField to the datae
    ```
 
 ##Known issues
-1) Each asset in a rem db asset.object_attribute.height_1 has to have an initial value (fp2rem_db.py assigns 99) in order 
+1. Each asset in a rem db asset.object_attribute.height_1 has to have an initial value (fp2rem_db.py assigns 99) in order 
    for the application to work properly.
-2) Panoramic images are limited in size, if too large they will show up black in the pannellum viewer
+2. Panoramic images are limited in size, if too large they will show up black in the pannellum viewer 
    recommended resolution is: 3500px*1750px
