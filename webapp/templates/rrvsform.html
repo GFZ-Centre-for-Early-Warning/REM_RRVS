@@ -76,6 +76,9 @@
 					<div class="formLayout">					
 						{{ rrvs_form.yr_built_field.label }}
 						{{ rrvs_form.yr_built_field }}
+						<br>
+						{{ rrvs_form.yr_built_bp_field.label }}
+						{{ rrvs_form.yr_built_bp_field }}
 					</div>
 			   </div> 
 		   </div>
@@ -155,6 +158,7 @@
 		  $('select[name="height_field"]').val(data.height_gid);
 		  $('input[name="height1_field"]').val(data.height1_val);
 		  $('select[name="yr_built_field"]').val(data.yr_built_gid);
+		  $('input[name="yr_built_bp_field"]').val(data.yr_built_bp_val);
 		  $('select[name="occupy_field"]').val(data.occupy_gid);
 		  $('select[name="occupy_dt_field"]').val(data.occupy_dt_gid);
 		  $('select[name="nonstrcexw_field"]').val(data.nonstrcexw_gid);

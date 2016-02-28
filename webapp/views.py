@@ -150,6 +150,7 @@ def update_rrvsform():
     return flask.jsonify(
 		# query values for text fields
 		height1_val = int(ve_object.query.filter_by(gid=gid_val).first().height_1),
+		yr_built_bp_val = ve_object.query.filter_by(gid=gid_val).first().yr_built_bp,
 		# query gid of attribute_values for select fields
 		mat_type_gid = dic_attribute_value.query.filter_by(attribute_value=mat_type_val).first().gid,
 		mat_tech_gid = dic_attribute_value.query.filter_by(attribute_value=mat_tech_val).first().gid,
@@ -188,6 +189,7 @@ def rrvsform():
 					ve_object.height: rrvs_form.height_field.data.attribute_value,
 					ve_object.height_1: rrvs_form.height1_field.data,
 					ve_object.yr_built: rrvs_form.yr_built_field.data.attribute_value,
+					ve_object.yr_built_bp: rrvs_form.yr_built_bp_field.data,
 					ve_object.occupy: rrvs_form.occupy_field.data.attribute_value,
 					ve_object.occupy_dt: rrvs_form.occupy_dt_field.data.attribute_value,
 					ve_object.nonstrcexw: rrvs_form.nonstrcexw_field.data.attribute_value,

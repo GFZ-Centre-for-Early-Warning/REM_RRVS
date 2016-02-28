@@ -98,6 +98,7 @@ class ve_object(db.Model):
     occupy_dt = db.Column(db.String(254))
     nonstrcexw = db.Column(db.String(254))
     yr_built = db.Column(db.String(254))
+    yr_built_bp = db.Column(db.Integer)
     rrvs_status = db.Column(db.String(254))
     the_geom = db.Column(Geometry(geometry_type='POLYGON', srid=4326))
 

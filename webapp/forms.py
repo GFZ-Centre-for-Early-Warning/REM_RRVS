@@ -40,6 +40,7 @@ class RrvsForm(Form):
     # Text fields
     gid_field = TextField(label="BuildingID")
     height1_field = TextField(label="Height Value", validators=[validators.Length(max=10), validators.Required()])
+    yr_built_bp_field = TextField(label="Construction Date", validators=[validators.Length(max=10), validators.Required()])
     # Select fields
     mat_type_field = QuerySelectField("Material Type", query_factory=getMatType, get_label='description', allow_blank=True)
     mat_tech_field = QuerySelectField("Material Technology", query_factory=getMatTech, get_label='description', allow_blank=True)
