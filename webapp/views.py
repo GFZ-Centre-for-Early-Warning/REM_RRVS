@@ -11,11 +11,12 @@ Description: The main views file setting up the flask application layout, defini
 import flask
 from webapp import app, db
 from models import ve_object, dic_attribute_value, pan_imgs,gps, User, task
-from forms import RrvsForm, LoginForm
+from forms import RrvsForm, RrvsForm_ar,LoginForm
 from flask.ext.security import login_required, login_user, logout_user
 import geoalchemy2.functions as func
 import json
 from geojson import Feature, FeatureCollection, dumps
+
 
 ########################################################
 # REST interface getting task related buildings as json
@@ -64,6 +65,7 @@ def login():
             flask.session['img_gids'] = task.query.filter_by(id=flask.session['taskid']).first().img_ids
             #flags for screened buildings
             flask.session['screened'] = [False]*len(flask.session['bdg_gids'])
+            #language is set in babel locale in __init__.py
             return flask.redirect(flask.url_for("main"))
     return flask.render_template("index.htm", form=form)
 
@@ -137,20 +139,30 @@ def update_rrvsform():
     # get building gid value for queries
     gid_val = flask.request.args.get('gid_val', 0, type=int)
     # query attribute_value for select fields
-    mat_type_val = ve_object.query.filter_by(gid=gid_val).first().mat_type
-    mat_tech_val = ve_object.query.filter_by(gid=gid_val).first().mat_tech
-    mat_prop_val = ve_object.query.filter_by(gid=gid_val).first().mat_prop
-    llrs_val = ve_object.query.filter_by(gid=gid_val).first().llrs
-    height_val = ve_object.query.filter_by(gid=gid_val).first().height
-    yr_built_val = ve_object.query.filter_by(gid=gid_val).first().yr_built
-    occupy_val = ve_object.query.filter_by(gid=gid_val).first().occupy
-    occupy_dt_val = ve_object.query.filter_by(gid=gid_val).first().occupy_dt
-    nonstrcexw_val = ve_object.query.filter_by(gid=gid_val).first().nonstrcexw
+    row = ve_object.query.filter_by(gid=gid_val).first()
+    mat_type_val = row.mat_type
+    mat_tech_val = row.mat_tech
+    mat_prop_val = row.mat_prop
+    llrs_val = row.llrs
+    height_val = row.height
+    yr_built_val = row.yr_built
+    occupy_val = row.occupy
+    occupy_dt_val = row.occupy_dt
+    nonstrcexw_val = row.nonstrcexw
+    #mat_type_val = ve_object.query.filter_by(gid=gid_val).first().mat_type
+    #mat_tech_val = ve_object.query.filter_by(gid=gid_val).first().mat_tech
+    #mat_prop_val = ve_object.query.filter_by(gid=gid_val).first().mat_prop
+    #llrs_val = ve_object.query.filter_by(gid=gid_val).first().llrs
+    #height_val = ve_object.query.filter_by(gid=gid_val).first().height
+    #yr_built_val = ve_object.query.filter_by(gid=gid_val).first().yr_built
+    #occupy_val = ve_object.query.filter_by(gid=gid_val).first().occupy
+    #occupy_dt_val = ve_object.query.filter_by(gid=gid_val).first().occupy_dt
+    #nonstrcexw_val = ve_object.query.filter_by(gid=gid_val).first().nonstrcexw
 
     return flask.jsonify(
 		# query values for text fields
-		height1_val = int(ve_object.query.filter_by(gid=gid_val).first().height_1),
-		yr_built_bp_val = ve_object.query.filter_by(gid=gid_val).first().yr_built_bp,
+		height1_val = int(row.height_1),
+		yr_built_bp_val = row.yr_built_bp,
 		# query gid of attribute_values for select fields
 		mat_type_gid = dic_attribute_value.query.filter_by(attribute_value=mat_type_val).first().gid,
 		mat_tech_gid = dic_attribute_value.query.filter_by(attribute_value=mat_tech_val).first().gid,
@@ -161,6 +173,19 @@ def update_rrvsform():
 		occupy_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_val).first().gid,
 		occupy_dt_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_dt_val).first().gid,
 		nonstrcexw_gid = dic_attribute_value.query.filter_by(attribute_value=nonstrcexw_val).first().gid,
+		## query values for text fields
+		#height1_val = int(ve_object.query.filter_by(gid=gid_val).first().height_1),
+		#yr_built_bp_val = ve_object.query.filter_by(gid=gid_val).first().yr_built_bp,
+		## query gid of attribute_values for select fields
+		#mat_type_gid = dic_attribute_value.query.filter_by(attribute_value=mat_type_val).first().gid,
+		#mat_tech_gid = dic_attribute_value.query.filter_by(attribute_value=mat_tech_val).first().gid,
+		#mat_prop_gid = dic_attribute_value.query.filter_by(attribute_value=mat_prop_val).first().gid,
+		#llrs_gid = dic_attribute_value.query.filter_by(attribute_value=llrs_val).first().gid,
+		#height_gid = dic_attribute_value.query.filter_by(attribute_value=height_val).first().gid,
+		#yr_built_gid = dic_attribute_value.query.filter_by(attribute_value=yr_built_val).first().gid,
+		#occupy_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_val).first().gid,
+		#occupy_dt_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_dt_val).first().gid,
+		#nonstrcexw_gid = dic_attribute_value.query.filter_by(attribute_value=nonstrcexw_val).first().gid,
         # query values for checkbox fields
         rrvs_status_val = str(ve_object.query.filter_by(gid=gid_val).first().rrvs_status)
 	)
@@ -172,7 +197,10 @@ def rrvsform():
 	a Get request. If the user is attempting to Post then this view will push
 	the data to the database.
 	"""
-    rrvs_form = RrvsForm()
+    if flask.session['lang']=='ar':
+        rrvs_form = RrvsForm_ar()
+    else:
+        rrvs_form = RrvsForm()
 
     if flask.request.method == 'POST' and rrvs_form.validate():
         # check if checkbox for rrvs status is ticked and assign values to be used for database update

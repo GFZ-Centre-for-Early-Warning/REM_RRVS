@@ -118,7 +118,7 @@
 		//function for interaction between gps layer and panoImg iframe
 		function updatePanoImg() {
 			// zoom to feature in map
-			map.fitBounds(highlightedGPS.getBounds(), {maxZoom: 17});
+			//map.fitBounds(highlightedGPS.getBounds(), {maxZoom: 18});
 			// update src of iframe 1 (panoImg)
             // distinguish between frame mode or multi window mode
             if(self==top){
@@ -142,7 +142,7 @@
         function imgBdgInteraction(){
             var ang = angleDeg(imgBdgData.imgLoc,imgBdgData.bdgLoc);
             configPano.yaw = (90-ang)-imgBdgData.imgAzi;
-            configPano.hotSpots = [{pitch:'0',yaw:configPano.yaw,type:'info',text:'Selected building'}];
+            configPano.hotSpots = [{pitch:'0',yaw:configPano.yaw,type:'info',text:'{{_('Selected building')}}'}];
         }
 
 		//function for refreshing rrvsForm iframe and pannellum iframe based on map iframe action

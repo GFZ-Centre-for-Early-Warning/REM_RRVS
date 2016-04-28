@@ -1,0 +1,89 @@
+# Arabic translations for PROJECT.
+# Copyright (C) 2016 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2016-04-27 18:14+0200\n"
+"PO-Revision-Date: 2016-04-27 21:01+0200\n"
+"Language: ar\n"
+"Language-Team: ar <LL@li.org>\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n>=3 "
+"&& n<=10 ? 3 : n>=11 && n<=99 ? 4 : 5);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+"Last-Translator: \n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: webapp/forms.py:43
+msgid "BuildingID"
+msgstr "بناء ID"
+
+#: webapp/forms.py:44
+msgid "Height Value"
+msgstr "الارتفاع لقيمة"
+
+#: webapp/forms.py:45
+msgid "Construction Date"
+msgstr "التقوية الزلزالية أو الإنشاء تاريخ"
+
+#: webapp/forms.py:47
+msgid "Material Type"
+msgstr "المادة نوع"
+
+#: webapp/forms.py:48
+msgid "Material Technology"
+msgstr "المادة تقنيه"
+
+#: webapp/forms.py:49
+msgid "Material Property"
+msgstr "المادة خاصية"
+
+#: webapp/forms.py:50
+msgid "Lat. Load Res. Sys."
+msgstr "من نظام مقاومة للتحميل الجانبي"
+
+#: webapp/forms.py:51
+msgid "Height Type"
+msgstr "نوع الارتفاع"
+
+#: webapp/forms.py:52
+msgid "Construction Date Type"
+msgstr "التقوية الزلزالية أو الإنشاء تاريخ"
+
+#: webapp/forms.py:53
+msgid "Occupancy Type"
+msgstr "بشكل عام - المبنى شغالإ تصنيف"
+
+#: webapp/forms.py:54
+msgid "Occupancy Detail"
+msgstr "المبنى- تفاصيل  إشغالتصنيف"
+
+#: webapp/forms.py:55
+msgid "Exterior Walls Material"
+msgstr "لخارجيةا الجدران"
+
+#: webapp/forms.py:57
+msgid "Completed"
+msgstr "مكتملة"
+
+#: webapp/forms.py:59
+msgid "Update building"
+msgstr "حفظ بناء"
+
+#: webapp/forms.py:65
+msgid "UserID"
+msgstr "لمستعمل ID"
+
+#: webapp/forms.py:66
+msgid "TaskID"
+msgstr "مهمة ID"
+
+#: webapp/templates/map.html:145
+msgid "Selected building"
+msgstr "بناء مختار"
