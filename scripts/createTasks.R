@@ -21,12 +21,9 @@ library(sp)
 library(maptools)
 
 #database settings
-# host <- 'host'
-# dbuser <- 'user'
-# password <- 'password'
-host <- 'rz-vm161.gfz-potsdam.de'
-dbuser <- 'postgres'
-password <- 'postgres'
+host <- 'host'
+dbuser <- 'user'
+password <- 'password'
 dbname <- 'rem'
 survey_gid <- 2
 utm <- 32636
