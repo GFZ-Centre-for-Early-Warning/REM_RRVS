@@ -19,12 +19,18 @@
 		var buildingsJSON;
 	
 		//add baselayer
-		var basemap = L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
-			maxZoom: 18,
-			attribution: 'Processing &copy; <a href="http://www.gfz-potsdam.de/en/section/ews/">GFZ Potsdam - Centre for Early Warning Systems</a>' +
-						 ' | Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, ',
-			subdomains: ['otile1','otile2','otile3','otile4']
-		}).addTo(map);
+        var mapBoxHybrid = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy; Mapbox &copy; OpenStreetMap</a> <a class='mapbox-improve-map' href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a>",
+            maxZoom: 20,
+            id: 'mapbox.streets-satellite',
+            accessToken: 'xyz'
+        }).addTo(map);
+	//	var basemap = L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
+	//		maxZoom: 18,
+	//		attribution: 'Processing &copy; <a href="http://www.gfz-potsdam.de/en/section/ews/">GFZ Potsdam - Centre for Early Warning Systems</a>' +
+	//					 ' | Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, ',
+	//		subdomains: ['otile1','otile2','otile3','otile4']
+	//	}).addTo(map);
 
 		//functions for dynamic building polygon styles
 		function getColor(feature) {
