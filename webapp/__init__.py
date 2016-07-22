@@ -6,12 +6,14 @@ from flask.ext.babel import Babel
 from flask_kvsession import KVSessionExtension
 import redis
 from simplekv.memory.redisstore import RedisStore
+from datetime import timedelta
 
 
 store=RedisStore(redis.StrictRedis())
 
 app = Flask(__name__)
 app.config.from_object('rrvs_config')
+app.permanent_session_lifetime = timedelta(hours=1)
 KVSessionExtension(store, app)
 
 db = SQLAlchemy(app)
@@ -35,6 +37,15 @@ def get_locale():
     session['lang']=lang
     return lang
 
+@app.before_request
+def func():
+    session.modified = True
+
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    return redirect('/')
+
+
 if __name__== "__main__":
 
     @login_manager.user_loader
@@ -47,5 +58,13 @@ if __name__== "__main__":
         lang = request.accept_languages.best_match(['ar','en'])
         session['lang']=lang
         return lang
+    @app.before_request
+    def func():
+        session.modified = True
+
+    @login_manager.unauthorized_handler
+    def unauthorized_callback():
+        return redirect('/')
+
 
     app.run(host="0.0.0.0")

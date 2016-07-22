@@ -179,6 +179,11 @@
 		function updateMap(gid) {
 			// get feature by id
 			var e = buildingsJSON.getLayer(gid);
+			console.log(e);
+            //get zoom level and layer bounds
+            //var zl = map.getZoom();
+            //map.setView([e.latLng.lat, e.latLng.lng], zl);
+            map.fitBounds(e.getBounds());
 			// update building map styles
 			resetHighlightBuilding();
 			e.setStyle({

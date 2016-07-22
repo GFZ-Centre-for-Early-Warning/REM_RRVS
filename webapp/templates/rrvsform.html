@@ -137,7 +137,7 @@
 			$('input[name="gid_field"]').val(data[0]);
 			$('#rrvs_status_field').focus();
 			// update map and panoviewer
-			//console.log('rrvsform: ' + $('input[name="gid_field"]').val());
+			console.log('rrvsform: ' + $('input[name="gid_field"]').val());
 			var ifrm = parent.document.getElementById('ifrm2');
 			ifrm.contentWindow.updateMap($('input[name="gid_field"]').val());
 		} );

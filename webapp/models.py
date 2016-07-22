@@ -67,6 +67,17 @@ class task(db.Model):
     bdg_gids = db.Column(postgresql.ARRAY(db.Integer))
     img_ids = db.Column(postgresql.ARRAY(db.Integer))
 
+class tasks_users(db.Model):
+    """
+    Holds the assigned tasks for all users
+    """
+    __tablename__="tasks_users"
+    __table_args__ = {'schema':'users'}
+
+    user_id = db.Column(db.Integer, primary_key=True)
+    task_id = db.Column(db.Integer)
+
+
 class dic_attribute_value(db.Model):
     """
 	Holds dic_attribute_value from the taxonomy schema.
