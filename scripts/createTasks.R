@@ -34,7 +34,7 @@ user_id <- 1
 task_nr <- 10
 task_size <- 100
 #strata
-strata_dir <- '/home/mhaas/PhD/Routines/LandsatAnalysis/'
+strata_dir <- '/home/mhaas/PhD/Routines/LandsatAnalysis/Jordan/'
 strata_shp <- 'madaba_regions'
 
 
@@ -112,26 +112,54 @@ for (type in types){
 }
 
 #adjust nr of tasks if larger than possible
-task_nr <- as.integer(sum(as.numeric(weights[,3]))/task_size)
+test <- as.integer(sum(as.numeric(weights[,3]))/task_size)
+if (test < task_nr){task_nr<-test}
+
+#create building sample
+#sampling without replacement nr_s(type)=weigth(type)*task_size*task_nr
+# weight <- rep(0,length(buildings.sp))
+# for (type in types){
+#   weight[which(buildings.sp@data$sample_type==type)]<-as.double(weights[which(weights[,1]==type),2])
+# }
+
+sample_weights <- round(as.double(weights[,2])*task_size*task_nr)
+#check if unequal to intended size due to rounding
+tot_diff <- task_size*task_nr-sum(sample_weights)
+#if yes adjust the sample sizes
+if(tot_diff!=0){
+  increments <- rep(sign(tot_diff),abs(tot_diff))
+  for (i in increments){
+    diff <- abs(as.double(weights[,2])*task_size*task_nr-sample_weights)  
+    sample_weights[which(diff==max(diff))]<-sample_weights[which(diff==max(diff))]+i
+  }
+}
+
+
+# type_pop <- as.double(weights[which(weights[,1]==types[1]),3])
+# sample_size <- as.integer(task_size*weight*task_nr)
+buildings.sampled.all <- buildings.sp[sample(which(buildings.sp@data$sample_type==types[1]),size=sample_weights[1],replace=FALSE),]
+for(i in seq(2,length(types))){
+#   weight <- as.double(weights[which(weights[,1]==type),2])
+#   sample_size <- as.integer(task_size*weight*task_nr)
+   buildings.sampled.all <- spRbind(buildings.sampled.all,buildings.sp[sample(which(buildings.sp@data$sample_type==types[i]),size=sample_weights[i],replace=FALSE),])
+}
+
+#get all building ids of sampled buildings
+gids<-buildings.sampled.all$buildings.gid
 
 #create tasks (in form of buildings)
 for (i in seq(task_nr)){
-  #sampling without replacement nr_s(type)=weigth(type)*task_size
-  weight <- as.double(weights[which(weights[,1]==types[1]),2])
-  type_pop <- as.double(weights[which(weights[,1]==types[1]),3])
-  sample_size <- as.integer(task_size*weight)
-  buildings.sampled <- buildings.sp[sample(which(buildings.sp@data$sample_type==types[1]),size=sample_size,replace=FALSE),]
-  
-  for(type in types[2:length(types)]){
-    weight <- as.double(weights[which(weights[,1]==type),2])
-    sample_size <- as.integer(task_size*weight)
-    buildings.sampled <- spRbind(buildings.sampled,buildings.sp[sample(which(buildings.sp@data$sample_type==type),size=sample_size,replace=FALSE),])
-  }
   #get task id
   task_id <- sql_query("SELECT max(id) FROM users.tasks")
   if (is.na(task_id)){task_id<-1}else{task_id <- task_id+1}
+  
+  #get buildings for task
+  selected <- sample(gids,task_size,replace=FALSE)
+  #reduce gids by selected for next iteration
+  gids <- setdiff(gids,selected)
+  
   #write task to database
-  bdg_gids <- paste0("'{",paste0(buildings.sampled$buildings.gid,collapse=","),"}'")
+  bdg_gids <- paste0("'{",paste0(selected,collapse=","),"}'")
   query <- paste("INSERT INTO users.tasks(id,bdg_gids) VALUES(",task_id,",",bdg_gids,");",sep='')
   exec <- sql_query(query)
   #write images related to task to task
