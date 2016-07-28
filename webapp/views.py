@@ -10,7 +10,7 @@ Description: The main views file setting up the flask application layout, defini
 '''
 import flask
 from webapp import app, db
-from models import ve_object, dic_attribute_value, pan_imgs,gps, User, task
+from models import ve_object, dic_attribute_value, pan_imgs,gps, User, task, tasks_users
 from forms import RrvsForm, RrvsForm_ar,LoginForm
 from flask.ext.security import login_required, login_user, logout_user
 import geoalchemy2.functions as func
@@ -40,6 +40,11 @@ from geojson import Feature, FeatureCollection, dumps
 #    else:
 #        return input
 
+@app.before_request
+def check_login():
+    if flask.request.endpoint == 'static' and not flask.current_user.is_authenticated():
+        abort(401)
+    return None
 
 #######################################
 # Login landing page
@@ -48,9 +53,19 @@ from geojson import Feature, FeatureCollection, dumps
 def login():
     """For GET requests, display the login form. For POSTS, login the current user
     by processing the form and storing the taskid."""
+    msg=''
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.get(int(form.userid.data))
+        try:
+            user = User.query.get(int(form.userid.data))
+        except:
+            user = False
+        #check if task id belongs to user
+        try:
+            task_id = tasks_users.query.filter_by(task_id=form.taskid.data).first()
+            1/(task_id.user_id==user.id)
+        except:
+            user = False
         if user:
             user.authenticated = True
             db.session.add(user)
@@ -67,7 +82,9 @@ def login():
             flask.session['screened'] = [False]*len(flask.session['bdg_gids'])
             #language is set in babel locale in __init__.py
             return flask.redirect(flask.url_for("main"))
-    return flask.render_template("index.htm", form=form)
+        else:
+            msg='Wrong combination of UserID and TaskID'
+    return flask.render_template("index.htm", form=form,msg=msg)
 
 @app.route("/logout", methods=["GET"])
 def logout():
@@ -91,6 +108,7 @@ def main():
     return flask.render_template('main.htm')
 
 @app.route('/map')
+@login_required
 def map():
     """
 	This will render a template that holds the map.
@@ -123,6 +141,7 @@ def map():
     return flask.render_template('map.html',bdgs=bdgs_json,gps=gps_json)
 
 @app.route('/pannellum')
+@login_required
 def pannellum():
     """
     This will render a template that holds the panoimage viewer.
@@ -130,6 +149,7 @@ def pannellum():
     return flask.render_template('pannellum.htm')
 
 @app.route('/_update_rrvsform')
+@login_required
 def update_rrvsform():
     """
 	This updates the values of the rrvsform fields using jQuery. The function sends a json
@@ -191,6 +211,7 @@ def update_rrvsform():
 	)
 
 @app.route('/rrvsform', methods=['GET', 'POST'])
+@login_required
 def rrvsform():
     """
 	This renders a template that displays all of the form objects if it's
