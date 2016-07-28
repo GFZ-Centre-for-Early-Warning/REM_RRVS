@@ -15,18 +15,20 @@ populating the database and creating tasks).
 The installation as described here for Ubuntu 14.04, but should be similar on other linux distributions.
 In order to run the application locally do the following:
 
-###A) Setup virtualenvironment and add the project source code
-1. $ sudo pip install virtualenv
-2. go to root of project folder and run $ virtualenv venv 
+###A) Setup the project source code
+We recommend using a virtual python environment, but you can also skip step 2-4.
+1. Get a copy of the source code git clone https://github.com/GFZ-Centre-for-Early-Warning/REM_RRVS
+2. $ sudo pip install virtualenv
+3. go to root of project folder (usally the webfolder e.g. "/var/www/rrvs") and run $ virtualenv venv 
    this creates a new folder venv to hold the virtualenvironment
-3. run $ venv/bin/activate to start the enviroment ($ deactivate to stop it)  
+4. run $ venv/bin/activate to start the enviroment ($ deactivate to stop it)  
    now you can install python libraries localy in a virtual environment 
    not affecting the host systems python libraries.
-4. $ venv/bin/pip install Flask Flask-WTF Flask-SQLAlchemy Flask-Security Flask-Login Flask-RESTful flask-kvsession geoalchemy2 geojson redis
 5. sudo apt-get install redis (used for server-side caching)
-5. copy the rrvstool folder that holds the flask application into the the venv directory
+6. Use $pip install -r python-requirements.txt 
+7. Adjust the rrvs_config.py.example and save it as rrvs_config.py
 
-###B) Setup the database**
+###B) Setup the database
 For production:
 1. Create and connect to a database e.g. called rem on the server (or adjust the name accordingly in the rrvs_config.py)
 2. run the templating script for a rem database from within the database (https://github.com/GFZ-Centre-for-Early-Warning/REM_DBschema)
