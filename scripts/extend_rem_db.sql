@@ -669,3 +669,16 @@ INSERT INTO dic_attribute_type (gid, code, description) VALUES (28,'RRVS_STATUS'
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (387,'RRVS_STATUS','MODIFIED','Asset has been modified by RRVS');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (388,'RRVS_STATUS','COMPLETED','Asset has been completed by RRVS');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (386,'RRVS_STATUS','UNMODIFIED','Default RRVS processing status');
+
+---
+--- Michael: Extension during DESERVE
+---
+INSERT INTO dic_attribute_type (gid, code, description) VALUES (29,'COMMENT','Comment by analyst');
+
+
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (389,'OCCUPY','CON','Under construction');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (390,'OCCUPY','VAC','Vacant building');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (391,'COMMENT','COMMENT','Comment by the analyst');
+
+
+
