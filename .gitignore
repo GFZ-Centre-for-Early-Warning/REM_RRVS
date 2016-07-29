@@ -8,3 +8,5 @@ webapp/static/panoimg/*.jpg
 *.project
 *.pydevproject
 *.settings/
+#ignore config
+rrvs_config.py

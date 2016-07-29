@@ -35,7 +35,7 @@ For production:
 3. run the extend_rem_db.sql script to extend the schema for the rrvs functionality
 **THE ORDER FOR THE FOLLOWING MATTERS!**
 4. populate the database with image and survey information (metadata.sql files as created with PERManEnt makalu.gfz-potsdam.de:/media/EWC/git/permanent.git)
-5. populate the database with assets (building footprints) by using fp2rem_db.py
+5. populate the database with assets (building footprints) by using fp2rem_db.py and importing the resulting sql file fp2rem.sql
 6. create users in the users schema of the database see e.g. Users.sql
 7. create tasks for the analysis, there is an R-script for doing so based on a stratification available as a shapefile (rrvsTask.R)
 
@@ -157,7 +157,7 @@ A short step-by-step guideline on how to add a new QuerySelectField to the datae
    ('select[name="mat_type_field"]').val(data.mat_type_gid);
    ```
 
-4. routes.py: 
+4. views.py: 
    in update_rrvsform() define the query attribute_value for the select fields 
    ```python 
    mat_type_val = ve_resolution1.query.filter_by(gid=gid_val).first().mat_type

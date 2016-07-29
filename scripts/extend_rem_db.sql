@@ -1,4 +1,23 @@
-CREATE SCHEMA users;
+﻿CREATE SCHEMA users;
+
+SET search_path = taxonomy, pg_catalog;
+
+---
+--- Michael: Extension during DESERVE
+---
+INSERT INTO dic_attribute_type (gid, code, description) VALUES (29,'COMMENT','Comment by analyst');
+INSERT INTO dic_attribute_type (gid, code, description) VALUES (30,'HEIGHT2','Second height value');
+INSERT INTO dic_attribute_type (gid, code, description) VALUES (31,'STR_IRREG_2','Second structural irregularity');
+INSERT INTO dic_attribute_type (gid, code, description) VALUES (32,'STR_IRREG_DT_2','Second structural irregularity detail');
+INSERT INTO dic_attribute_type (gid, code, description) VALUES (33,'STR_IRREG_TYPE_2','Second structural irregularity type');
+
+
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (389,'OCCUPY','CON','Under construction');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (390,'OCCUPY','VAC','Vacant building');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (391,'COMMENT','COMMENT','Comment by the analyst');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (392,'HEIGHT','HB99','Number of storeys below ground unknown');
+
+---
 
 SET search_path = asset, pg_catalog;
 
@@ -18,14 +37,18 @@ BEGIN
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'LLRS', NEW.llrs);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'LLRS_DUCT', NEW.llrs_duct);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value, attribute_numeric_1, attribute_numeric_2) VALUES ((SELECT max(gid) FROM asset.object), 'HEIGHT', NEW.height, NEW.height_1, NEW.height_2);
+       INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value, attribute_numeric_1, attribute_numeric_2) VALUES ((SELECT max(gid) FROM asset.object), 'HEIGHT2', NEW.height2, NEW.height2_1, NEW.height2_2);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'YR_BUILT', NEW.yr_built);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'OCCUPY', NEW.occupy);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'OCCUPY_DT', NEW.occupy_dt);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'POSITION', NEW."position");
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'PLAN_SHAPE', NEW.plan_shape);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'STR_IRREG', NEW.str_irreg);
+       INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'STR_IRREG_2', NEW.str_irreg_2);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'STR_IRREG_DT', NEW.str_irreg_dt);
+       INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'STR_IRREG_DT_2', NEW.str_irreg_dt_2);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'STR_IRREG_TYPE', NEW.str_irreg_type);
+       INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'STR_IRREG_TYPE_2', NEW.str_irreg_type_2);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'NONSTRCEXW', NEW.nonstrcexw);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'ROOF_SHAPE', NEW.roof_shape);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'ROOFCOVMAT', NEW.roofcovmat);
@@ -39,6 +62,7 @@ BEGIN
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'BUILD_TYPE', NEW.build_type);       
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'BUILD_SUBTYPE', NEW.build_subtype);       
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'RRVS_STATUS', NEW.rrvs_status);
+       INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'COMMENT', NEW.comment);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value, attribute_numeric_1, attribute_numeric_2) VALUES ((SELECT max(gid) FROM asset.object), 'VULN', NEW.vuln, NEW.vuln_1, NEW.vuln_2);       
        
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='MAT_TYPE'), 'BELIEF', 'BP', NEW.mat_type_bp);
@@ -47,14 +71,18 @@ BEGIN
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='LLRS'), 'BELIEF', 'BP', NEW.llrs_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='LLRS_DUCT'), 'BELIEF', 'BP', NEW.llrs_duct_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='HEIGHT'), 'BELIEF', 'BP', NEW.height_bp);
+       INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='HEIGHT2'), 'BELIEF', 'BP', NEW.height2_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='YR_BUILT'), 'BELIEF', 'BP', NEW.yr_built_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='OCCUPY'), 'BELIEF', 'BP', NEW.occupy_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='OCCUPY_DT'), 'BELIEF', 'BP', NEW.occupy_dt_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='POSITION'), 'BELIEF', 'BP', NEW.position_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='PLAN_SHAPE'), 'BELIEF', 'BP', NEW.plan_shape_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='STR_IRREG'), 'BELIEF', 'BP', NEW.str_irreg_bp);
+       INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='STR_IRREG_2'), 'BELIEF', 'BP', NEW.str_irreg_2_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='STR_IRREG_DT'), 'BELIEF', 'BP', NEW.str_irreg_dt_bp);
+       INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='STR_IRREG_DT_2'), 'BELIEF', 'BP', NEW.str_irreg_dt_2_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='STR_IRREG_TYPE'), 'BELIEF', 'BP', NEW.str_irreg_type_bp);
+       INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='STR_IRREG_TYPE_2'), 'BELIEF', 'BP', NEW.str_irreg_type_2_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='NONSTRCEXW'), 'BELIEF', 'BP', NEW.nonstrcexw_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='ROOF_SHAPE'), 'BELIEF', 'BP', NEW.roof_shape_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='ROOFCOVMAT'), 'BELIEF', 'BP', NEW.roofcovmat_bp);
@@ -76,14 +104,18 @@ BEGIN
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='LLRS'), 'SOURCE', NEW.llrs_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='LLRS_DUCT'), 'SOURCE', NEW.llrs_duct_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='HEIGHT'), 'SOURCE', NEW.height_src);
+       INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='HEIGHT2'), 'SOURCE', NEW.height2_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='YR_BUILT'), 'SOURCE', NEW.yr_built_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='OCCUPY'), 'SOURCE', NEW.occupy_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='OCCUPY_DT'), 'SOURCE', NEW.occupy_dt_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='POSITION'), 'SOURCE', NEW.position_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='PLAN_SHAPE'), 'SOURCE', NEW.plan_shape_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='STR_IRREG'), 'SOURCE', NEW.str_irreg_src);
+       INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='STR_IRREG_2'), 'SOURCE', NEW.str_irreg_2_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='STR_IRREG_DT'), 'SOURCE', NEW.str_irreg_dt_src);
+       INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='STR_IRREG_DT_2'), 'SOURCE', NEW.str_irreg_dt_2_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='STR_IRREG_TYPE'), 'SOURCE', NEW.str_irreg_type_src);
+       INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='STR_IRREG_TYPE_2'), 'SOURCE', NEW.str_irreg_type_2_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='NONSTRCEXW'), 'SOURCE', NEW.nonstrcexw_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='ROOF_SHAPE'), 'SOURCE', NEW.roof_shape_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='ROOFCOVMAT'), 'SOURCE', NEW.roofcovmat_src);
@@ -110,14 +142,18 @@ BEGIN
        UPDATE asset.object_attribute SET attribute_value=NEW.llrs WHERE object_id=OLD.gid AND attribute_type_code='LLRS';    
        UPDATE asset.object_attribute SET attribute_value=NEW.llrs_duct WHERE object_id=OLD.gid AND attribute_type_code='LLRS_DUCT';
        UPDATE asset.object_attribute SET attribute_value=NEW.height WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT';
+       UPDATE asset.object_attribute SET attribute_value=NEW.height2 WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT2';
        UPDATE asset.object_attribute SET attribute_value=NEW.yr_built WHERE object_id=OLD.gid AND attribute_type_code='YR_BUILT';
        UPDATE asset.object_attribute SET attribute_value=NEW.occupy WHERE object_id=OLD.gid AND attribute_type_code='OCCUPY';
        UPDATE asset.object_attribute SET attribute_value=NEW.occupy_dt WHERE object_id=OLD.gid AND attribute_type_code='OCCUPY_DT';
        UPDATE asset.object_attribute SET attribute_value=NEW."position" WHERE object_id=OLD.gid AND attribute_type_code='POSITION';    
        UPDATE asset.object_attribute SET attribute_value=NEW.plan_shape WHERE object_id=OLD.gid AND attribute_type_code='PLAN_SHAPE';
        UPDATE asset.object_attribute SET attribute_value=NEW.str_irreg WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG';
+       UPDATE asset.object_attribute SET attribute_value=NEW.str_irreg_2 WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_2';
        UPDATE asset.object_attribute SET attribute_value=NEW.str_irreg_dt WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_DT';
+       UPDATE asset.object_attribute SET attribute_value=NEW.str_irreg_dt_2 WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_DT_2';
        UPDATE asset.object_attribute SET attribute_value=NEW.str_irreg_type WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_TYPE';
+       UPDATE asset.object_attribute SET attribute_value=NEW.str_irreg_type_2 WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_TYPE_2';
        UPDATE asset.object_attribute SET attribute_value=NEW.nonstrcexw WHERE object_id=OLD.gid AND attribute_type_code='NONSTRCEXW';
        UPDATE asset.object_attribute SET attribute_value=NEW.roof_shape WHERE object_id=OLD.gid AND attribute_type_code='ROOF_SHAPE';    
        UPDATE asset.object_attribute SET attribute_value=NEW.roofcovmat WHERE object_id=OLD.gid AND attribute_type_code='ROOFCOVMAT';
@@ -130,11 +166,14 @@ BEGIN
        UPDATE asset.object_attribute SET attribute_value=NEW.build_type WHERE object_id=OLD.gid AND attribute_type_code='BUILD_TYPE';
        UPDATE asset.object_attribute SET attribute_value=NEW.build_subtype WHERE object_id=OLD.gid AND attribute_type_code='BUILD_SUBTYPE';
        UPDATE asset.object_attribute SET attribute_value=NEW.rrvs_status WHERE object_id=OLD.gid AND attribute_type_code='RRVS_STATUS';
+       UPDATE asset.object_attribute SET attribute_value=NEW.comment WHERE object_id=OLD.gid AND attribute_type_code='COMMENT';
        UPDATE asset.object_attribute SET attribute_value=NEW.vuln WHERE object_id=OLD.gid AND attribute_type_code='VULN';
        UPDATE asset.object_attribute SET attribute_numeric_1=NEW.vuln_1 WHERE object_id=OLD.gid AND attribute_type_code='VULN';
        UPDATE asset.object_attribute SET attribute_numeric_2=NEW.vuln_2 WHERE object_id=OLD.gid AND attribute_type_code='VULN';
        UPDATE asset.object_attribute SET attribute_numeric_1=NEW.height_1 WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT';
        UPDATE asset.object_attribute SET attribute_numeric_2=NEW.height_2 WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT';
+       UPDATE asset.object_attribute SET attribute_numeric_1=NEW.height2_1 WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT2';
+       UPDATE asset.object_attribute SET attribute_numeric_2=NEW.height2_2 WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT2';
 
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.mat_type_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='MAT_TYPE') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.mat_tech_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='MAT_TECH') AND qualifier_type_code='BELIEF';
@@ -142,14 +181,18 @@ BEGIN
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.llrs_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='LLRS') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.llrs_duct_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='LLRS_DUCT') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.height_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT') AND qualifier_type_code='BELIEF';
+       UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.height2_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT2') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.yr_built_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='YR_BUILT') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.occupy_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='OCCUPY') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.occupy_dt_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='OCCUPY_DT') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.position_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='POSITION') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.plan_shape_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='PLAN_SHAPE') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.str_irreg_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG') AND qualifier_type_code='BELIEF';
+       UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.str_irreg_2_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_2') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.str_irreg_dt_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_DT') AND qualifier_type_code='BELIEF';
+       UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.str_irreg_dt_2_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_DT_2') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.str_irreg_type_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_TYPE') AND qualifier_type_code='BELIEF';
+       UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.str_irreg_type_2_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_TYPE_2') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.nonstrcexw_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='NONSTRCEXW') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.roof_shape_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='ROOF_SHAPE') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.roofcovmat_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='ROOFCOVMAT') AND qualifier_type_code='BELIEF';
@@ -172,14 +215,18 @@ BEGIN
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.llrs_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='LLRS') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.llrs_duct_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='LLRS_DUCT') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.height_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT') AND qualifier_type_code='SOURCE';
+       UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.height2_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT2') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.yr_built_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='YR_BUILT') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.occupy_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='OCCUPY') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.occupy_dt_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='OCCUPY_DT') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.position_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='POSITION') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.plan_shape_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='PLAN_SHAPE') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.str_irreg_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG') AND qualifier_type_code='SOURCE';
+       UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.str_irreg_2_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_2') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.str_irreg_dt_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_DT') AND qualifier_type_code='SOURCE';
+       UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.str_irreg_dt_2_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_DT_2') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.str_irreg_type_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_TYPE') AND qualifier_type_code='SOURCE';
+       UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.str_irreg_type_2_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='STR_IRREG_TYPE_2') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.nonstrcexw_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='NONSTRCEXW') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.roof_shape_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='ROOF_SHAPE') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.roofcovmat_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='ROOFCOVMAT') AND qualifier_type_code='SOURCE';
@@ -238,6 +285,7 @@ CREATE VIEW v_object_data AS
     b.llrs,
     b.llrs_duct,
     b.height,
+    b.height2,
     b.yr_built,
     b.occupy,
     b.occupy_dt,
@@ -246,6 +294,9 @@ CREATE VIEW v_object_data AS
     b.str_irreg,
     b.str_irreg_dt,
     b.str_irreg_type,
+    b.str_irreg_2,
+    b.str_irreg_dt_2,
+    b.str_irreg_type_2,
     b.nonstrcexw,
     b.roof_shape,
     b.roofcovmat,
@@ -259,10 +310,13 @@ CREATE VIEW v_object_data AS
     b.build_type,
     b.build_subtype,
     b.vuln,
+    b."comment",
     e.vuln_1,
     e.vuln_2,
     c.height_1,
     c.height_2,
+    c.height2_1,
+    c.height2_2,
     d.yr_built_vt,
     d.yr_built_vt1
    FROM ((((object a
@@ -273,6 +327,7 @@ CREATE VIEW v_object_data AS
             ct.llrs,
             ct.llrs_duct,
             ct.height,
+            ct.height2,
             ct.yr_built,
             ct.occupy,
             ct.occupy_dt,
@@ -281,6 +336,9 @@ CREATE VIEW v_object_data AS
             ct.str_irreg,
             ct.str_irreg_dt,
             ct.str_irreg_type,
+            ct.str_irreg_2,
+            ct.str_irreg_dt_2,
+            ct.str_irreg_type_2,
             ct.nonstrcexw,
             ct.roof_shape,
             ct.roofcovmat,
@@ -294,11 +352,14 @@ CREATE VIEW v_object_data AS
             ct.build_type,
             ct.build_subtype,
             ct.vuln,
+            ct."comment",
             ct.rrvs_status
-           FROM public.crosstab('SELECT object_id, attribute_type_code, attribute_value FROM asset.object_attribute order by object_id'::text, 'select code from taxonomy.dic_attribute_type order by gid'::text) ct(object_id integer, mat_type character varying, mat_tech character varying, mat_prop character varying, llrs character varying, llrs_duct character varying, height character varying, yr_built character varying, occupy character varying, occupy_dt character varying, "position" character varying, plan_shape character varying, str_irreg character varying, str_irreg_dt character varying, str_irreg_type character varying, nonstrcexw character varying, roof_shape character varying, roofcovmat character varying, roofsysmat character varying, roofsystyp character varying, roof_conn character varying, floor_mat character varying, floor_type character varying, floor_conn character varying, foundn_sys character varying, build_type character varying, build_subtype character varying, vuln character varying, rrvs_status character varying)) b ON ((a.gid = b.object_id)))
+           FROM public.crosstab('SELECT object_id, attribute_type_code, attribute_value FROM asset.object_attribute order by object_id'::text, 'select code from taxonomy.dic_attribute_type order by gid'::text) ct(object_id integer, mat_type character varying, mat_tech character varying, mat_prop character varying, llrs character varying, llrs_duct character varying, height character varying, height2 character varying, yr_built character varying, occupy character varying, occupy_dt character varying, "position" character varying, plan_shape character varying, str_irreg character varying, str_irreg_dt character varying, str_irreg_type character varying, str_irreg_2 character varying, str_irreg_dt_2 character varying, str_irreg_type_2 character varying, nonstrcexw character varying, roof_shape character varying, roofcovmat character varying, roofsysmat character varying, roofsystyp character varying, roof_conn character varying, floor_mat character varying, floor_type character varying, floor_conn character varying, foundn_sys character varying, build_type character varying, build_subtype character varying, vuln character varying, "comment" character varying, rrvs_status character varying)) b ON ((a.gid = b.object_id)))
      LEFT JOIN ( SELECT object_attribute.object_id,
             object_attribute.attribute_numeric_1 AS height_1,
-            object_attribute.attribute_numeric_2 AS height_2
+            object_attribute.attribute_numeric_1 AS height2_1,
+            object_attribute.attribute_numeric_2 AS height_2,
+            object_attribute.attribute_numeric_2 AS height2_2
            FROM object_attribute object_attribute
           WHERE ((object_attribute.attribute_type_code)::text = 'HEIGHT'::text)) c ON ((a.gid = c.object_id)))
      LEFT JOIN ( SELECT sub.object_id,
@@ -343,6 +404,7 @@ CREATE VIEW ve_object AS
     b.llrs,
     b.llrs_duct,
     b.height,
+    b.height2,
     b.yr_built,
     b.occupy,
     b.occupy_dt,
@@ -351,6 +413,9 @@ CREATE VIEW ve_object AS
     b.str_irreg,
     b.str_irreg_dt,
     b.str_irreg_type,
+    b.str_irreg_2,
+    b.str_irreg_dt_2,
+    b.str_irreg_type_2,
     b.nonstrcexw,
     b.roof_shape,
     b.roofcovmat,
@@ -364,11 +429,14 @@ CREATE VIEW ve_object AS
     b.build_type,
     b.build_subtype,
     b.vuln,
+    b."comment",
     b.rrvs_status,
     f.vuln_1,
     f.vuln_2,
     c.height_1,
     c.height_2,
+    c.height2_1,
+    c.height2_2,
     d.object_id1,
     d.mat_type_bp,
     d.mat_tech_bp,
@@ -376,6 +444,7 @@ CREATE VIEW ve_object AS
     d.llrs_bp,
     d.llrs_duct_bp,
     d.height_bp,
+    d.height2_bp,
     d.yr_built_bp,
     d.occupy_bp,
     d.occupy_dt_bp,
@@ -384,6 +453,9 @@ CREATE VIEW ve_object AS
     d.str_irreg_bp,
     d.str_irreg_dt_bp,
     d.str_irreg_type_bp,
+    d.str_irreg_2_bp,
+    d.str_irreg_dt_2_bp,
+    d.str_irreg_type_2_bp,
     d.nonstrcexw_bp,
     d.roof_shape_bp,
     d.roofcovmat_bp,
@@ -406,6 +478,7 @@ CREATE VIEW ve_object AS
     g.llrs_src,
     g.llrs_duct_src,
     g.height_src,
+    g.height2_src,
     g.yr_built_src,
     g.occupy_src,
     g.occupy_dt_src,
@@ -414,6 +487,9 @@ CREATE VIEW ve_object AS
     g.str_irreg_src,
     g.str_irreg_dt_src,
     g.str_irreg_type_src,
+    g.str_irreg_2_src,
+    g.str_irreg_dt_2_src,
+    g.str_irreg_type_2_src,
     g.nonstrcexw_src,
     g.roof_shape_src,
     g.roofcovmat_src,
@@ -435,6 +511,7 @@ CREATE VIEW ve_object AS
             ct.llrs,
             ct.llrs_duct,
             ct.height,
+            ct.height2,
             ct.yr_built,
             ct.occupy,
             ct.occupy_dt,
@@ -443,6 +520,9 @@ CREATE VIEW ve_object AS
             ct.str_irreg,
             ct.str_irreg_dt,
             ct.str_irreg_type,
+            ct.str_irreg_2,
+            ct.str_irreg_dt_2,
+            ct.str_irreg_type_2,
             ct.nonstrcexw,
             ct.roof_shape,
             ct.roofcovmat,
@@ -456,11 +536,26 @@ CREATE VIEW ve_object AS
             ct.build_type,
             ct.build_subtype,
             ct.vuln,
+            ct."comment",
             ct.rrvs_status
-           FROM public.crosstab('SELECT object_id, attribute_type_code, attribute_value FROM asset.object_attribute order by object_id'::text, 'select code from taxonomy.dic_attribute_type order by gid'::text) ct(object_id integer, mat_type character varying, mat_tech character varying, mat_prop character varying, llrs character varying, llrs_duct character varying, height character varying, yr_built character varying, occupy character varying, occupy_dt character varying, "position" character varying, plan_shape character varying, str_irreg character varying, str_irreg_dt character varying, str_irreg_type character varying, nonstrcexw character varying, roof_shape character varying, roofcovmat character varying, roofsysmat character varying, roofsystyp character varying, roof_conn character varying, floor_mat character varying, floor_type character varying, floor_conn character varying, foundn_sys character varying, build_type character varying, build_subtype character varying, vuln character varying, rrvs_status character varying)) b ON ((a.gid = b.object_id)))
+           FROM public.crosstab('SELECT object_id, attribute_type_code, attribute_value FROM asset.object_attribute order by object_id'::text, 'select code from taxonomy.dic_attribute_type order by gid'::text) 
+				ct(object_id integer, mat_type character varying, mat_tech character varying, 
+				   mat_prop character varying, llrs character varying, llrs_duct character varying, 
+				   height character varying, height2 character varying, yr_built character varying, 
+				   occupy character varying, occupy_dt character varying, "position" character varying, plan_shape character varying,
+				   str_irreg character varying, str_irreg_dt character varying, str_irreg_type character varying,
+				   str_irreg_2 character varying, str_irreg_dt_2 character varying, str_irreg_type_2 character varying, 
+				   nonstrcexw character varying, roof_shape character varying, roofcovmat character varying, 
+				   roofsysmat character varying, roofsystyp character varying, roof_conn character varying, 
+				   floor_mat character varying, floor_type character varying, floor_conn character varying, 
+				   foundn_sys character varying, build_type character varying, build_subtype character varying, 
+				   vuln character varying, "comment" character varying, rrvs_status character varying)) b 
+				   ON ((a.gid = b.object_id)))
      LEFT JOIN ( SELECT object_attribute.object_id,
             object_attribute.attribute_numeric_1 AS height_1,
-            object_attribute.attribute_numeric_2 AS height_2
+            object_attribute.attribute_numeric_2 AS height_2,
+            object_attribute.attribute_numeric_1 AS height2_1,
+            object_attribute.attribute_numeric_2 AS height2_2
            FROM object_attribute object_attribute
           WHERE ((object_attribute.attribute_type_code)::text = 'HEIGHT'::text)) c ON ((a.gid = c.object_id)))
      JOIN ( SELECT a_1.object_id1,
@@ -470,6 +565,7 @@ CREATE VIEW ve_object AS
             a_1.llrs_bp,
             a_1.llrs_duct_bp,
             a_1.height_bp,
+            a_1.height2_bp,
             a_1.yr_built_bp,
             a_1.occupy_bp,
             a_1.occupy_dt_bp,
@@ -478,6 +574,9 @@ CREATE VIEW ve_object AS
             a_1.str_irreg_bp,
             a_1.str_irreg_dt_bp,
             a_1.str_irreg_type_bp,
+            a_1.str_irreg_2_bp,
+            a_1.str_irreg_dt_2_bp,
+            a_1.str_irreg_type_2_bp,
             a_1.nonstrcexw_bp,
             a_1.roof_shape_bp,
             a_1.roofcovmat_bp,
@@ -491,10 +590,20 @@ CREATE VIEW ve_object AS
             a_1.build_type_bp,
             a_1.build_subtype_bp,
             a_1.vuln_bp,
+            a_1.comment_bp,
             a_1.rrvs_status_bp
            FROM public.crosstab('SELECT object_id, attribute_type_code, qualifier_numeric_1 FROM (SELECT * FROM asset.object_attribute as a
                 JOIN (SELECT * FROM asset.object_attribute_qualifier WHERE qualifier_type_code=''BELIEF'') as b
-                ON (a.gid = b.attribute_id)) sub ORDER BY object_id'::text, 'SELECT code from taxonomy.dic_attribute_type order by gid'::text) a_1(object_id1 integer, mat_type_bp integer, mat_tech_bp integer, mat_prop_bp integer, llrs_bp integer, llrs_duct_bp integer, height_bp integer, yr_built_bp integer, occupy_bp integer, occupy_dt_bp integer, position_bp integer, plan_shape_bp integer, str_irreg_bp integer, str_irreg_dt_bp integer, str_irreg_type_bp integer, nonstrcexw_bp integer, roof_shape_bp integer, roofcovmat_bp integer, roofsysmat_bp integer, roofsystyp_bp integer, roof_conn_bp integer, floor_mat_bp integer, floor_type_bp integer, floor_conn_bp integer, foundn_sys_bp integer, build_type_bp integer, build_subtype_bp integer, vuln_bp integer, rrvs_status_bp integer)) d ON ((a.gid = d.object_id1)))
+                ON (a.gid = b.attribute_id)) sub ORDER BY object_id'::text, 'SELECT code from taxonomy.dic_attribute_type order by gid'::text) 
+                a_1(object_id1 integer, mat_type_bp integer, mat_tech_bp integer, mat_prop_bp integer, llrs_bp integer, 
+		    llrs_duct_bp integer, height_bp integer, height2_bp integer, yr_built_bp integer, occupy_bp integer,
+		    occupy_dt_bp integer, position_bp integer, plan_shape_bp integer, 
+		    str_irreg_bp integer, str_irreg_dt_bp integer, str_irreg_type_bp integer,
+		    str_irreg_2_bp integer, str_irreg_dt_2_bp integer, str_irreg_type_2_bp integer, 
+		    nonstrcexw_bp integer, roof_shape_bp integer, roofcovmat_bp integer, roofsysmat_bp integer, 
+		    roofsystyp_bp integer, roof_conn_bp integer, floor_mat_bp integer, floor_type_bp integer, 
+		    floor_conn_bp integer, foundn_sys_bp integer, build_type_bp integer, build_subtype_bp integer, 
+		    vuln_bp integer, comment_bp integer, rrvs_status_bp integer)) d ON ((a.gid = d.object_id1)))
      LEFT JOIN ( SELECT sub.object_id,
             sub.qualifier_value AS yr_built_vt,
             sub.qualifier_timestamp_1 AS yr_built_vt1
@@ -528,6 +637,7 @@ CREATE VIEW ve_object AS
             ct.llrs_src,
             ct.llrs_duct_src,
             ct.height_src,
+            ct.height2_src,
             ct.yr_built_src,
             ct.occupy_src,
             ct.occupy_dt_src,
@@ -536,6 +646,9 @@ CREATE VIEW ve_object AS
             ct.str_irreg_src,
             ct.str_irreg_dt_src,
             ct.str_irreg_type_src,
+            ct.str_irreg_2_src,
+            ct.str_irreg_dt_2_src,
+            ct.str_irreg_type_2_src,
             ct.nonstrcexw_src,
             ct.roof_shape_src,
             ct.roofcovmat_src,
@@ -549,10 +662,23 @@ CREATE VIEW ve_object AS
             ct.build_type_src,
             ct.build_subtype_src,
             ct.vuln_src,
+            ct.comment_src,
             ct.rrvs_status_src
            FROM public.crosstab('SELECT object_id, attribute_type_code, qualifier_value FROM (SELECT * FROM asset.object_attribute as a
                 JOIN (SELECT * FROM asset.object_attribute_qualifier WHERE qualifier_type_code=''SOURCE'') as b
-                ON (a.gid = b.attribute_id)) sub ORDER BY object_id'::text, 'SELECT code from taxonomy.dic_attribute_type order by gid'::text) ct(object_id2 integer, mat_type_src character varying, mat_tech_src character varying, mat_prop_src character varying, llrs_src character varying, llrs_duct_src character varying, height_src character varying, yr_built_src character varying, occupy_src character varying, occupy_dt_src character varying, position_src character varying, plan_shape_src character varying, str_irreg_src character varying, str_irreg_dt_src character varying, str_irreg_type_src character varying, nonstrcexw_src character varying, roof_shape_src character varying, roofcovmat_src character varying, roofsysmat_src character varying, roofsystyp_src character varying, roof_conn_src character varying, floor_mat_src character varying, floor_type_src character varying, floor_conn_src character varying, foundn_sys_src character varying, build_type_src character varying, build_subtype_src character varying, vuln_src character varying, rrvs_status_src character varying)) g ON ((a.gid = g.object_id2)))
+                ON (a.gid = b.attribute_id)) sub ORDER BY object_id'::text, 'SELECT code from taxonomy.dic_attribute_type order by gid'::text) 
+                ct(object_id2 integer, mat_type_src character varying, mat_tech_src character varying, mat_prop_src character varying, 
+		   llrs_src character varying, llrs_duct_src character varying, height_src character varying, 
+		   height2_src character varying, yr_built_src character varying, occupy_src character varying, 
+		   occupy_dt_src character varying, position_src character varying, plan_shape_src character varying, 
+		   str_irreg_src character varying, str_irreg_dt_src character varying, str_irreg_type_src character varying, 
+		   str_irreg_2_src character varying, str_irreg_dt_2_src character varying, str_irreg_type_2_src character varying,
+		   nonstrcexw_src character varying, roof_shape_src character varying, roofcovmat_src character varying, 
+		   roofsysmat_src character varying, roofsystyp_src character varying, roof_conn_src character varying, 
+		   floor_mat_src character varying, floor_type_src character varying, floor_conn_src character varying, 
+		   foundn_sys_src character varying, build_type_src character varying, build_subtype_src character varying, 
+		   vuln_src character varying, comment_src character varying, rrvs_status_src character varying)) g 
+		   ON ((a.gid = g.object_id2)))
   ORDER BY a.gid;
 
 ALTER VIEW ve_object ALTER COLUMN mat_type SET DEFAULT 'MAT99'::character varying;
@@ -566,6 +692,8 @@ ALTER VIEW ve_object ALTER COLUMN llrs SET DEFAULT 'L99'::character varying;
 ALTER VIEW ve_object ALTER COLUMN llrs_duct SET DEFAULT 'DU99'::character varying;
 
 ALTER VIEW ve_object ALTER COLUMN height SET DEFAULT 'H99'::character varying;
+
+ALTER VIEW ve_object ALTER COLUMN height2 SET DEFAULT 'HB99'::character varying;
 
 ALTER VIEW ve_object ALTER COLUMN yr_built SET DEFAULT 'Y99'::character varying;
 
@@ -582,6 +710,12 @@ ALTER VIEW ve_object ALTER COLUMN str_irreg SET DEFAULT 'IR99'::character varyin
 ALTER VIEW ve_object ALTER COLUMN str_irreg_dt SET DEFAULT 'IRP99'::character varying;
 
 ALTER VIEW ve_object ALTER COLUMN str_irreg_type SET DEFAULT 'IRT99'::character varying;
+
+ALTER VIEW ve_object ALTER COLUMN str_irreg_2 SET DEFAULT 'IRRE'::character varying;
+
+ALTER VIEW ve_object ALTER COLUMN str_irreg_dt_2 SET DEFAULT 'IRPP'::character varying;
+
+ALTER VIEW ve_object ALTER COLUMN str_irreg_type_2 SET DEFAULT 'IRN'::character varying;
 
 ALTER VIEW ve_object ALTER COLUMN nonstrcexw SET DEFAULT 'EW99'::character varying;
 
@@ -670,15 +804,4 @@ INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, desc
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (388,'RRVS_STATUS','COMPLETED','Asset has been completed by RRVS');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (386,'RRVS_STATUS','UNMODIFIED','Default RRVS processing status');
 
----
---- Michael: Extension during DESERVE
----
-INSERT INTO dic_attribute_type (gid, code, description) VALUES (29,'COMMENT','Comment by analyst');
-
-
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (389,'OCCUPY','CON','Under construction');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (390,'OCCUPY','VAC','Vacant building');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (391,'COMMENT','COMMENT','Comment by the analyst');
-
-
-
+SET search_path = public, pg_catalog;

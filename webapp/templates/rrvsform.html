@@ -8,6 +8,23 @@
 	<script type="text/javascript" src="{{ url_for('static', filename='jquery-1.12.0.min.js') }}"></script>
 	<script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='datatables/media/js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript"> var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+    <script LANGUAGE="JavaScript"> 
+    function height2switch(div,choice){
+        var selected=document.getElementById("heightRadio");
+        if selected.value="H99"{
+            document.getElementById("height2").style.display="none";
+        }else{
+            document.getElementById("height2").style.display="block";
+        }
+    };
+    function secondIrregCheck() {
+        if (document.getElementById('secondIrregCheck').checked) {
+            document.getElementById('secondIrreg').style.display = 'block';
+        } else {
+            document.getElementById('secondIrreg').style.display = 'none';
+        }
+    };
+    </script>
 </head>
 <body>  
 	<form id="rrvsForm" action="{{ url_for('rrvsform') }}" method=post>
@@ -53,19 +70,29 @@
 				   <div class="formLayout">					
 						{{ rrvs_form.llrs_field.label }}
 						{{ rrvs_form.llrs_field }}
+						<br>
+						{{ rrvs_form.llrs_duct_field.label }}
+						{{ rrvs_form.llrs_duct_field }}
 					</div>
 			   </div> 
 		   </div>
 		   <div class="tab">
-			   <input type="radio" id="tab-3" name="tab-group-1">
+			   <input type="radio" id="tab-3" name="tab-group-1" on-click="height2switch()">
                <label class="tablabel" for="tab-3">{{gettext('Height')}}</label>
 			   <div class="content">
-				    <div class="formLayout">					
+				    <div id="heightRadio" class="formLayout">					
 						{{ rrvs_form.height_field.label }}
 						{{ rrvs_form.height_field }}
-						<br>
-						{{ rrvs_form.height1_field.label }}
-						{{ rrvs_form.height1_field }}
+                    </div>
+                    <div id="height2" class="formLayout" style="display:none">
+						{{ rrvs_form.height_val_1_field.label }}
+						{{ rrvs_form.height_val_1_field }}
+                        <br>
+						{{ rrvs_form.height2_field.label }}
+						{{ rrvs_form.height2_field }}
+                        <br>
+						{{ rrvs_form.height_val_2_field.label }}
+						{{ rrvs_form.height_val_2_field }}
 					</div>
 			   </div> 
 		   </div>
@@ -97,11 +124,114 @@
 		   </div>
 		   <div class="tab">
 			   <input type="radio" id="tab-6" name="tab-group-1">
-               <label class="tablabel" for="tab-6">{{gettext('Exterior Walls')}}</label>
+               <label class="tablabel" for="tab-6">{{gettext('Plan & Pos.')}}</label>
+			   <div class="content">
+					<div class="formLayout">
+						{{ rrvs_form.plan_shape_field.label }}
+						{{ rrvs_form.plan_shape_field }}
+                        <br>
+						{{ rrvs_form.position_field.label }}
+						{{ rrvs_form.position_field }}
+					</div>
+			   </div> 
+		   </div>
+		   <div class="tab">
+			   <input type="radio" id="tab-7" name="tab-group-1">
+               <label class="tablabel" for="tab-7">{{gettext('Str. Irreg.')}}</label>
+			   <div class="content">
+					<div class="formLayout">
+						{{ rrvs_form.str_irreg_field.label }}
+						{{ rrvs_form.str_irreg_field }}
+                        <br>
+						{{ rrvs_form.str_irreg_dt_field.label }}
+						{{ rrvs_form.str_irreg_dt_field }}
+                        <br>
+						{{ rrvs_form.str_irreg_type_field.label }}
+						{{ rrvs_form.str_irreg_type_field }}
+                        <br>
+					</div>
+                    <input type="radio" onclick="javascript:secondIrregCheck();" id="IrregCheck"/> Second Irregularity
+					<div id="secondIrreg" class="formLayout" style="display:none">
+                        <br>
+						{{ rrvs_form.str_irreg_2_field.label }}
+						{{ rrvs_form.str_irreg_2_field }}
+                        <br>
+						{{ rrvs_form.str_irreg_dt_2_field.label }}
+						{{ rrvs_form.str_irreg_dt_2_field }}
+                        <br>
+						{{ rrvs_form.str_irreg_type_2_field.label }}
+						{{ rrvs_form.str_irreg_type_2_field }}
+					</div>
+			   </div> 
+		   </div>
+		   <div class="tab">
+			   <input type="radio" id="tab-8" name="tab-group-1">
+               <label class="tablabel" for="tab-8">{{gettext('Exterior Walls')}}</label>
 			   <div class="content">
 					<div class="formLayout">
 						{{ rrvs_form.nonstrcexw_field.label }}
 						{{ rrvs_form.nonstrcexw_field }}
+					</div>
+			   </div> 
+		   </div>
+		   <div class="tab">
+			   <input type="radio" id="tab-9" name="tab-group-1">
+               <label class="tablabel" for="tab-9">{{gettext('Roof')}}</label>
+			   <div class="content">
+					<div class="formLayout">
+						{{ rrvs_form.roof_shape_field.label }}
+						{{ rrvs_form.roof_shape_field }}
+                        <br>
+						{{ rrvs_form.roof_covmat_field.label }}
+						{{ rrvs_form.roof_covmat_field }}
+                        <br>
+						{{ rrvs_form.roof_sysmat_field.label }}
+						{{ rrvs_form.roof_sysmat_field }}
+                        <br>
+						{{ rrvs_form.roof_systype_field.label }}
+						{{ rrvs_form.roof_systype_field }}
+                        <br>
+						{{ rrvs_form.roof_conn_field.label }}
+						{{ rrvs_form.roof_conn_field }}
+					</div>
+			   </div> 
+		   </div>
+		   <div class="tab">
+			   <input type="radio" id="tab-10" name="tab-group-1">
+               <label class="tablabel" for="tab-10">{{gettext('Floors')}}</label>
+			   <div class="content">
+					<div class="formLayout">
+						{{ rrvs_form.floor_mat_field.label }}
+						{{ rrvs_form.floor_mat_field }}
+                        <br>
+						{{ rrvs_form.floor_type_field.label }}
+						{{ rrvs_form.floor_type_field }}
+                        <br>
+						{{ rrvs_form.floor_conn_field.label }}
+						{{ rrvs_form.floor_conn_field }}
+					</div>
+			   </div> 
+		   </div>
+		   <div class="tab">
+			   <input type="radio" id="tab-11" name="tab-group-1">
+               <label class="tablabel" for="tab-11">{{gettext('Foundn. Sys.')}}</label>
+			   <div class="content">
+					<div class="formLayout">
+						{{ rrvs_form.foundn_sys_field.label }}
+						{{ rrvs_form.foundn_sys_field }}
+					</div>
+			   </div> 
+		   </div>
+		   <div class="tab">
+			   <input type="radio" id="tab-12" name="tab-group-1">
+               <label class="tablabel" for="tab-12">{{gettext('Optional')}}</label>
+			   <div class="content">
+					<div class="formLayout">
+						{{ rrvs_form.comment_field.label }}
+						{{ rrvs_form.comment_field }}
+                        <br>
+						{{ rrvs_form.vuln_field.label }}
+						{{ rrvs_form.vuln_field }}
 					</div>
 			   </div> 
 		   </div>
@@ -155,13 +285,35 @@
 		  $('select[name="mat_tech_field"]').val(data.mat_tech_gid);
 		  $('select[name="mat_prop_field"]').val(data.mat_prop_gid);
 		  $('select[name="llrs_field"]').val(data.llrs_gid);
+		  $('select[name="llrs_duct_field"]').val(data.llrs_duct_gid);
 		  $('select[name="height_field"]').val(data.height_gid);
-		  $('input[name="height1_field"]').val(data.height1_val);
+		  $('input[name="height_val_1_field"]').val(data.height_val_1);
+		  $('select[name="height2_field"]').val(data.height2_gid);
+		  $('input[name="height_val_2_field"]').val(data.height_val_2);
 		  $('select[name="yr_built_field"]').val(data.yr_built_gid);
 		  $('input[name="yr_built_bp_field"]').val(data.yr_built_bp_val);
 		  $('select[name="occupy_field"]').val(data.occupy_gid);
 		  $('select[name="occupy_dt_field"]').val(data.occupy_dt_gid);
+		  $('select[name="plan_shape_field"]').val(data.plan_shape_gid);
+		  $('select[name="position_field"]').val(data.position_gid);
+		  $('select[name="str_irreg_field"]').val(data.str_irreg_gid);
+		  $('select[name="str_irreg_dt_field"]').val(data.str_irreg_dt_gid);
+		  $('select[name="str_irreg_type_field"]').val(data.str_irreg_type_gid);
+		  $('select[name="str_irreg_2_field"]').val(data.str_irreg_2_gid);
+		  $('select[name="str_irreg_dt_2_field"]').val(data.str_irreg_dt_2_gid);
+		  $('select[name="str_irreg_type_2_field"]').val(data.str_irreg_type_2_gid);
 		  $('select[name="nonstrcexw_field"]').val(data.nonstrcexw_gid);
+		  $('select[name="roof_shape_field"]').val(data.roof_shape_gid);
+		  $('select[name="roof_covmat_field"]').val(data.roof_covmat_gid);
+		  $('select[name="roof_sysmat_field"]').val(data.roof_sysmat_gid);
+		  $('select[name="roof_systype_field"]').val(data.roof_systype_gid);
+		  $('select[name="roof_conn_field"]').val(data.roof_conn_gid);
+		  $('select[name="floor_mat_field"]').val(data.floor_mat_gid);
+		  $('select[name="floor_type_field"]').val(data.floor_type_gid);
+		  $('select[name="floor_conn_field"]').val(data.floor_conn_gid);
+		  $('select[name="foundn_sys_field"]').val(data.foundn_sys_gid);
+		  $('input[name="comment_field"]').val(data.comment_val);
+		  $('input[name="vuln_field"]').val(data.vuln_val);
 		  // update the rrvs_status checkbox
 		  // note: needed to reformat the rrvs_status_val to fit a boolean checkbox field
 		  if(data.rrvs_status_val == "COMPLETED"){
