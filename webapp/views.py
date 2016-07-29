@@ -198,19 +198,21 @@ def update_rrvsform():
     #occupy_dt_val = ve_object.query.filter_by(gid=gid_val).first().occupy_dt
     #nonstrcexw_val = ve_object.query.filter_by(gid=gid_val).first().nonstrcexw
 
+    #convert values for return
+    try:
+        height_1_val = int(row.height_1)
+    #in case no height has been defined
+    except ValueError:
+        height_1_val = ''
+    try:
+    	height2_1_val = int(row.height2_1)
+    #in case no height has been defined
+    except ValueError:
+    		height2_1_val = ''
+
     return flask.jsonify(
 		# query values for text fields
-        try:
-            height_val_1_val = int(row.height_val_1)
-        #in case no height has been defined
-        except ValueError:
-            height_val_1_val = ''
-        try:
-    		height_val_2_val = int(row.height_val_2)
-        #in case no height has been defined
-        except ValueError:
-    		height_val_2_val = ''
-
+                height_1_val,height2_1_val,
 		yr_built_bp_val = row.yr_built_bp,
         # TODO: VERY UGLY!! Find replacement to improve performance! query gid of attribute_values for select fields
 		mat_type_gid = dic_attribute_value.query.filter_by(attribute_value=mat_type_val).first().gid,
