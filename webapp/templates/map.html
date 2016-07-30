@@ -19,9 +19,9 @@
 		var buildingsJSON;
 	
 		//add baselayer
-        var mapBoxHybrid = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        var basemap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
             attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy; Mapbox &copy; OpenStreetMap</a> <a class='mapbox-improve-map' href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a>",
-            maxZoom: 20,
+            maxZoom: 17,
             id: 'mapbox.streets-satellite',
             accessToken: 'xyz'
         }).addTo(map);

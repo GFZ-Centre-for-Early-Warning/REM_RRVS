@@ -176,12 +176,12 @@ def update_rrvsform():
     str_irreg_dt_val = row.str_irreg_dt
     str_irreg_type_val = row.str_irreg_type
     str_irreg_2_val = row.str_irreg_2
-    str_irreg_dt_2_val = row.str_irreg_2_dt
-    str_irreg_type_2_val = row.str_irreg_2_type
+    str_irreg_dt_2_val = row.str_irreg_dt_2
+    str_irreg_type_2_val = row.str_irreg_type_2
     roof_shape_val = row.roof_shape
-    roof_covmat_val = row.roof_covmat
-    roof_sysmat_val = row.roof_sysmat
-    roof_systype_val = row.roof_systype
+    roof_covmat_val = row.roofcovmat
+    roof_sysmat_val = row.roofsysmat
+    roof_systype_val = row.roofsystyp
     roof_conn_val = row.roof_conn
     floor_mat_val = row.floor_mat
     floor_type_val = row.floor_type
@@ -198,23 +198,11 @@ def update_rrvsform():
     #occupy_dt_val = ve_object.query.filter_by(gid=gid_val).first().occupy_dt
     #nonstrcexw_val = ve_object.query.filter_by(gid=gid_val).first().nonstrcexw
 
-    #convert values for return
-    try:
-        height_1_val = int(row.height_1)
-    #in case no height has been defined
-    except ValueError:
-        height_1_val = ''
-    try:
-    	height2_1_val = int(row.height2_1)
-    #in case no height has been defined
-    except ValueError:
-    		height2_1_val = ''
-
     return flask.jsonify(
 		# query values for text fields
-                height_1_val,height2_1_val,
+                height_1_val=int(row.height_1),height2_1_val=int(row.height2_1),
 		yr_built_bp_val = row.yr_built_bp,
-        # TODO: VERY UGLY!! Find replacement to improve performance! query gid of attribute_values for select fields
+                #TODO: VERY UGLY!! Find replacement to improve performance! query gid of attribute_values for select fields
 		mat_type_gid = dic_attribute_value.query.filter_by(attribute_value=mat_type_val).first().gid,
 		mat_tech_gid = dic_attribute_value.query.filter_by(attribute_value=mat_tech_val).first().gid,
 		mat_prop_gid = dic_attribute_value.query.filter_by(attribute_value=mat_prop_val).first().gid,
@@ -256,9 +244,9 @@ def update_rrvsform():
 		#occupy_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_val).first().gid,
 		#occupy_dt_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_dt_val).first().gid,
 		#nonstrcexw_gid = dic_attribute_value.query.filter_by(attribute_value=nonstrcexw_val).first().gid,
-        # query values for checkbox fields
-        rrvs_status_val = str(ve_object.query.filter_by(gid=gid_val).first().rrvs_status)
-	)
+                # query values for checkbox fields
+                rrvs_status_val = str(ve_object.query.filter_by(gid=gid_val).first().rrvs_status)
+	        )
 
 @app.route('/rrvsform', methods=['GET', 'POST'])
 @login_required

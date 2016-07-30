@@ -10,7 +10,7 @@ Description: Defines the WTForms fields
 '''
 import flask
 from flask.ext.wtf import Form
-from wtforms import TextField, BooleanField, SubmitField
+from wtforms import TextField, TextAreaField, BooleanField, SubmitField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import wtforms.validators as validators
 from models import dic_attribute_value
@@ -82,8 +82,8 @@ class RrvsForm(Form):
     height_val_1_field = TextField(label=lazy_gettext("Height Value"), validators=[validators.Length(max=10), validators.Optional()])
     height_val_2_field = TextField(label=lazy_gettext("Height Value 2"), validators=[validators.Length(max=10), validators.Optional()])
     yr_built_bp_field = TextField(label=lazy_gettext("Construction Date"), validators=[validators.Length(max=10), validators.Optional()])
-    comment_field = TextField(label=lazy_gettext("Comment"), validators=[validators.Length(max=254), validators.Optional()])
-    vuln_field = TextField(label=lazy_gettext("Vulnerability"), validators=[validators.Length(max=10), validators.Optional()])
+    comment_field = TextAreaField(label=lazy_gettext("Comment"), validators=[validators.Length(max=254), validators.Optional()])
+    vuln_field = TextAreaField(label=lazy_gettext("Vulnerability"), validators=[validators.Length(max=10), validators.Optional()])
 
     # Select fields
     mat_type_field = QuerySelectField(lazy_gettext("Material Type"), query_factory=getMatType, get_label=label, allow_blank=True)

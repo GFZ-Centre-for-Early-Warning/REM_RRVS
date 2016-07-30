@@ -1,9 +1,6 @@
 /* General */
-body {
-	padding: 0;
-	margin: 0;
-}
-html, body, #map {
+html, body,#map {
+    position: fixed;
 	height: 100%;
 	width: 100%;
 	padding: 0;
@@ -116,6 +113,7 @@ th {
 	border: solid 1px #fff;
 	padding: 0px;
 	width: 600px; /*600px*/
+	height: 300px; /*600px*/
 }
 
 .formLayout label
@@ -164,7 +162,7 @@ br
 
 .tabs {
   position: relative;   
-  height: 200px;
+  height: 350px;
   clear: both;
   margin: 0px 0;
 }

@@ -11,7 +11,7 @@
     <script LANGUAGE="JavaScript"> 
     function height2switch(div,choice){
         var selected=document.getElementById("heightRadio");
-        if selected.value="H99"{
+        if (selected.value="H99"){
             document.getElementById("height2").style.display="none";
         }else{
             document.getElementById("height2").style.display="block";
@@ -32,10 +32,10 @@
 		<div class="tabs">
 		   <div class="formLayoutGeneral"> 
 				<img class="banner" src="{{ url_for('static', filename='img/banner.svg') }}" alt="RRVS tool">			
-				<br><br>
+                <br><br><br>
 				{{ rrvs_form.gid_field.label }}
 				{{ rrvs_form.gid_field(readonly=True)}}						
-				<br>
+                <br><br><br><br>
 				{{ rrvs_form.rrvs_status_field.label }}
 				{{ rrvs_form.rrvs_status_field }}								
 				<br>
@@ -48,7 +48,7 @@
 		   </div>
 		   <div class="tab">
 			   <input type="radio" id="tab-1" name="tab-group-1" checked>
-               <label class="tablabel" for="tab-1">{{gettext('Material')}}</label>
+               <label class="tablabel" for="tab-1">{{gettext('Mat.')}}</label>
 			   <div class="content">
 					<div class="formLayout">
 						{{ rrvs_form.mat_type_field.label }}
@@ -78,13 +78,14 @@
 		   </div>
 		   <div class="tab">
 			   <input type="radio" id="tab-3" name="tab-group-1" on-click="height2switch()">
-               <label class="tablabel" for="tab-3">{{gettext('Height')}}</label>
+               <label class="tablabel" for="tab-3">{{gettext('H')}}</label>
 			   <div class="content">
 				    <div id="heightRadio" class="formLayout">					
 						{{ rrvs_form.height_field.label }}
 						{{ rrvs_form.height_field }}
-                    </div>
-                    <div id="height2" class="formLayout" style="display:none">
+                        <br>
+                    <!--/div-->
+                    <!--div id="height2" class="formLayout" style="display:none"-->
 						{{ rrvs_form.height_val_1_field.label }}
 						{{ rrvs_form.height_val_1_field }}
                         <br>
@@ -111,7 +112,7 @@
 		   </div>
 		   <div class="tab">
 			   <input type="radio" id="tab-5" name="tab-group-1">
-               <label class="tablabel" for="tab-5">{{gettext('Occupancy')}}</label>
+               <label class="tablabel" for="tab-5">{{gettext('Occ.')}}</label>
 			   <div class="content">
 					<div class="formLayout">
 						{{ rrvs_form.occupy_field.label }}
@@ -124,7 +125,7 @@
 		   </div>
 		   <div class="tab">
 			   <input type="radio" id="tab-6" name="tab-group-1">
-               <label class="tablabel" for="tab-6">{{gettext('Plan & Pos.')}}</label>
+               <label class="tablabel" for="tab-6">{{gettext('Plan&Pos.')}}</label>
 			   <div class="content">
 					<div class="formLayout">
 						{{ rrvs_form.plan_shape_field.label }}
@@ -137,7 +138,7 @@
 		   </div>
 		   <div class="tab">
 			   <input type="radio" id="tab-7" name="tab-group-1">
-               <label class="tablabel" for="tab-7">{{gettext('Str. Irreg.')}}</label>
+               <label class="tablabel" for="tab-7">{{gettext('Str.Irreg.')}}</label>
 			   <div class="content">
 					<div class="formLayout">
 						{{ rrvs_form.str_irreg_field.label }}
@@ -149,10 +150,9 @@
 						{{ rrvs_form.str_irreg_type_field.label }}
 						{{ rrvs_form.str_irreg_type_field }}
                         <br>
-					</div>
-                    <input type="radio" onclick="javascript:secondIrregCheck();" id="IrregCheck"/> Second Irregularity
-					<div id="secondIrreg" class="formLayout" style="display:none">
-                        <br>
+					<!--/div-->
+                    <!--input type="radio" onclick="javascript:secondIrregCheck();" id="IrregCheck"/> Second Irregularity -->
+					<!--div id="secondIrreg" class="formLayout" style="display:none"-->
 						{{ rrvs_form.str_irreg_2_field.label }}
 						{{ rrvs_form.str_irreg_2_field }}
                         <br>
@@ -166,7 +166,7 @@
 		   </div>
 		   <div class="tab">
 			   <input type="radio" id="tab-8" name="tab-group-1">
-               <label class="tablabel" for="tab-8">{{gettext('Exterior Walls')}}</label>
+               <label class="tablabel" for="tab-8">{{gettext('Ext. Walls')}}</label>
 			   <div class="content">
 					<div class="formLayout">
 						{{ rrvs_form.nonstrcexw_field.label }}
@@ -228,10 +228,10 @@
 			   <div class="content">
 					<div class="formLayout">
 						{{ rrvs_form.comment_field.label }}
-						{{ rrvs_form.comment_field }}
+                        {{ rrvs_form.comment_field(cols="35",rows="7") }}
                         <br>
 						{{ rrvs_form.vuln_field.label }}
-						{{ rrvs_form.vuln_field }}
+						{{ rrvs_form.vuln_field(cols="3",rows="1") }}
 					</div>
 			   </div> 
 		   </div>
@@ -242,7 +242,7 @@
 	// generate dynamic rrvsFormTable with building ids and rrvs status columns
 	$(document).ready(function create_table() {
 		var table = $('#rrvsFormTable').DataTable({
-						scrollY: 135,
+						scrollY: 240,
 						paging: false,
 						data: {{bdgs|safe}},
 						columns: [
