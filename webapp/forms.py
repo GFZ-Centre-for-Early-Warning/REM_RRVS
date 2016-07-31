@@ -60,7 +60,7 @@ def getRoofCovMat():
 def getRoofSysMat():
 	return dic_attribute_value.query.filter_by(attribute_type_code='ROOFSYSMAT')
 def getRoofSysType():
-	return dic_attribute_value.query.filter_by(attribute_type_code='ROOFSYSTYPE')
+	return dic_attribute_value.query.filter_by(attribute_type_code='ROOFSYSTYP')
 def getRoofConn():
 	return dic_attribute_value.query.filter_by(attribute_type_code='ROOF_CONN')
 def getFloorMat():
@@ -79,9 +79,9 @@ class RrvsForm(Form):
     label='description'
     # Text fields
     gid_field = TextField(label=lazy_gettext("BuildingID"))
-    height_val_1_field = TextField(label=lazy_gettext("Height Value"), validators=[validators.Length(max=10), validators.Optional()])
-    height_val_2_field = TextField(label=lazy_gettext("Height Value 2"), validators=[validators.Length(max=10), validators.Optional()])
-    yr_built_bp_field = TextField(label=lazy_gettext("Construction Date"), validators=[validators.Length(max=10), validators.Optional()])
+    height_1_val_field = TextField(label=lazy_gettext("Height Value"), validators=[validators.Length(max=10), validators.Optional()])
+    height2_1_val_field = TextField(label=lazy_gettext("Height Value 2"), validators=[validators.Length(max=10), validators.Optional()])
+    year_1_val_field = TextField(label=lazy_gettext("Construction Date"), validators=[validators.Length(max=10), validators.Optional()])
     comment_field = TextAreaField(label=lazy_gettext("Comment"), validators=[validators.Length(max=254), validators.Optional()])
     vuln_field = TextAreaField(label=lazy_gettext("Vulnerability"), validators=[validators.Length(max=10), validators.Optional()])
 

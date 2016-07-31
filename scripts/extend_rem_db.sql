@@ -22,13 +22,9 @@ INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, desc
 
 SET search_path = asset, pg_catalog;
 
-DROP VIEW v_object_data;
+DROP VIEW IF EXISTS v_object_data;
 
-DROP VIEW ve_object;
-
-DROP TRIGGER IF EXISTS object_trigger ON ve_object;
-
-DROP FUNCTION IF EXISTS edit_object_view();
+DROP VIEW IF EXISTS ve_object;
 
 CREATE OR REPLACE FUNCTION edit_object_view() RETURNS trigger
     LANGUAGE plpgsql
@@ -43,7 +39,7 @@ BEGIN
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'LLRS_DUCT', NEW.llrs_duct);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value, attribute_numeric_1, attribute_numeric_2) VALUES ((SELECT max(gid) FROM asset.object), 'HEIGHT', NEW.height, NEW.height_1, NEW.height_2);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value, attribute_numeric_1, attribute_numeric_2) VALUES ((SELECT max(gid) FROM asset.object), 'HEIGHT2', NEW.height2, NEW.height2_1, NEW.height2_2);
-       INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'YR_BUILT', NEW.yr_built);
+       INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value, attribute_numeric_1, attribute_numeric_2) VALUES ((SELECT max(gid) FROM asset.object), 'YR_BUILT', NEW.yr_built, NEW.year_1, NEW.year_2);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'OCCUPY', NEW.occupy);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'OCCUPY_DT', NEW.occupy_dt);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'POSITION', NEW."position");
@@ -179,6 +175,8 @@ BEGIN
        UPDATE asset.object_attribute SET attribute_numeric_2=NEW.height_2 WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT';
        UPDATE asset.object_attribute SET attribute_numeric_1=NEW.height2_1 WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT2';
        UPDATE asset.object_attribute SET attribute_numeric_2=NEW.height2_2 WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT2';
+       UPDATE asset.object_attribute SET attribute_numeric_1=NEW.year_1 WHERE object_id=OLD.gid AND attribute_type_code='YR_BUILT';
+       UPDATE asset.object_attribute SET attribute_numeric_2=NEW.year_2 WHERE object_id=OLD.gid AND attribute_type_code='YR_BUILT';
 
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.mat_type_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='MAT_TYPE') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.mat_tech_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='MAT_TECH') AND qualifier_type_code='BELIEF';
@@ -320,11 +318,13 @@ CREATE VIEW v_object_data AS
     e.vuln_2,
     c.height_1,
     c.height_2,
-    c.height2_1,
-    c.height2_2,
+    c1.height2_1,
+    c1.height2_2,
+    c2.year_1,
+    c2.year_2,
     d.yr_built_vt,
     d.yr_built_vt1
-   FROM ((((object a
+   FROM ((((((object a
      JOIN ( SELECT ct.object_id,
             ct.mat_type,
             ct.mat_tech,
@@ -374,11 +374,19 @@ CREATE VIEW v_object_data AS
 		str_irreg_type_2 character varying)) b ON ((a.gid = b.object_id)))
      LEFT JOIN ( SELECT object_attribute.object_id,
             object_attribute.attribute_numeric_1 AS height_1,
-            object_attribute.attribute_numeric_1 AS height2_1,
-            object_attribute.attribute_numeric_2 AS height_2,
-            object_attribute.attribute_numeric_2 AS height2_2
+            object_attribute.attribute_numeric_2 AS height_2
            FROM object_attribute object_attribute
           WHERE ((object_attribute.attribute_type_code)::text = 'HEIGHT'::text)) c ON ((a.gid = c.object_id)))
+     LEFT JOIN ( SELECT object_attribute.object_id,
+            object_attribute.attribute_numeric_1 AS height2_1,
+            object_attribute.attribute_numeric_2 AS height2_2
+           FROM object_attribute object_attribute
+          WHERE ((object_attribute.attribute_type_code)::text = 'HEIGHT2'::text)) c1 ON ((a.gid = c1.object_id)))
+     LEFT JOIN ( SELECT object_attribute.object_id,
+            object_attribute.attribute_numeric_1 AS year_1,
+            object_attribute.attribute_numeric_2 AS year_2
+           FROM object_attribute object_attribute
+          WHERE ((object_attribute.attribute_type_code)::text = 'YR_BUILT'::text)) c2 ON ((a.gid = c2.object_id)))
      LEFT JOIN ( SELECT sub.object_id,
             sub.qualifier_value AS yr_built_vt,
             sub.qualifier_timestamp_1 AS yr_built_vt1
@@ -452,8 +460,10 @@ CREATE VIEW ve_object AS
     f.vuln_2,
     c.height_1,
     c.height_2,
-    c.height2_1,
-    c.height2_2,
+    c1.height2_1,
+    c1.height2_2,
+    c2.year_1,
+    c2.year_2,
     d.object_id1,
     d.mat_type_bp,
     d.mat_tech_bp,
@@ -571,11 +581,19 @@ CREATE VIEW ve_object AS
 				   ON ((a.gid = b.object_id)))
      LEFT JOIN ( SELECT object_attribute.object_id,
             object_attribute.attribute_numeric_1 AS height_1,
-            object_attribute.attribute_numeric_2 AS height_2,
+            object_attribute.attribute_numeric_2 AS height_2
+           FROM object_attribute object_attribute
+          WHERE ((object_attribute.attribute_type_code)::text = 'HEIGHT'::text)) c ON ((a.gid = c.object_id))
+     LEFT JOIN ( SELECT object_attribute.object_id,
             object_attribute.attribute_numeric_1 AS height2_1,
             object_attribute.attribute_numeric_2 AS height2_2
            FROM object_attribute object_attribute
-          WHERE ((object_attribute.attribute_type_code)::text = 'HEIGHT'::text)) c ON ((a.gid = c.object_id)))
+          WHERE ((object_attribute.attribute_type_code)::text = 'HEIGHT2'::text)) c1 ON ((a.gid = c1.object_id))
+     LEFT JOIN ( SELECT object_attribute.object_id,
+            object_attribute.attribute_numeric_1 AS year_1,
+            object_attribute.attribute_numeric_2 AS year_2
+           FROM object_attribute object_attribute
+          WHERE ((object_attribute.attribute_type_code)::text = 'YR_BUILT'::text)) c2 ON ((a.gid = c2.object_id)))
      JOIN ( SELECT a_1.object_id1,
             a_1.mat_type_bp,
             a_1.mat_tech_bp,
