@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='leaflet/leaflet.css') }}">	
 	<script src="{{ url_for('static', filename='leaflet/leaflet.js') }}"></script>
 	<script src="{{ url_for('static', filename='leaflet-knn.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='jquery-1.12.0.min.js') }}"></script>
 </head>
 <body>
 	<div id="map"></div>	
@@ -20,10 +21,10 @@
 	
 		//add baselayer
         var basemap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-            attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy; Mapbox &copy; OpenStreetMap</a> <a class='mapbox-improve-map' href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a>",
-            maxZoom: 17,
+attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy; Mapbox &copy; OpenStreetMap</a> <a class='mapbox-improve-map' href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map </a><span id=latlon>&nbsp;</span>",
+            maxZoom: 19,
             id: 'mapbox.streets-satellite',
-            accessToken: 'xyz'
+            accessToken: 'pk.eyJ1IjoibWhhYXMiLCJhIjoiY2lqbjU0dWdsMDA0NHZobTNkNHhoNG41YiJ9.b3KQYD4pgNv91lJK9mcN5w'
         }).addTo(map);
 	//	var basemap = L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
 	//		maxZoom: 18,
@@ -109,16 +110,12 @@
         //update image related parameters
         function updateImgParams(e){
             //update imgBdgData object
-            //console.log(e);
-            //console.log(highlightedGPS);
             imgBdgData.imgLoc = e.getLatLng();
             imgBdgData.imgAzi = e.feature.properties.azimuth;
-            //console.log(imgBdgData);
             //update configPano
             //configPano.panorama = "/panellum/../static/panoimg/ladybug_panoramic_" + imgBdgData.img_id + ".jpg";
             configPano.panorama = "/pano/"+e.feature.properties.repository + "/"+ e.feature.properties.filename;
             configPano.title = "FrameID: " + e.feature.properties.frame_id;
-            console.log(configPano);
         }
         
 		//function for interaction between gps layer and panoImg iframe
@@ -149,6 +146,8 @@
             var ang = angleDeg(imgBdgData.imgLoc,imgBdgData.bdgLoc);
             configPano.yaw = (90-ang)-imgBdgData.imgAzi;
             configPano.hotSpots = [{pitch:'0',yaw:configPano.yaw,type:'info',text:'{{_('Selected building')}}'}];
+            //TODO Michael hard fixed to 0 --> camera 0
+            configPano.yaw = 0;
         }
 
 		//function for refreshing rrvsForm iframe and pannellum iframe based on map iframe action
@@ -172,7 +171,6 @@
             //update gps map styles
             resetHighlightGPS();
             closestImg.setStyle(gpsHighlightStyle);
-            //console.log(closestImg);
             highlightedGPS=closestImg;
             //set configPano and imgBdgData accordingly
             updateImgParams(closestImg);
@@ -185,7 +183,6 @@
 		function updateMap(gid) {
 			// get feature by id
 			var e = buildingsJSON.getLayer(gid);
-			console.log(e);
             //get zoom level and layer bounds
             //var zl = map.getZoom();
             //map.setView([e.latLng.lat, e.latLng.lng], zl);
@@ -198,19 +195,21 @@
                 color: '#008000'
 			});
 			//store the building location
-            imgBdgData.bdgLoc=([e.feature.geometry.coordinates[0][0][0], e.feature.geometry.coordinates[0][0][1]]);
+            imgBdgData.bdgLoc=([e.feature.geometry.coordinates[0][0][0][0], e.feature.geometry.coordinates[0][0][0][1]]);
             // update panoramic image
             // find closest img 
             var closestImg = leafletKnn(gpsJSON).nearestLayer(imgBdgData.bdgLoc,1);
             closestImg = closestImg[0].layer;
-            //console.log(closestImg);
             //update gps map styles
             resetHighlightGPS();
             closestImg.setStyle(gpsHighlightStyle);
             highlightedGPS=closestImg;
             //set configPano and imgBdgData accordingly
             updateImgParams(closestImg);
-            imgBdgInteraction();
+            if(imgBdgData.bdgLoc != undefined){
+                imgBdgData.bdgLoc=L.latLng(e.feature.geometry.coordinates[0][0][0][0], e.feature.geometry.coordinates[0][0][0][1]);
+                imgBdgInteraction();
+            }
             //update the image
             updatePanoImg();
 		}
@@ -279,6 +278,29 @@
 				//: 'PanoImage Information');
 		//};
 		//info.addTo(map);
+    
+        //adding lat lon display when moving with the mouse on the map, and when clicking
+        var latlon = jQuery("#latlon");
+        var setLatLon = function (e) {
+            var lat = "--.---";
+            var lng = "--.---";
+            if (e && e.latlng) {
+                var l = e.latlng;
+                lat = l.lat.toFixed(4);
+                lng = l.lng.toFixed(4);
+            }
+            latlon.html("lat: " + lat + " lng: " + lng);
+        };
+
+        //add event listener for mouse moving:
+        map.on('mousemove', function (e) {
+            setLatLon(e);
+        });
+        map.on('click', function (e) {
+            setLatLon(e);
+        });
+        //set default:
+        setLatLon();
 
 		//add layer control
 		L.control.layers({'OpenStreetMap': basemap},

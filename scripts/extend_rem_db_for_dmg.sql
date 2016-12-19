@@ -6,24 +6,36 @@ SET search_path = taxonomy, pg_catalog;
 --- Michael: Extension during DESERVE
 ---
 
+INSERT INTO dic_attribute_type (gid, code, description) VALUES (28,'RRVS_STATUS','RRVS processing status');
 INSERT INTO dic_attribute_type (gid, code, description) VALUES (29,'COMMENT','Comment by analyst');
 INSERT INTO dic_attribute_type (gid, code, description) VALUES (30,'HEIGHT2','Second height value');
 INSERT INTO dic_attribute_type (gid, code, description) VALUES (31,'STR_IRREG_2','Second structural irregularity');
 INSERT INTO dic_attribute_type (gid, code, description) VALUES (32,'STR_IRREG_DT_2','Second structural irregularity detail');
 INSERT INTO dic_attribute_type (gid, code, description) VALUES (33,'STR_IRREG_TYPE_2','Second structural irregularity type');
-INSERT INTO dic_attribute_type (gid, code, description) VALUES (34,'VULN_EMS98','EMS-98 vulnerability classes');
+INSERT INTO dic_attribute_type (gid, code, description) VALUES (34,'DMG','EMS-98 damage grade');
+
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (386,'RRVS_STATUS','UNMODIFIED','Default RRVS processing status');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (387,'RRVS_STATUS','MODIFIED','Asset has been modified by RRVS');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (388,'RRVS_STATUS','COMPLETED','Asset has been completed by RRVS');
 
 
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (389,'OCCUPY','CON','Under construction');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (390,'OCCUPY','VAC','Vacant building');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (391,'COMMENT','COMMENT','Comment by the analyst');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (392,'HEIGHT','HB99','Number of storeys below ground unknown');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (393,'VULN_EMS98','A','EMS-98 Class A');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (394,'VULN_EMS98','B','EMS-98 Class B');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (395,'VULN_EMS98','C','EMS-98 Class C');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (396,'VULN_EMS98','D','EMS-98 Class D');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (397,'VULN_EMS98','E','EMS-98 Class E');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (398,'VULN_EMS98','F','EMS-98 Class F');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (393,'VULN','A','EMS-98 Class A');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (394,'VULN','B','EMS-98 Class B');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (395,'VULN','C','EMS-98 Class C');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (396,'VULN','D','EMS-98 Class D');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (397,'VULN','E','EMS-98 Class E');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (398,'VULN','F','EMS-98 Class F');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (399,'DMG','0','EMS-98 Damage Grade 0');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (400,'DMG','1','EMS-98 Damage Grade 1');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (401,'DMG','2','EMS-98 Damage Grade 2');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (402,'DMG','3','EMS-98 Damage Grade 3');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (403,'DMG','4','EMS-98 Damage Grade 4');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (404,'DMG','5','EMS-98 Damage Grade 5');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (405,'DMG','99','EMS-98 Damage Grade unknown');
 
 ---
 
@@ -72,6 +84,7 @@ BEGIN
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'RRVS_STATUS', NEW.rrvs_status);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'COMMENT', NEW.comment);
        INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value, attribute_numeric_1, attribute_numeric_2) VALUES ((SELECT max(gid) FROM asset.object), 'VULN', NEW.vuln, NEW.vuln_1, NEW.vuln_2);       
+       INSERT INTO asset.object_attribute (object_id, attribute_type_code, attribute_value) VALUES ((SELECT max(gid) FROM asset.object), 'DMG', NEW.dmg);       
        
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='MAT_TYPE'), 'BELIEF', 'BP', NEW.mat_type_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='MAT_TECH'), 'BELIEF', 'BP', NEW.mat_tech_bp);
@@ -104,6 +117,7 @@ BEGIN
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='BUILD_TYPE'), 'BELIEF', 'BP', NEW.build_type_bp);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='BUILD_SUBTYPE'), 'BELIEF', 'BP', NEW.build_subtype_bp);  
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='VULN'), 'BELIEF', 'BP', NEW.vuln_bp);      
+       INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_numeric_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='DMG'), 'BELIEF', 'BP', NEW.dmg_bp);      
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value, qualifier_timestamp_1) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='YR_BUILT'), 'VALIDTIME', NEW.yr_built_vt, NEW.yr_built_vt1);
 
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='MAT_TYPE'), 'SOURCE', NEW.mat_type_src);
@@ -137,6 +151,7 @@ BEGIN
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='BUILD_TYPE'), 'SOURCE', NEW.build_type_src);
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='BUILD_SUBTYPE'), 'SOURCE', NEW.build_subtype_src);  
        INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='VULN'), 'SOURCE', NEW.vuln_src);
+       INSERT INTO asset.object_attribute_qualifier (attribute_id, qualifier_type_code, qualifier_value) VALUES ((SELECT max(gid) FROM asset.object_attribute WHERE attribute_type_code='DMG'), 'SOURCE', NEW.dmg_src);
  
        RETURN NEW;
 
@@ -178,6 +193,7 @@ BEGIN
        UPDATE asset.object_attribute SET attribute_value=NEW.vuln WHERE object_id=OLD.gid AND attribute_type_code='VULN';
        UPDATE asset.object_attribute SET attribute_numeric_1=NEW.vuln_1 WHERE object_id=OLD.gid AND attribute_type_code='VULN';
        UPDATE asset.object_attribute SET attribute_numeric_2=NEW.vuln_2 WHERE object_id=OLD.gid AND attribute_type_code='VULN';
+       UPDATE asset.object_attribute SET attribute_value=NEW.dmg WHERE object_id=OLD.gid AND attribute_type_code='DMG';
        UPDATE asset.object_attribute SET attribute_numeric_1=NEW.height_1 WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT';
        UPDATE asset.object_attribute SET attribute_numeric_2=NEW.height_2 WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT';
        UPDATE asset.object_attribute SET attribute_numeric_1=NEW.height2_1 WHERE object_id=OLD.gid AND attribute_type_code='HEIGHT2';
@@ -216,6 +232,7 @@ BEGIN
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.build_type_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='BUILD_TYPE') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.build_subtype_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='BUILD_SUBTYPE') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.vuln_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='VULN') AND qualifier_type_code='BELIEF';
+       UPDATE asset.object_attribute_qualifier SET qualifier_numeric_1=NEW.dmg_bp WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='DMG') AND qualifier_type_code='BELIEF';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.yr_built_vt WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='YR_BUILT') AND qualifier_type_code='VALIDTIME';
        UPDATE asset.object_attribute_qualifier SET qualifier_timestamp_1=NEW.yr_built_vt1 WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='YR_BUILT') AND qualifier_type_code='VALIDTIME'; 
        
@@ -250,6 +267,7 @@ BEGIN
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.build_type_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='BUILD_TYPE') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.build_subtype_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='BUILD_SUBTYPE') AND qualifier_type_code='SOURCE';
        UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.vuln_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='VULN') AND qualifier_type_code='SOURCE';
+       UPDATE asset.object_attribute_qualifier SET qualifier_value=NEW.dmg_src WHERE attribute_id=(SELECT gid FROM asset.object_attribute WHERE object_id=OLD.gid AND attribute_type_code='DMG') AND qualifier_type_code='SOURCE';
 
        RETURN NEW;
 
@@ -320,6 +338,7 @@ CREATE VIEW v_object_data AS
     b.build_type,
     b.build_subtype,
     b.vuln,
+    b.dmg,
     b."comment",
     e.vuln_1,
     e.vuln_2,
@@ -339,7 +358,6 @@ CREATE VIEW v_object_data AS
             ct.llrs,
             ct.llrs_duct,
             ct.height,
-            ct.height2,
             ct.yr_built,
             ct.occupy,
             ct.occupy_dt,
@@ -348,9 +366,6 @@ CREATE VIEW v_object_data AS
             ct.str_irreg,
             ct.str_irreg_dt,
             ct.str_irreg_type,
-            ct.str_irreg_2,
-            ct.str_irreg_dt_2,
-            ct.str_irreg_type_2,
             ct.nonstrcexw,
             ct.roof_shape,
             ct.roofcovmat,
@@ -364,21 +379,28 @@ CREATE VIEW v_object_data AS
             ct.build_type,
             ct.build_subtype,
             ct.vuln,
+            ct.rrvs_status,
             ct."comment",
-            ct.rrvs_status
+            ct.height2,
+            ct.str_irreg_2,
+            ct.str_irreg_dt_2,
+            ct.str_irreg_type_2,
+            ct.dmg
+            
            FROM public.crosstab('SELECT object_id, attribute_type_code, attribute_value FROM asset.object_attribute order by object_id'::text, 'select code from taxonomy.dic_attribute_type order by gid'::text) ct
-		(object_id integer, mat_type character varying, mat_tech character varying, 
-		mat_prop character varying, llrs character varying, llrs_duct character varying, 
+		(object_id integer, mat_type character varying, mat_tech character varying, mat_prop character varying, 
+		llrs character varying, llrs_duct character varying, 
 		height character varying, yr_built character varying, 
 		occupy character varying, occupy_dt character varying, "position" character varying, plan_shape character varying,
-		str_irreg character varying, str_irreg_dt character varying, str_irreg_type character varying,
+		str_irreg character varying, str_irreg_dt character varying, str_irreg_type character varying,  
 		nonstrcexw character varying, roof_shape character varying, roofcovmat character varying, 
 		roofsysmat character varying, roofsystyp character varying, roof_conn character varying, 
 		floor_mat character varying, floor_type character varying, floor_conn character varying, 
-		foundn_sys character varying, build_type character varying, build_subtype character varying, 
-		vuln character varying, rrvs_status character varying, "comment" character varying, 
-		height2 character varying, str_irreg_2 character varying, str_irreg_dt_2 character varying, 
-		str_irreg_type_2 character varying)) b ON ((a.gid = b.object_id)))
+		foundn_sys character varying, build_type character varying, build_subtype character varying,
+		vuln character varying,  rrvs_status character varying, "comment" character varying, height2 character varying,
+		str_irreg_2 character varying, str_irreg_dt_2 character varying, str_irreg_type_2 character varying,
+		dmg character varying 
+		)) b ON ((a.gid = b.object_id)))
      LEFT JOIN ( SELECT object_attribute.object_id,
             object_attribute.attribute_numeric_1 AS height_1,
             object_attribute.attribute_numeric_2 AS height_2
@@ -436,7 +458,6 @@ CREATE VIEW ve_object AS
     b.llrs,
     b.llrs_duct,
     b.height,
-    b.height2,
     b.yr_built,
     b.occupy,
     b.occupy_dt,
@@ -445,9 +466,6 @@ CREATE VIEW ve_object AS
     b.str_irreg,
     b.str_irreg_dt,
     b.str_irreg_type,
-    b.str_irreg_2,
-    b.str_irreg_dt_2,
-    b.str_irreg_type_2,
     b.nonstrcexw,
     b.roof_shape,
     b.roofcovmat,
@@ -461,8 +479,13 @@ CREATE VIEW ve_object AS
     b.build_type,
     b.build_subtype,
     b.vuln,
-    b."comment",
     b.rrvs_status,
+    b."comment",
+    b.height2,
+    b.str_irreg_2,
+    b.str_irreg_dt_2,
+    b.str_irreg_type_2,
+    b.dmg,
     f.vuln_1,
     f.vuln_2,
     c.height_1,
@@ -503,6 +526,7 @@ CREATE VIEW ve_object AS
     d.build_type_bp,
     d.build_subtype_bp,
     d.vuln_bp,
+    d.dmg_bp,
     e.yr_built_vt,
     e.yr_built_vt1,
     g.object_id2,
@@ -536,7 +560,8 @@ CREATE VIEW ve_object AS
     g.foundn_sys_src,
     g.build_type_src,
     g.build_subtype_src,
-    g.vuln_src
+    g.vuln_src,
+    g.dmg_src
    FROM ((((((object a
      JOIN ( SELECT ct.object_id,
             ct.mat_type,
@@ -545,7 +570,6 @@ CREATE VIEW ve_object AS
             ct.llrs,
             ct.llrs_duct,
             ct.height,
-            ct.height2,
             ct.yr_built,
             ct.occupy,
             ct.occupy_dt,
@@ -554,9 +578,6 @@ CREATE VIEW ve_object AS
             ct.str_irreg,
             ct.str_irreg_dt,
             ct.str_irreg_type,
-            ct.str_irreg_2,
-            ct.str_irreg_dt_2,
-            ct.str_irreg_type_2,
             ct.nonstrcexw,
             ct.roof_shape,
             ct.roofcovmat,
@@ -570,21 +591,30 @@ CREATE VIEW ve_object AS
             ct.build_type,
             ct.build_subtype,
             ct.vuln,
+            ct.rrvs_status,
             ct."comment",
-            ct.rrvs_status
+            ct.height2,
+            ct.str_irreg_2,
+            ct.str_irreg_dt_2,
+            ct.str_irreg_type_2,
+            ct.dmg
+            
+            
            FROM public.crosstab('SELECT object_id, attribute_type_code, attribute_value FROM asset.object_attribute order by object_id'::text, 'select code from taxonomy.dic_attribute_type order by gid'::text) 
-				ct(object_id integer, mat_type character varying, mat_tech character varying, 
-				   mat_prop character varying, llrs character varying, llrs_duct character varying, 
+				ct(object_id integer, mat_type character varying, mat_tech character varying, mat_prop character varying, 
+				   llrs character varying, llrs_duct character varying, 
 				   height character varying, yr_built character varying, 
 				   occupy character varying, occupy_dt character varying, "position" character varying, plan_shape character varying,
-				   str_irreg character varying, str_irreg_dt character varying, str_irreg_type character varying,
+				   str_irreg character varying, str_irreg_dt character varying, str_irreg_type character varying, 
 				   nonstrcexw character varying, roof_shape character varying, roofcovmat character varying, 
 				   roofsysmat character varying, roofsystyp character varying, roof_conn character varying, 
 				   floor_mat character varying, floor_type character varying, floor_conn character varying, 
 				   foundn_sys character varying, build_type character varying, build_subtype character varying, 
-				   vuln character varying, rrvs_status character varying, "comment" character varying, 
-				   height2 character varying, str_irreg_2 character varying, str_irreg_dt_2 character varying, 
-				   str_irreg_type_2 character varying)) b 
+				   vuln character varying,rrvs_status character varying, "comment" character varying,
+				   height2 character varying,
+				   str_irreg_2 character varying, str_irreg_dt_2 character varying, str_irreg_type_2 character varying,
+				   dmg character varying 
+				   )) b 
 				   ON ((a.gid = b.object_id)))
      LEFT JOIN ( SELECT object_attribute.object_id,
             object_attribute.attribute_numeric_1 AS height_1,
@@ -608,7 +638,6 @@ CREATE VIEW ve_object AS
             a_1.llrs_bp,
             a_1.llrs_duct_bp,
             a_1.height_bp,
-            a_1.height2_bp,
             a_1.yr_built_bp,
             a_1.occupy_bp,
             a_1.occupy_dt_bp,
@@ -617,9 +646,6 @@ CREATE VIEW ve_object AS
             a_1.str_irreg_bp,
             a_1.str_irreg_dt_bp,
             a_1.str_irreg_type_bp,
-            a_1.str_irreg_2_bp,
-            a_1.str_irreg_dt_2_bp,
-            a_1.str_irreg_type_2_bp,
             a_1.nonstrcexw_bp,
             a_1.roof_shape_bp,
             a_1.roofcovmat_bp,
@@ -633,20 +659,29 @@ CREATE VIEW ve_object AS
             a_1.build_type_bp,
             a_1.build_subtype_bp,
             a_1.vuln_bp,
+            a_1.rrvs_status_bp,
             a_1.comment_bp,
-            a_1.rrvs_status_bp
+            a_1.height2_bp,
+            a_1.str_irreg_2_bp,
+            a_1.str_irreg_dt_2_bp,
+            a_1.str_irreg_type_2_bp,
+            a_1.dmg_bp
+
            FROM public.crosstab('SELECT object_id, attribute_type_code, qualifier_numeric_1 FROM (SELECT * FROM asset.object_attribute as a
                 JOIN (SELECT * FROM asset.object_attribute_qualifier WHERE qualifier_type_code=''BELIEF'') as b
                 ON (a.gid = b.attribute_id)) sub ORDER BY object_id'::text, 'SELECT code from taxonomy.dic_attribute_type order by gid'::text) 
                 a_1(object_id1 integer, mat_type_bp integer, mat_tech_bp integer, mat_prop_bp integer, llrs_bp integer, 
-		    llrs_duct_bp integer, height_bp integer,  yr_built_bp integer, occupy_bp integer,
+		    llrs_duct_bp integer, height_bp integer, yr_built_bp integer, occupy_bp integer,
 		    occupy_dt_bp integer, position_bp integer, plan_shape_bp integer, 
 		    str_irreg_bp integer, str_irreg_dt_bp integer, str_irreg_type_bp integer,
 		    nonstrcexw_bp integer, roof_shape_bp integer, roofcovmat_bp integer, roofsysmat_bp integer, 
 		    roofsystyp_bp integer, roof_conn_bp integer, floor_mat_bp integer, floor_type_bp integer, 
 		    floor_conn_bp integer, foundn_sys_bp integer, build_type_bp integer, build_subtype_bp integer, 
-		    vuln_bp integer, rrvs_status_bp integer, comment_bp integer, height2_bp integer, 
-		    str_irreg_2_bp integer, str_irreg_dt_2_bp integer, str_irreg_type_2_bp integer)) d ON ((a.gid = d.object_id1)))
+		    vuln_bp integer, rrvs_status_bp integer,comment_bp integer,height2_bp integer,
+    		    str_irreg_2_bp integer, str_irreg_dt_2_bp integer, str_irreg_type_2_bp integer,
+    		    dmg_bp integer
+  
+		    )) d ON ((a.gid = d.object_id1)))
      LEFT JOIN ( SELECT sub.object_id,
             sub.qualifier_value AS yr_built_vt,
             sub.qualifier_timestamp_1 AS yr_built_vt1
@@ -680,7 +715,6 @@ CREATE VIEW ve_object AS
             ct.llrs_src,
             ct.llrs_duct_src,
             ct.height_src,
-            ct.height2_src,
             ct.yr_built_src,
             ct.occupy_src,
             ct.occupy_dt_src,
@@ -689,9 +723,6 @@ CREATE VIEW ve_object AS
             ct.str_irreg_src,
             ct.str_irreg_dt_src,
             ct.str_irreg_type_src,
-            ct.str_irreg_2_src,
-            ct.str_irreg_dt_2_src,
-            ct.str_irreg_type_2_src,
             ct.nonstrcexw_src,
             ct.roof_shape_src,
             ct.roofcovmat_src,
@@ -705,8 +736,13 @@ CREATE VIEW ve_object AS
             ct.build_type_src,
             ct.build_subtype_src,
             ct.vuln_src,
+            ct.rrvs_status_src,
             ct.comment_src,
-            ct.rrvs_status_src
+            ct.height2_src,
+            ct.str_irreg_2_src,
+            ct.str_irreg_dt_2_src,
+            ct.str_irreg_type_2_src,
+            ct.dmg_src
            FROM public.crosstab('SELECT object_id, attribute_type_code, qualifier_value FROM (SELECT * FROM asset.object_attribute as a
                 JOIN (SELECT * FROM asset.object_attribute_qualifier WHERE qualifier_type_code=''SOURCE'') as b
                 ON (a.gid = b.attribute_id)) sub ORDER BY object_id'::text, 'SELECT code from taxonomy.dic_attribute_type order by gid'::text) 
@@ -719,9 +755,11 @@ CREATE VIEW ve_object AS
 		   roofsysmat_src character varying, roofsystyp_src character varying, roof_conn_src character varying, 
 		   floor_mat_src character varying, floor_type_src character varying, floor_conn_src character varying, 
 		   foundn_sys_src character varying, build_type_src character varying, build_subtype_src character varying, 
-		   vuln_src character varying, rrvs_status_src character varying, comment_src character varying, 
-		   height2_src character varying,str_irreg_2_src character varying, str_irreg_dt_2_src character varying, 
-		   str_irreg_type_2_src character varying)) g 
+		   vuln_src character varying, rrvs_status_src character varying, comment_src character varying,
+		   height2_src character varying,
+		   str_irreg_2_src character varying, str_irreg_dt_2_src character varying, str_irreg_type_2_src character varying,
+		   dmg_src character varying
+                   )) g 
 		   ON ((a.gid = g.object_id2)))
   ORDER BY a.gid;
 
@@ -838,15 +876,10 @@ SET search_path = taxonomy, pg_catalog;
 -- Data for Name: dic_attribute_type; Type: TABLE DATA; Schema: taxonomy; Owner: postgres
 --
 
-INSERT INTO dic_attribute_type (gid, code, description) VALUES (28,'RRVS_STATUS','RRVS processing status');
 
 --
 -- Data for Name: dic_attribute_value; Type: TABLE DATA; Schema: taxonomy; Owner: postgres
 --
-
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (387,'RRVS_STATUS','MODIFIED','Asset has been modified by RRVS');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (388,'RRVS_STATUS','COMPLETED','Asset has been completed by RRVS');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (386,'RRVS_STATUS','UNMODIFIED','Default RRVS processing status');
 
 
 SET search_path = taxonomy, pg_catalog;

@@ -134,6 +134,7 @@ class ve_object(db.Model):
     foundn_sys = db.Column(db.String(254))
     rrvs_status = db.Column(db.String(254))
     vuln = db.Column(db.String(254))
+    dmg = db.Column(db.String(254))
     comment = db.Column(db.String(254))
     the_geom = db.Column(Geometry(geometry_type='POLYGON', srid=4326))
 

@@ -7,12 +7,15 @@ from flask_kvsession import KVSessionExtension
 import redis
 from simplekv.memory.redisstore import RedisStore
 from datetime import timedelta
+from werkzeug.contrib.profiler import ProfilerMiddleware
 
 
 store=RedisStore(redis.StrictRedis())
 
 app = Flask(__name__)
-app.config.from_object('rrvs_config')
+app.config.from_object('rrda_config')
+app.config['PROFILE']=True
+app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
 app.permanent_session_lifetime = timedelta(hours=1)
 KVSessionExtension(store, app)
 

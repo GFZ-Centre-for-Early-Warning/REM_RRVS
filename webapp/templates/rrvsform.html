@@ -47,7 +47,7 @@
 			   <table id="rrvsFormTable" class="hover"></table>
 		   </div>
 		   <div class="tab">
-			   <input type="radio" id="tab-1" name="tab-group-1" checked>
+			   <input type="radio" id="tab-1" name="tab-group-1">
                <label class="tablabel" for="tab-1">{{gettext('Mat.')}}</label>
 			   <div class="content">
 					<div class="formLayout">
@@ -223,15 +223,18 @@
 			   </div> 
 		   </div>
 		   <div class="tab">
-			   <input type="radio" id="tab-12" name="tab-group-1">
-               <label class="tablabel" for="tab-12">{{gettext('Optional')}}</label>
+			   <input type="radio" id="tab-12" name="tab-group-1" checked>
+               <label class="tablabel" for="tab-12">{{gettext('Dmg+VC')}}</label>
 			   <div class="content">
 					<div class="formLayout">
-						{{ rrvs_form.comment_field.label }}
-                        {{ rrvs_form.comment_field(cols="35",rows="7") }}
+						{{ rrvs_form.dmg_field.label }}
+						{{ rrvs_form.dmg_field }}
                         <br>
 						{{ rrvs_form.vuln_field.label }}
-						{{ rrvs_form.vuln_field(cols="3",rows="1") }}
+						{{ rrvs_form.vuln_field }}
+                        <br>
+						{{ rrvs_form.comment_field.label }}
+                        {{ rrvs_form.comment_field(cols="35",rows="7") }}
 					</div>
 			   </div> 
 		   </div>
@@ -281,6 +284,7 @@
 		  gid_val: $('input[name="gid_field"]').val()
 		}, function(data) {
 		  // update form fields with results from server
+		  console.log(data);
 		  $('select[name="mat_type_field"]').val(data.mat_type_gid);
 		  $('select[name="mat_tech_field"]').val(data.mat_tech_gid);
 		  $('select[name="mat_prop_field"]').val(data.mat_prop_gid);
@@ -312,8 +316,9 @@
 		  $('select[name="floor_type_field"]').val(data.floor_type_gid);
 		  $('select[name="floor_conn_field"]').val(data.floor_conn_gid);
 		  $('select[name="foundn_sys_field"]').val(data.foundn_sys_gid);
-		  $('input[name="comment_field"]').val(data.comment_val);
-		  $('input[name="vuln_field"]').val(data.vuln_val);
+          $('#comment_field').val(data.comment_val);
+		  $('select[name="vuln_field"]').val(data.vuln_gid);
+		  $('select[name="dmg_field"]').val(data.dmg_gid);
 		  // update the rrvs_status checkbox
 		  // note: needed to reformat the rrvs_status_val to fit a boolean checkbox field
 		  if(data.rrvs_status_val == "COMPLETED"){

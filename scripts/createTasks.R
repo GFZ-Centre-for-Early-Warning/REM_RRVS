@@ -24,7 +24,7 @@ library(maptools)
 host <- 'host'
 dbuser <- 'user'
 password <- 'password'
-dbname <- 'rem'
+dbname <- 'rrda'
 survey_gid <- 2
 utm <- 32636
 dbuffer <- 30
