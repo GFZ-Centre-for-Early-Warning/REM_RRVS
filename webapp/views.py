@@ -16,6 +16,7 @@ from flask.ext.security import login_required, login_user, logout_user
 import geoalchemy2.functions as func
 import json
 from geojson import Feature, FeatureCollection, dumps
+import time
 
 
 ########################################################
@@ -81,6 +82,12 @@ def login():
             #flags for screened buildings
             flask.session['screened'] = [False]*len(flask.session['bdg_gids'])
             #language is set in babel locale in __init__.py
+            #get gid's as python dictionary
+            dic_attribute_val_query=dic_attribute_value.query.all()#.options(load_only("gid","attribute_value"))
+            dic_attribute_val_py={}
+            for attribute in dic_attribute_val_query:
+                dic_attribute_val_py[attribute.attribute_value] = attribute.gid
+            flask.session['dic_attribute_val_py']=dic_attribute_val_py
             return flask.redirect(flask.url_for("main"))
         else:
             msg='Wrong combination of UserID and TaskID'
@@ -157,9 +164,13 @@ def update_rrvsform():
 	Note that for QuerySelectFields the gid of the attribute_value needs to be returned by the function.
 	"""
     # get building gid value for queries
+    t0=time.time()
     gid_val = flask.request.args.get('gid_val', 0, type=int)
+    print ('here')
+    print time.time()-t0
     # query attribute_value for select fields
     row = ve_object.query.filter_by(gid=gid_val).first()
+    print time.time()-t0
     mat_type_val = row.mat_type
     mat_tech_val = row.mat_tech
     mat_prop_val = row.mat_prop
@@ -188,6 +199,8 @@ def update_rrvsform():
     floor_conn_val = row.floor_conn
     foundn_sys_val = row.foundn_sys
     nonstrcexw_val = row.nonstrcexw
+    comment_val = row.comment
+    vuln_val = row.vuln
     #mat_type_val = ve_object.query.filter_by(gid=gid_val).first().mat_type
     #mat_tech_val = ve_object.query.filter_by(gid=gid_val).first().mat_tech
     #mat_prop_val = ve_object.query.filter_by(gid=gid_val).first().mat_prop
@@ -197,40 +210,73 @@ def update_rrvsform():
     #occupy_val = ve_object.query.filter_by(gid=gid_val).first().occupy
     #occupy_dt_val = ve_object.query.filter_by(gid=gid_val).first().occupy_dt
     #nonstrcexw_val = ve_object.query.filter_by(gid=gid_val).first().nonstrcexw
+    print time.time()-t0
+
+    dic_attribute_val_py = flask.session['dic_attribute_val_py']
 
     return flask.jsonify(
 		# query values for text fields
                 height_1_val=int(row.height_1),height2_1_val=int(row.height2_1),
 		year_1_val = row.year_1,
+		comment_val = row.comment,
                 #TODO: VERY UGLY!! Find replacement to improve performance! query gid of attribute_values for select fields
-		mat_type_gid = dic_attribute_value.query.filter_by(attribute_value=mat_type_val).first().gid,
-		mat_tech_gid = dic_attribute_value.query.filter_by(attribute_value=mat_tech_val).first().gid,
-		mat_prop_gid = dic_attribute_value.query.filter_by(attribute_value=mat_prop_val).first().gid,
-		llrs_gid = dic_attribute_value.query.filter_by(attribute_value=llrs_val).first().gid,
-		llrs_duct_gid = dic_attribute_value.query.filter_by(attribute_value=llrs_duct_val).first().gid,
-		height_gid = dic_attribute_value.query.filter_by(attribute_value=height_val).first().gid,
-		height2_gid = dic_attribute_value.query.filter_by(attribute_value=height2_val).first().gid,
-		yr_built_gid = dic_attribute_value.query.filter_by(attribute_value=yr_built_val).first().gid,
-		occupy_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_val).first().gid,
-		occupy_dt_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_dt_val).first().gid,
-		position_gid = dic_attribute_value.query.filter_by(attribute_value=position_val).first().gid,
-		plan_shape_gid = dic_attribute_value.query.filter_by(attribute_value=plan_shape_val).first().gid,
-		str_irreg_gid = dic_attribute_value.query.filter_by(attribute_value=str_irreg_val).first().gid,
-		str_irreg_dt_gid = dic_attribute_value.query.filter_by(attribute_value=str_irreg_dt_val).first().gid,
-		str_irreg_type_gid = dic_attribute_value.query.filter_by(attribute_value=str_irreg_type_val).first().gid,
-		str_irreg_2_gid = dic_attribute_value.query.filter_by(attribute_value=str_irreg_2_val).first().gid,
-		str_irreg_dt_2_gid = dic_attribute_value.query.filter_by(attribute_value=str_irreg_dt_2_val).first().gid,
-		str_irreg_type_2_gid = dic_attribute_value.query.filter_by(attribute_value=str_irreg_type_2_val).first().gid,
-		roof_shape_gid = dic_attribute_value.query.filter_by(attribute_value=roof_shape_val).first().gid,
-		roof_covmat_gid = dic_attribute_value.query.filter_by(attribute_value=roof_covmat_val).first().gid,
-		roof_sysmat_gid = dic_attribute_value.query.filter_by(attribute_value=roof_sysmat_val).first().gid,
-		roof_systype_gid = dic_attribute_value.query.filter_by(attribute_value=roof_systype_val).first().gid,
-		roof_conn_gid = dic_attribute_value.query.filter_by(attribute_value=roof_conn_val).first().gid,
-		floor_mat_gid = dic_attribute_value.query.filter_by(attribute_value=floor_mat_val).first().gid,
-		floor_type_gid = dic_attribute_value.query.filter_by(attribute_value=floor_type_val).first().gid,
-		floor_conn_gid = dic_attribute_value.query.filter_by(attribute_value=floor_conn_val).first().gid,
-		foundn_sys_gid = dic_attribute_value.query.filter_by(attribute_value=foundn_sys_val).first().gid,
-		nonstrcexw_gid = dic_attribute_value.query.filter_by(attribute_value=nonstrcexw_val).first().gid,
+		mat_type_gid = dic_attribute_val_py[mat_type_val],
+		mat_tech_gid = dic_attribute_val_py[mat_tech_val],
+		mat_prop_gid = dic_attribute_val_py[mat_prop_val],
+		llrs_gid = dic_attribute_val_py[llrs_val],
+		llrs_duct_gid = dic_attribute_val_py[llrs_duct_val],
+		height_gid = dic_attribute_val_py[height_val],
+		height2_gid = dic_attribute_val_py[height2_val],
+		yr_built_gid = dic_attribute_val_py[yr_built_val],
+		occupy_gid = dic_attribute_val_py[occupy_val],
+		occupy_dt_gid = dic_attribute_val_py[occupy_dt_val],
+		position_gid = dic_attribute_val_py[position_val],
+		plan_shape_gid = dic_attribute_val_py[plan_shape_val],
+		str_irreg_gid = dic_attribute_val_py[str_irreg_val],
+		str_irreg_dt_gid = dic_attribute_val_py[str_irreg_dt_val],
+		str_irreg_type_gid = dic_attribute_val_py[str_irreg_type_val],
+		str_irreg_2_gid = dic_attribute_val_py[str_irreg_2_val],
+		str_irreg_dt_2_gid = dic_attribute_val_py[str_irreg_dt_val],
+		str_irreg_type_2_gid = dic_attribute_val_py[str_irreg_type_2_val],
+		roof_shape_gid = dic_attribute_val_py[roof_shape_val],
+		roof_covmat_gid = dic_attribute_val_py[roof_covmat_val],
+		roof_sysmat_gid = dic_attribute_val_py[roof_sysmat_val],
+		roof_systype_gid = dic_attribute_val_py[roof_systype_val],
+		roof_conn_gid = dic_attribute_val_py[roof_conn_val],
+		floor_mat_gid = dic_attribute_val_py[floor_mat_val],
+		floor_type_gid = dic_attribute_val_py[floor_type_val],
+		floor_conn_gid = dic_attribute_val_py[floor_conn_val],
+		foundn_sys_gid = dic_attribute_val_py[foundn_sys_val],
+		nonstrcexw_gid = dic_attribute_val_py[nonstrcexw_val],
+		vuln_gid = dic_attribute_val_py[vuln_val],
+		#mat_type_gid = dic_attribute_value.query.filter_by(attribute_value=mat_type_val).first().gid,
+		#mat_tech_gid = dic_attribute_value.query.filter_by(attribute_value=mat_tech_val).first().gid,
+		#mat_prop_gid = dic_attribute_value.query.filter_by(attribute_value=mat_prop_val).first().gid,
+		#llrs_gid = dic_attribute_value.query.filter_by(attribute_value=llrs_val).first().gid,
+		#llrs_duct_gid = dic_attribute_value.query.filter_by(attribute_value=llrs_duct_val).first().gid,
+		#height_gid = dic_attribute_value.query.filter_by(attribute_value=height_val).first().gid,
+		#height2_gid = dic_attribute_value.query.filter_by(attribute_value=height2_val).first().gid,
+		#yr_built_gid = dic_attribute_value.query.filter_by(attribute_value=yr_built_val).first().gid,
+		#occupy_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_val).first().gid,
+		#occupy_dt_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_dt_val).first().gid,
+		#position_gid = dic_attribute_value.query.filter_by(attribute_value=position_val).first().gid,
+		#plan_shape_gid = dic_attribute_value.query.filter_by(attribute_value=plan_shape_val).first().gid,
+		#str_irreg_gid = dic_attribute_value.query.filter_by(attribute_value=str_irreg_val).first().gid,
+		#str_irreg_dt_gid = dic_attribute_value.query.filter_by(attribute_value=str_irreg_dt_val).first().gid,
+		#str_irreg_type_gid = dic_attribute_value.query.filter_by(attribute_value=str_irreg_type_val).first().gid,
+		#str_irreg_2_gid = dic_attribute_value.query.filter_by(attribute_value=str_irreg_2_val).first().gid,
+		#str_irreg_dt_2_gid = dic_attribute_value.query.filter_by(attribute_value=str_irreg_dt_2_val).first().gid,
+		#str_irreg_type_2_gid = dic_attribute_value.query.filter_by(attribute_value=str_irreg_type_2_val).first().gid,
+		#roof_shape_gid = dic_attribute_value.query.filter_by(attribute_value=roof_shape_val).first().gid,
+		#roof_covmat_gid = dic_attribute_value.query.filter_by(attribute_value=roof_covmat_val).first().gid,
+		#roof_sysmat_gid = dic_attribute_value.query.filter_by(attribute_value=roof_sysmat_val).first().gid,
+		#roof_systype_gid = dic_attribute_value.query.filter_by(attribute_value=roof_systype_val).first().gid,
+		#roof_conn_gid = dic_attribute_value.query.filter_by(attribute_value=roof_conn_val).first().gid,
+		#floor_mat_gid = dic_attribute_value.query.filter_by(attribute_value=floor_mat_val).first().gid,
+		#floor_type_gid = dic_attribute_value.query.filter_by(attribute_value=floor_type_val).first().gid,
+		#floor_conn_gid = dic_attribute_value.query.filter_by(attribute_value=floor_conn_val).first().gid,
+		#foundn_sys_gid = dic_attribute_value.query.filter_by(attribute_value=foundn_sys_val).first().gid,
+		#nonstrcexw_gid = dic_attribute_value.query.filter_by(attribute_value=nonstrcexw_val).first().gid,
 		## query values for text fields
 		#height1_val = int(ve_object.query.filter_by(gid=gid_val).first().height_1),
 		#yr_built_bp_val = ve_object.query.filter_by(gid=gid_val).first().yr_built_bp,
@@ -245,7 +291,8 @@ def update_rrvsform():
 		#occupy_dt_gid = dic_attribute_value.query.filter_by(attribute_value=occupy_dt_val).first().gid,
 		#nonstrcexw_gid = dic_attribute_value.query.filter_by(attribute_value=nonstrcexw_val).first().gid,
                 # query values for checkbox fields
-                rrvs_status_val = str(ve_object.query.filter_by(gid=gid_val).first().rrvs_status)
+                #rrvs_status_val = str(ve_object.query.filter_by(gid=gid_val).first().rrvs_status)
+                rrvs_status_val = str(row.rrvs_status)
 	        )
 
 @app.route('/rrvsform', methods=['GET', 'POST'])
@@ -301,7 +348,7 @@ def rrvsform():
                     ve_object.floor_conn: rrvs_form.floor_conn_field.data.attribute_value,
                     ve_object.foundn_sys: rrvs_form.foundn_sys_field.data.attribute_value,
                     ve_object.comment: rrvs_form.comment_field.data,
-                    ve_object.vuln: rrvs_form.vuln_field.data,
+                    ve_object.vuln: rrvs_form.vuln_field.data.attribute_value,
                     ve_object.rrvs_status: rrvs_status_val
                     }, synchronize_session=False)
         db.session.commit()

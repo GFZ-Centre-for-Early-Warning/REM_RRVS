@@ -11,12 +11,19 @@ INSERT INTO dic_attribute_type (gid, code, description) VALUES (30,'HEIGHT2','Se
 INSERT INTO dic_attribute_type (gid, code, description) VALUES (31,'STR_IRREG_2','Second structural irregularity');
 INSERT INTO dic_attribute_type (gid, code, description) VALUES (32,'STR_IRREG_DT_2','Second structural irregularity detail');
 INSERT INTO dic_attribute_type (gid, code, description) VALUES (33,'STR_IRREG_TYPE_2','Second structural irregularity type');
+INSERT INTO dic_attribute_type (gid, code, description) VALUES (34,'VULN_EMS98','EMS-98 vulnerability classes');
 
 
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (389,'OCCUPY','CON','Under construction');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (390,'OCCUPY','VAC','Vacant building');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (391,'COMMENT','COMMENT','Comment by the analyst');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (392,'HEIGHT','HB99','Number of storeys below ground unknown');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (393,'VULN_EMS98','A','EMS-98 Class A');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (394,'VULN_EMS98','B','EMS-98 Class B');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (395,'VULN_EMS98','C','EMS-98 Class C');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (396,'VULN_EMS98','D','EMS-98 Class D');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (397,'VULN_EMS98','E','EMS-98 Class E');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (398,'VULN_EMS98','F','EMS-98 Class F');
 
 ---
 

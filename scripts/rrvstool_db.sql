@@ -2527,6 +2527,13 @@ ALTER TABLE ONLY ve_object ALTER COLUMN foundn_sys SET DEFAULT 'FOS99'::characte
 ALTER TABLE ONLY ve_object ALTER COLUMN rrvs_status SET DEFAULT 'UNMODIFIED'::character varying;
 
 
+--
+-- Name: vuln; Type: DEFAULT; Schema: asset; Owner: postgres
+--
+ALTER TABLE ONLY ve_object ALTER COLUMN vuln SET DEFAULT 'V99'::character varying;
+
+
+
 SET search_path = history, pg_catalog;
 
 --

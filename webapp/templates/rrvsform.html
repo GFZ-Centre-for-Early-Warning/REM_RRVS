@@ -231,7 +231,7 @@
                         {{ rrvs_form.comment_field(cols="35",rows="7") }}
                         <br>
 						{{ rrvs_form.vuln_field.label }}
-						{{ rrvs_form.vuln_field(cols="3",rows="1") }}
+						{{ rrvs_form.vuln_field }}
 					</div>
 			   </div> 
 		   </div>
@@ -312,8 +312,10 @@
 		  $('select[name="floor_type_field"]').val(data.floor_type_gid);
 		  $('select[name="floor_conn_field"]').val(data.floor_conn_gid);
 		  $('select[name="foundn_sys_field"]').val(data.foundn_sys_gid);
-		  $('input[name="comment_field"]').val(data.comment_val);
-		  $('input[name="vuln_field"]').val(data.vuln_val);
+          $('#comment_field').val(data.comment_val);
+		  $('select[name="vuln_field"]').val(data.vuln_gid);
+		  //$('input[name="vuln_field"]').val(data.vuln_val);
+		  //$('input[name="comment_field"]').val(data.comment_val);
 		  // update the rrvs_status checkbox
 		  // note: needed to reformat the rrvs_status_val to fit a boolean checkbox field
 		  if(data.rrvs_status_val == "COMPLETED"){

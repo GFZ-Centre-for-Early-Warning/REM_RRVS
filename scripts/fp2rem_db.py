@@ -10,10 +10,10 @@
 #############################
 import os
 
-shapefile = 'ramallah_fp4326.shp'
+shapefile = 'tiberias_buildings.shp'
 sql_out = 'fp2rem.sql'
 source = 'OSM'
-survey_name='ramallah2016'
+survey_name='tiberias2016'
 
 #create a table with the shapefile layer containing postgis geometry
 cmd = "shp2pgsql -s 4326 -g the_geom {} temporary_footprint_data > {}".format(shapefile,sql_out)

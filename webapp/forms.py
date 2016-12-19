@@ -10,67 +10,71 @@ Description: Defines the WTForms fields
 '''
 import flask
 from flask.ext.wtf import Form
-from wtforms import TextField, TextAreaField, BooleanField, SubmitField
+from wtforms import TextField, TextAreaField, BooleanField, SubmitField, SelectField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import wtforms.validators as validators
 from models import dic_attribute_value
 from flask.ext.babel import lazy_gettext
 
 def getMatType():
-	return dic_attribute_value.query.filter_by(attribute_type_code='MAT_TYPE')
+	return dic_attribute_value.query.filter_by(attribute_type_code='MAT_TYPE').order_by(dic_attribute_value.attribute_value)
 def getMatTech():
-	return dic_attribute_value.query.filter_by(attribute_type_code='MAT_TECH')
+	return dic_attribute_value.query.filter_by(attribute_type_code='MAT_TECH').order_by(dic_attribute_value.attribute_value)
 def getMatProp():
-	return dic_attribute_value.query.filter_by(attribute_type_code='MAT_PROP')
+	return dic_attribute_value.query.filter_by(attribute_type_code='MAT_PROP').order_by(dic_attribute_value.attribute_value)
 def getLlrs():
-	return dic_attribute_value.query.filter_by(attribute_type_code='LLRS')
+	return dic_attribute_value.query.filter_by(attribute_type_code='LLRS').order_by(dic_attribute_value.attribute_value)
 def getLlrsDuct():
-	return dic_attribute_value.query.filter_by(attribute_type_code='LLRS_DUCT')
+	return dic_attribute_value.query.filter_by(attribute_type_code='LLRS_DUCT').order_by(dic_attribute_value.attribute_value)
 def getHeight():
-	return dic_attribute_value.query.filter_by(attribute_type_code='HEIGHT')
+	return dic_attribute_value.query.filter_by(attribute_type_code='HEIGHT').order_by(dic_attribute_value.attribute_value)
 def getYrBuilt():
-	return dic_attribute_value.query.filter_by(attribute_type_code='YR_BUILT')
+	return dic_attribute_value.query.filter_by(attribute_type_code='YR_BUILT').order_by(dic_attribute_value.attribute_value)
 def getOccupy():
-	return dic_attribute_value.query.filter_by(attribute_type_code='OCCUPY')
+	return dic_attribute_value.query.filter_by(attribute_type_code='OCCUPY').order_by(dic_attribute_value.attribute_value)
 def getOccupyDt():
-	return dic_attribute_value.query.filter_by(attribute_type_code='OCCUPY_DT')
+	return dic_attribute_value.query.filter_by(attribute_type_code='OCCUPY_DT').order_by(dic_attribute_value.attribute_value)
 def getPosition():
-	return dic_attribute_value.query.filter_by(attribute_type_code='POSITION')
+	return dic_attribute_value.query.filter_by(attribute_type_code='POSITION').order_by(dic_attribute_value.attribute_value)
 def getPlanShape():
-	return dic_attribute_value.query.filter_by(attribute_type_code='PLAN_SHAPE')
+	return dic_attribute_value.query.filter_by(attribute_type_code='PLAN_SHAPE').order_by(dic_attribute_value.attribute_value)
 #NOTE: choices for secondary str.irreg. are for now the same as for primary
 def getStrIrreg():
-	return dic_attribute_value.query.filter_by(attribute_type_code='STR_IRREG')
+	return dic_attribute_value.query.filter_by(attribute_type_code='STR_IRREG').order_by(dic_attribute_value.attribute_value)
 def getStrIrreg2():
-	return dic_attribute_value.query.filter_by(attribute_type_code='STR_IRREG')
+	return dic_attribute_value.query.filter_by(attribute_type_code='STR_IRREG').order_by(dic_attribute_value.attribute_value)
 def getStrIrregDt():
-	return dic_attribute_value.query.filter_by(attribute_type_code='STR_IRREG_DT')
+	return dic_attribute_value.query.filter_by(attribute_type_code='STR_IRREG_DT').order_by(dic_attribute_value.attribute_value)
 def getStrIrregDt2():
-	return dic_attribute_value.query.filter_by(attribute_type_code='STR_IRREG_DT')
+	return dic_attribute_value.query.filter_by(attribute_type_code='STR_IRREG_DT').order_by(dic_attribute_value.attribute_value)
 def getStrIrregType():
-	return dic_attribute_value.query.filter_by(attribute_type_code='STR_IRREG_TYPE')
+	return dic_attribute_value.query.filter_by(attribute_type_code='STR_IRREG_TYPE').order_by(dic_attribute_value.attribute_value)
 def getStrIrregType2():
-	return dic_attribute_value.query.filter_by(attribute_type_code='STR_IRREG_TYPE')
+	return dic_attribute_value.query.filter_by(attribute_type_code='STR_IRREG_TYPE').order_by(dic_attribute_value.attribute_value)
 def getNonstrcexw():
-	return dic_attribute_value.query.filter_by(attribute_type_code='NONSTRCEXW')
+	return dic_attribute_value.query.filter_by(attribute_type_code='NONSTRCEXW').order_by(dic_attribute_value.attribute_value)
 def getRoofShape():
-	return dic_attribute_value.query.filter_by(attribute_type_code='ROOF_SHAPE')
+	return dic_attribute_value.query.filter_by(attribute_type_code='ROOF_SHAPE').order_by(dic_attribute_value.attribute_value)
 def getRoofCovMat():
-	return dic_attribute_value.query.filter_by(attribute_type_code='ROOFCOVMAT')
+	return dic_attribute_value.query.filter_by(attribute_type_code='ROOFCOVMAT').order_by(dic_attribute_value.attribute_value)
 def getRoofSysMat():
-	return dic_attribute_value.query.filter_by(attribute_type_code='ROOFSYSMAT')
+	return dic_attribute_value.query.filter_by(attribute_type_code='ROOFSYSMAT').order_by(dic_attribute_value.attribute_value)
 def getRoofSysType():
-	return dic_attribute_value.query.filter_by(attribute_type_code='ROOFSYSTYP')
+	return dic_attribute_value.query.filter_by(attribute_type_code='ROOFSYSTYP').order_by(dic_attribute_value.attribute_value)
 def getRoofConn():
-	return dic_attribute_value.query.filter_by(attribute_type_code='ROOF_CONN')
+	return dic_attribute_value.query.filter_by(attribute_type_code='ROOF_CONN').order_by(dic_attribute_value.attribute_value)
 def getFloorMat():
-	return dic_attribute_value.query.filter_by(attribute_type_code='FLOOR_MAT')
+	return dic_attribute_value.query.filter_by(attribute_type_code='FLOOR_MAT').order_by(dic_attribute_value.attribute_value)
 def getFloorType():
-	return dic_attribute_value.query.filter_by(attribute_type_code='FLOOR_TYPE')
+	return dic_attribute_value.query.filter_by(attribute_type_code='FLOOR_TYPE').order_by(dic_attribute_value.attribute_value)
 def getFloorConn():
-	return dic_attribute_value.query.filter_by(attribute_type_code='FLOOR_CONN')
+	return dic_attribute_value.query.filter_by(attribute_type_code='FLOOR_CONN').order_by(dic_attribute_value.attribute_value)
 def getFoundnSys():
-	return dic_attribute_value.query.filter_by(attribute_type_code='FOUNDN_SYS')
+	return dic_attribute_value.query.filter_by(attribute_type_code='FOUNDN_SYS').order_by(dic_attribute_value.attribute_value)
+def getVuln():
+	return dic_attribute_value.query.filter_by(attribute_type_code='VULN').order_by(dic_attribute_value.attribute_value)
+def getDmg():
+	return dic_attribute_value.query.filter_by(attribute_type_code='DMG').order_by(dic_attribute_value.attribute_value)
 
 class RrvsForm(Form):
     """
@@ -83,9 +87,12 @@ class RrvsForm(Form):
     height2_1_val_field = TextField(label=lazy_gettext("Height Value 2"), validators=[validators.Length(max=10), validators.Optional()])
     year_1_val_field = TextField(label=lazy_gettext("Construction Date"), validators=[validators.Length(max=10), validators.Optional()])
     comment_field = TextAreaField(label=lazy_gettext("Comment"), validators=[validators.Length(max=254), validators.Optional()])
-    vuln_field = TextAreaField(label=lazy_gettext("Vulnerability"), validators=[validators.Length(max=10), validators.Optional()])
+    #vuln_field = TextAreaField(label=lazy_gettext("Vulnerability EMS-98"), validators=[validators.Length(max=10), validators.Optional()])
 
     # Select fields
+    #vulnerability select field (fixed)
+    #vuln_field = SelectField(label=lazy_gettext("Vulnerability EMS-98"), choices=[('',''),('A','A'),('B','B'),('C','C'),('D','D'),('E','E'),('F','F')],validators=[validators.Length(max=10), validators.Optional()])
+    vuln_field = QuerySelectField(label=lazy_gettext("Vulnerability EMS-98"), query_factory=getVuln,get_label=label,allow_blank=True)
     mat_type_field = QuerySelectField(lazy_gettext("Material Type"), query_factory=getMatType, get_label=label, allow_blank=True)
     mat_tech_field = QuerySelectField(lazy_gettext("Material Technology"), query_factory=getMatTech, get_label=label, allow_blank=True)
     mat_prop_field = QuerySelectField(lazy_gettext("Material Property"), query_factory=getMatProp, get_label=label, allow_blank=True)
