@@ -217,7 +217,7 @@ def update_rrvsform():
     return flask.jsonify(
 		# query values for text fields
                 height_1_val=int(row.height_1),height2_1_val=int(row.height2_1),
-		year_1_val = row.year_1,
+		year_1_val = int(row.year_1),
 		comment_val = row.comment,
                 #TODO: VERY UGLY!! Find replacement to improve performance! query gid of attribute_values for select fields
 		mat_type_gid = dic_attribute_val_py[mat_type_val],
