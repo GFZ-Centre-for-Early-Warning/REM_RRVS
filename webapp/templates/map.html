@@ -193,7 +193,8 @@ attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy;
                 color: '#008000'
 			});
 			//store the building location
-            imgBdgData.bdgLoc=([e.feature.geometry.coordinates[0][0][0][0], e.feature.geometry.coordinates[0][0][0][1]]);
+            //imgBdgData.bdgLoc=([e.feature.geometry.coordinates[0][0][0][0], e.feature.geometry.coordinates[0][0][0][1]]);
+            imgBdgData.bdgLoc=L.latLng(e.feature.geometry.coordinates[0][0][0][1], e.feature.geometry.coordinates[0][0][0][0]);
             // update panoramic image
             // find closest img 
             var closestImg = leafletKnn(gpsJSON).nearestLayer(imgBdgData.bdgLoc,1);
@@ -204,7 +205,7 @@ attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy;
             highlightedGPS=closestImg;
             //set configPano and imgBdgData accordingly
             updateImgParams(closestImg);
-            imgBdgData.bdgLoc=L.latLng(e.feature.geometry.coordinates[0][0][0][0], e.feature.geometry.coordinates[0][0][0][1]);
+            //imgBdgData.bdgLoc=L.latLng(e.feature.geometry.coordinates[0][0][0][0], e.feature.geometry.coordinates[0][0][0][1]);
             imgBdgInteraction();
             //update the image
             updatePanoImg();
