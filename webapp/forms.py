@@ -59,7 +59,7 @@ def getRoofCovMat():
 	return dic_attribute_value.query.filter_by(attribute_type_code='ROOFCOVMAT').order_by(dic_attribute_value.attribute_value)
 def getRoofSysMat():
 	return dic_attribute_value.query.filter_by(attribute_type_code='ROOFSYSMAT').order_by(dic_attribute_value.attribute_value)
-def getRoofSysType():
+def getRoofSysTyp():
 	return dic_attribute_value.query.filter_by(attribute_type_code='ROOFSYSTYP').order_by(dic_attribute_value.attribute_value)
 def getRoofConn():
 	return dic_attribute_value.query.filter_by(attribute_type_code='ROOF_CONN').order_by(dic_attribute_value.attribute_value)
@@ -113,9 +113,9 @@ class RrvsForm(Form):
     str_irreg_type_2_field = QuerySelectField(lazy_gettext("Second Structural Irregularity Type"), query_factory=getStrIrregType2, get_label=label, allow_blank=True)
     nonstrcexw_field = QuerySelectField(lazy_gettext("Exterior Walls Material"), query_factory=getNonstrcexw, get_label=label, allow_blank=True)
     roof_shape_field = QuerySelectField(lazy_gettext("Roof Shape"), query_factory=getRoofShape, get_label=label, allow_blank=True)
-    roof_covmat_field = QuerySelectField(lazy_gettext("Roof Covering Material"), query_factory=getRoofCovMat, get_label=label, allow_blank=True)
-    roof_sysmat_field = QuerySelectField(lazy_gettext("Roof System Material"), query_factory=getRoofSysMat, get_label=label, allow_blank=True)
-    roof_systype_field = QuerySelectField(lazy_gettext("Roof System Type"), query_factory=getRoofSysType, get_label=label, allow_blank=True)
+    roofcovmat_field = QuerySelectField(lazy_gettext("Roof Covering Material"), query_factory=getRoofCovMat, get_label=label, allow_blank=True)
+    roofsysmat_field = QuerySelectField(lazy_gettext("Roof System Material"), query_factory=getRoofSysMat, get_label=label, allow_blank=True)
+    roofsystyp_field = QuerySelectField(lazy_gettext("Roof System Type"), query_factory=getRoofSysTyp, get_label=label, allow_blank=True)
     roof_conn_field = QuerySelectField(lazy_gettext("Roof Connections"), query_factory=getRoofConn, get_label=label, allow_blank=True)
     floor_mat_field = QuerySelectField(lazy_gettext("Floor Material"), query_factory=getFloorMat, get_label=label, allow_blank=True)
     floor_type_field = QuerySelectField(lazy_gettext("Floor Type"), query_factory=getFloorType, get_label=label, allow_blank=True)

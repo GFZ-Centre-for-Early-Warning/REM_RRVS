@@ -182,14 +182,14 @@
 						{{ rrvs_form.roof_shape_field.label }}
 						{{ rrvs_form.roof_shape_field }}
                         <br>
-						{{ rrvs_form.roof_covmat_field.label }}
-						{{ rrvs_form.roof_covmat_field }}
+						{{ rrvs_form.roofcovmat_field.label }}
+						{{ rrvs_form.roofcovmat_field }}
                         <br>
-						{{ rrvs_form.roof_sysmat_field.label }}
-						{{ rrvs_form.roof_sysmat_field }}
+						{{ rrvs_form.roofsysmat_field.label }}
+						{{ rrvs_form.roofsysmat_field }}
                         <br>
-						{{ rrvs_form.roof_systype_field.label }}
-						{{ rrvs_form.roof_systype_field }}
+						{{ rrvs_form.roofsystyp_field.label }}
+						{{ rrvs_form.roofsystyp_field }}
                         <br>
 						{{ rrvs_form.roof_conn_field.label }}
 						{{ rrvs_form.roof_conn_field }}
@@ -265,6 +265,7 @@
 			var data = table.row( this ).data();
 			$('input[name="gid_field"]').focus();	
 			$('input[name="gid_field"]').val(data[0]);
+			//$('input[name="gid_field"]').focus();	
 			$('#rrvs_status_field').focus();
 			// update map and panoviewer
 			console.log('rrvsform: ' + $('input[name="gid_field"]').val());
@@ -304,15 +305,15 @@
 		  $('select[name="str_irreg_type_2_field"]').val(data.str_irreg_type_2_gid);
 		  $('select[name="nonstrcexw_field"]').val(data.nonstrcexw_gid);
 		  $('select[name="roof_shape_field"]').val(data.roof_shape_gid);
-		  $('select[name="roof_covmat_field"]').val(data.roof_covmat_gid);
-		  $('select[name="roof_sysmat_field"]').val(data.roof_sysmat_gid);
-		  $('select[name="roof_systype_field"]').val(data.roof_systype_gid);
+		  $('select[name="roofcovmat_field"]').val(data.roofcovmat_gid);
+		  $('select[name="roofsysmat_field"]').val(data.roofsysmat_gid);
+		  $('select[name="roofsystyp_field"]').val(data.roofsystyp_gid);
 		  $('select[name="roof_conn_field"]').val(data.roof_conn_gid);
 		  $('select[name="floor_mat_field"]').val(data.floor_mat_gid);
 		  $('select[name="floor_type_field"]').val(data.floor_type_gid);
 		  $('select[name="floor_conn_field"]').val(data.floor_conn_gid);
 		  $('select[name="foundn_sys_field"]').val(data.foundn_sys_gid);
-          $('#comment_field').val(data.comment_val);
+                  $('#comment_field').val(data.comment_val);
 		  $('select[name="vuln_field"]').val(data.vuln_gid);
 		  //$('input[name="vuln_field"]').val(data.vuln_val);
 		  //$('input[name="comment_field"]').val(data.comment_val);
