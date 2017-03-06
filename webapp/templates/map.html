@@ -116,6 +116,9 @@ attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy;
             //configPano.panorama = "/panellum/../static/panoimg/ladybug_panoramic_" + imgBdgData.img_id + ".jpg";
             configPano.panorama = "/pano/"+e.feature.properties.repository + "/"+ e.feature.properties.filename;
             configPano.title = "FrameID: " + e.feature.properties.frame_id;
+            //Google Streetview link
+            var gsv = "http://maps.google.com?layer=c&cbll="+imgBdgData.imgLoc.lat+','+imgBdgData.imgLoc.lng+"&cbp=12,"+imgBdgData.imgAzi+","+"0,5";
+            configPano.author = gsv;
         }
         
 		//function for interaction between gps layer and panoImg iframe
