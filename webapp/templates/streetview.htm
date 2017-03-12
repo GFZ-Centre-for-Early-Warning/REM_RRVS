@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Street View</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #street-view {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="street-view"></div>
+    <script>
+    var config;
+    var z=decodeURIComponent(window.location.href).split("?");
+    z.shift();
+    var panorama;
+    var config = JSON.parse(z[0]);
+    function initialize() {
+        panorama = new google.maps.StreetViewPanorama(
+        document.getElementById('street-view'),
+        {
+            position: {lat: config.lat, lng: config.lon},
+            pov: {heading: config.yaw, pitch: 0},
+            zoom: 1
+        });
+    }
+    </script>
+    <script async defer
+         src="https://maps.googleapis.com/maps/api/js?key=<GOOGLEAPIKEY>&callback=initialize">
+    </script>
+  </body>
+</html>
+
+
+
+

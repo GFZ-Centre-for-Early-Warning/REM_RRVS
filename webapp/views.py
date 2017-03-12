@@ -148,13 +148,21 @@ def map():
 
     return flask.render_template('map.html',bdgs=bdgs_json,gps=gps_json)
 
-@app.route('/pannellum')
+@app.route('/streetview')
 @login_required
-def pannellum():
+def streetview():
     """
     This will render a template that holds the panoimage viewer.
     """
-    return flask.render_template('pannellum.htm')
+    return flask.render_template('streetview.htm')
+
+#@app.route('/pannellum')
+#@login_required
+#def pannellum():
+#    """
+#    This will render a template that holds the panoimage viewer.
+#    """
+#    return flask.render_template('pannellum.htm')
 
 @app.route('/_update_rrvsform')
 @login_required

@@ -103,22 +103,12 @@ attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy;
 
         //object to keep panoramic image configuration
         var configPano = new Object();
-        configPano.autoLoad=true;
-        //Temporary Fix
-        configPano.ignoreGPanoXMP=true;
 
         //update image related parameters
         function updateImgParams(e){
             //update imgBdgData object
             imgBdgData.imgLoc = e.getLatLng();
             imgBdgData.imgAzi = e.feature.properties.azimuth;
-            //update configPano
-            //configPano.panorama = "/panellum/../static/panoimg/ladybug_panoramic_" + imgBdgData.img_id + ".jpg";
-            configPano.panorama = "/pano/"+e.feature.properties.repository + "/"+ e.feature.properties.filename;
-            configPano.title = "FrameID: " + e.feature.properties.frame_id;
-            //Google Streetview link
-            var gsv = "http://maps.google.com?layer=c&cbll="+imgBdgData.imgLoc.lat+','+imgBdgData.imgLoc.lng+"&cbp=12,"+imgBdgData.imgAzi+","+"0,5";
-            configPano.author = gsv;
         }
         
 		//function for interaction between gps layer and panoImg iframe
@@ -132,11 +122,17 @@ attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy;
             }else{
 			    var ifrm = parent.document.getElementById('ifrm1');
             }
+            configPano.lat = imgBdgData.imgLoc.lat;
+            configPano.lon = imgBdgData.imgLoc.lng;
+            if (!configPano.yaw){
+                configPano.yaw = 0.;
+            }
             //convert json to URI
             var config_json = JSON.stringify(configPano);
             config_json = encodeURIComponent(config_json);
             //reset panellum image source
-            ifrm.src = "{{ url_for('pannellum') }}?config="+config_json;
+            ifrm.src = "{{ url_for('streetview') }}?"+config_json;
+            //ifrm.src = "{{ url_for('streetview') }}";
 		}
 
         //function to calculate angle between two points in degrees p1 to p2
@@ -147,8 +143,9 @@ attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy;
         // function to calculate image building location parameters
         function imgBdgInteraction(){
             var ang = angleDeg(imgBdgData.imgLoc,imgBdgData.bdgLoc);
+            configPano.lat = imgBdgData.imgLoc.lat
+            configPano.lon = imgBdgData.imgLoc.lng
             configPano.yaw = (90-ang)-imgBdgData.imgAzi;
-            configPano.hotSpots = [{pitch:'0',yaw:configPano.yaw,type:'info',text:'{{_('Selected building')}}'}];
         }
 
 		//function for refreshing rrvsForm iframe and pannellum iframe based on map iframe action
