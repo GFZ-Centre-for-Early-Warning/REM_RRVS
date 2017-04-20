@@ -145,7 +145,8 @@ attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy;
             var ang = angleDeg(imgBdgData.imgLoc,imgBdgData.bdgLoc);
             configPano.lat = imgBdgData.imgLoc.lat
             configPano.lon = imgBdgData.imgLoc.lng
-            configPano.yaw = (90-ang)-imgBdgData.imgAzi;
+            //google panos always oriented towards north
+            configPano.yaw = 90-ang;
         }
 
 		//function for refreshing rrvsForm iframe and pannellum iframe based on map iframe action
