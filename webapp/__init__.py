@@ -1,8 +1,8 @@
 from flask import Flask,request,session
 from flask_sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager
-from flask.ext.security import Security,SQLAlchemyUserDatastore
-from flask.ext.babel import Babel
+from flask_login import LoginManager
+from flask_security import Security,SQLAlchemyUserDatastore
+from flask_babel import Babel
 from flask_kvsession import KVSessionExtension
 import redis
 from simplekv.memory.redisstore import RedisStore

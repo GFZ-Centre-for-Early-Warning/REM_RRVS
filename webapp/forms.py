@@ -9,12 +9,12 @@ Description: Defines the WTForms fields
 ----
 '''
 import flask
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import TextField, TextAreaField, BooleanField, SubmitField, SelectField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 import wtforms.validators as validators
 from models import dic_attribute_value
-from flask.ext.babel import lazy_gettext
+from flask_babel import lazy_gettext
 
 def getMatType():
 	return dic_attribute_value.query.filter_by(attribute_type_code='MAT_TYPE').order_by(dic_attribute_value.attribute_value)

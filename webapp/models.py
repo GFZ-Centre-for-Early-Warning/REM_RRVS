@@ -9,7 +9,7 @@ Description: Defines the database model
 ----
 '''
 from webapp import db
-from flask.ext.security import RoleMixin, UserMixin
+from flask_security import RoleMixin, UserMixin
 from geoalchemy2 import Geometry
 from sqlalchemy.dialects import postgresql
 

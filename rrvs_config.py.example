@@ -1,4 +1,5 @@
 SQLALCHEMY_DATABASE_URI = 'postgresql://user:pw@localhost:5432/rem'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 WTF_CSRF_ENABLED = True
 SECRET_KEY = '42'
 DEBUG = True
