@@ -1,0 +1,44 @@
+#########################################################################
+# PERManEnt
+# Panorama Extraction and Resampling MANagment ENTity
+#
+# Collection of scripts intended to be used for extracting the images from
+# pgr streams acquired with the GFZ MoMa, taking care of all metadata
+# 
+# Author: M.Haas 
+# Contact: mhaas@gfz-potsdam.de
+#########################################################################
+
+#############################
+Basic Workflow:
+#############################
+
+########
+In Short
+########
+Use all the python scripts in alphabetical order
+
+#######
+Details
+#######
+
+(Preferably) During survey:
+---------------------------
+1. use interactive program camDelta.py to keep track of missalignments between camera and carheading (preferably already during survey)
+
+
+Any time after survey:
+----------------------
+2. use extract_images.py to extract all images from the pgrs, interpolate the 1Hz GPS position using the camera clock, create a metadata.csv,  and write the metadata to the jpegs using EXIF/XMP.
+3. use rrvs_metadata_manager.py with option "-m gen-meta" to generate the set of metadata for all images 
+4. use resample_images.py on the generated metadata .csv file to resample the images (only in the metadata file) based on a fixed rate (e.g. every 10th image frame) or on a distance (meters) threshold, and write a resampled metadata.csv and a filelist containing only the filenames of the sampled jpegs.
+5. use copy_sel.py tool to copy the selected (resampled) images into a dedicated folder
+6. use rrvs_metadata_manager.py with the option "-m update-meta" to write the metadata on the selected images 
+7. use sql_generate.py on the (resampled) metadata .csv file to generate the sql script which populate the rrvs_database.
+
+Afterwards:
+-----------
+1. Use the filelist generated (see point 4 above) to copy/move the jpegs to their final destination/repository
+2. Execute the sql script on the REM_DB keeping track of the images.
+3. If differing from the one specified in Workflow (5) update column repository in image.img accordingly
+

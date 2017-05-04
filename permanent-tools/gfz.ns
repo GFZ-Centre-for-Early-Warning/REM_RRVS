@@ -1,0 +1,24 @@
+%Image::ExifTool::UserDefined = (
+    'Image::ExifTool::XMP::Main' => {
+        GFZ => {
+            SubDirectory => {
+                TagTable => 'Image::ExifTool::UserDefined::GFZ',
+            },
+        },
+    },
+);
+
+%Image::ExifTool::UserDefined::GFZ = (
+    GROUPS        => { 0 => 'XMP', 1 => 'XMP-GFZ', 2 => 'Image' },
+    NAMESPACE     => { 'GFZ' => 'http://ns.gfz-potsdam.de/GFZ/1.0/' },
+    WRITABLE      => 'string',
+    SurveyName => { },
+    SurveyDescription => { },
+    SurveyType => { },
+    ImageType => { },
+    FrameId => { },
+    GPSAzimuth => { },
+    InitialCameraDolly => { },
+    Repository => { },
+);
+1;  #end
