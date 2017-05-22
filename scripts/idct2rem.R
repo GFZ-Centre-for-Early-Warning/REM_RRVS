@@ -5,16 +5,19 @@
 # Associates parameters with available footprints
 # For now only works for UNMODIFIED buildings no conflict handeling
 ######################################################################
+library(RPostgreSQL)
+library(sp)
+library(rgdal)
 
 #clear all variables
 rm(list=ls(all.names=TRUE))
 
-setwd("pass/to/idct_csvfile")
 
-library(RPostgreSQL)
 
 #idct database snapshot
-data <- read.csv("IDCTDO_survey_points.csv")
+setwd("pass/to/idct_csvfile")
+data <- read.csv("IDCTDO_survey_points_....csv")
+
 
 #longitudinal or transverse preferred
 L_T <- 'L'
@@ -320,7 +323,53 @@ writeOGR(idct.sp, conn, layer_options = "geometry_name=geom",
 query = paste("WITH b AS (SELECT * FROM idct) SELECT gid,b.ogc_fid as iid,rrvs_status FROM asset.ve_object,b WHERE survey_gid=",survey_gid," AND rrvs_status='",status,"' AND ST_CONTAINS(the_geom,b.geom)",sep="") 
 matches <- sql_query(query)
 
+#in case of duplicates take all info available with hierarchy achording
+#to length of data information 
 if (length(matches$gid)>0){
+  # find duplicates
+  duplicates_gids <- matches$gid[duplicated(matches$gid)]
+  # in case of duplicates
+  if (length(duplicates_gids)>0){
+    for (did in duplicates_gids){
+      # find all rows with this gid
+      iids <- matches$iid[which(matches$gid == did)] 
+      # find row with most information of duplicates
+      lengths <- c()
+      for (iid in seq_along(iids)){
+        #remove empty columns (keeps unknown in database)
+        row <- rem[iid,]
+        #remove empty columns (keeps unknown in database)
+        row[which(row=='')]=NULL
+        lengths<- c(lengths,length(row))
+      }
+      #find master as first entry with maximum nr of fields filled
+      mid <- iids[which(lengths==max(lengths))][1]
+      master <- rem[mid,]
+      #all subordinated rows
+      sids <- iids[which(iids!=mid)]
+      #fill master with slave information
+      for (sid in sids){
+        slave <- rem[sid,]
+        #find which info is in slave but not in master
+        ms <- which(master =='')
+        fs <- which(slave !='')
+        fs <- intersect(ms,fs)
+        #update it
+        for (info in fs){
+          master[names(slave[info])] <- slave[info]
+        }
+      }
+      #write back changes to rem
+      rem[mid,] <- master
+      #and drop slave ids from matches
+      matches <- matches[-which(matches$iid %in% sids),]
+    }
+  }
+}
+
+#update the database
+if (length(matches$gid)>0){
+
   #update the relevant buildings
   for (i in seq_along(matches$gid)){
     iid <- matches$iid[i]
