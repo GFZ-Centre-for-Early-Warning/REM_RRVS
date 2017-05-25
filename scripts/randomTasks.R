@@ -23,17 +23,17 @@ library(sp)
 library(maptools)
 
 #database settings
-host <- 'host'
-dbuser <- 'user'
-password <- 'password'
+host <- 'localhost'
+dbuser <- 'postgres'
+password <- 'postgres'
 dbname <- 'rem'
-survey_gid <- 99
-utm <- 32636
+survey_gid <- 6
+utm <- 32719
 dbuffer <- 30
 #user_id to assign task to
-user_id <- 6
+user_id <- 41
 #aimed task size
-task_nr <- 10
+task_nr <- 7
 task_size <- 100
 seed <- 42
 
@@ -55,10 +55,10 @@ int.hist = function(x,ylab="Frequency",...) {
 }
 
 #create buffer around images belonging to survey for 
-query <- paste("DROP TABLE IF EXISTS PATH; CREATE TABLE path AS SELECT g.path[1] as gid, g.geom::geometry(Polygon, 4326) as path FROM (SELECT(ST_Dump(ST_UNION(ST_Buffer(the_geom, ",dbuffer,")))).* FROM image.gps WHERE gid in (SELECT gid FROM image.img WHERE survey=",survey_gid,")) as g;",sep="")
+query <- paste("DROP TABLE IF EXISTS PATH; CREATE TABLE path AS SELECT g.path[1] as gid, g.geom::geometry(Polygon, 4326) as path FROM (SELECT(ST_Dump(ST_UNION(ST_Transform(ST_Buffer(ST_Transform(the_geom,",utm,"), ",dbuffer,"),4326)))).* FROM image.gps WHERE gid in (SELECT gid FROM image.img WHERE survey=",survey_gid,")) as g;",sep="")
 create_it <- sql_query(query)
 #get footprints within the path considering a buffer
-query <- paste("SELECT DISTINCT o.gid, ST_AsText(o.the_geom) AS wktgeom FROM asset.object AS o,survey.survey AS s, path AS p WHERE o.survey_gid=",survey_gid," AND ST_DWithIn(ST_Transform(p.path,",utm,"),ST_Centroid(ST_Transform(o.the_geom,",utm,")),",dbuffer,");",sep="")
+query <- paste("SELECT DISTINCT o.gid, ST_AsText(o.the_geom) AS wktgeom FROM asset.object AS o,survey.survey AS s, path AS p WHERE o.survey_gid=",survey_gid," AND ST_contains(ST_Transform(p.path,",utm,"),ST_Centroid(ST_Transform(o.the_geom,",utm,")));",sep="")
 buildings <- sql_query(query)
 
 #adjust nr of tasks if larger than possible
@@ -86,7 +86,7 @@ for (i in seq(task_nr)){
   exec <- sql_query(query)
   #write images related to task to task
 
-  query <- paste("WITH buildings AS (SELECT unnest(bdg_gids) AS id FROM users.tasks WHERE id=",task_id,") UPDATE users.tasks SET img_ids=(SELECT DISTINCT array_agg(i.gid ) FROM buildings, image.img AS i, image.gps AS g, asset.object AS o WHERE o.gid=id AND i.gps=g.gid AND ST_DWITHIN(ST_Transform(o.the_geom,",utm,"),ST_Transform(g.the_geom,",utm,"),",dbuffer,")) WHERE users.tasks.id=",task_id,";",sep='')
+  query <- paste("WITH buildings AS (SELECT unnest(bdg_gids) AS id FROM users.tasks WHERE id=",task_id,") UPDATE users.tasks SET img_ids=(SELECT DISTINCT array_agg(i.gid ) FROM buildings, image.img AS i, image.gps AS g, asset.object AS o WHERE o.gid=id AND i.gps=g.gid AND ST_DWITHIN(ST_Transform(o.the_geom,",utm,"),ST_Transform(g.the_geom,",utm,"),",dbuffer,") AND i.survey=",survey_gid,") WHERE users.tasks.id=",task_id,";",sep='')
   exec <- sql_query(query)
   #assign task to user_id
   query <- paste("INSERT INTO users.tasks_users(user_id,task_id) VALUES (",user_id,",",task_id,");",sep='')
