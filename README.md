@@ -118,7 +118,7 @@ If for example your images are at /path/to/your/directory/survey image.img.repos
 
 You can enter the site via the port you defined int the virtual host, e.g. localhost:8080 in a webbrowser
 
-### D) If not implemented as recommended via wsgi you can have to run the application via
+### D) If not implemented as recommended via wsgi you have to run the application via
    ```
    python runserver.py
    ```
