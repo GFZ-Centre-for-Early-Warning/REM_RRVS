@@ -15,9 +15,9 @@ osm=True
 epsg=4326
 spacing = 0.0001
 
-user = 'postgres'
-password = 'postgres'
-host = 'localhost'
+user = 'user'
+password = 'password'
+host = 'host'
 dbname = 'streets2rem'
 ###########################
 
