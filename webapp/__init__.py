@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.config.from_object('rrvs_config')
 app.config['PROFILE']=True
 app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
-app.permanent_session_lifetime = timedelta(hours=1)
+app.permanent_session_lifetime = timedelta(hours=8)
 KVSessionExtension(store, app)
 
 db = SQLAlchemy(app)
@@ -36,7 +36,7 @@ security = Security(app, user_datastore)
 
 @babel.localeselector
 def get_locale():
-    lang = request.accept_languages.best_match(['ar','en'])
+    lang = request.accept_languages.best_match(['ar','en','es'])
     session['lang']=lang
     return lang
 

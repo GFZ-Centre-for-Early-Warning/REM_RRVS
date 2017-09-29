@@ -1,19 +1,17 @@
-# Arabic translations for PROJECT.
-# Copyright (C) 2016 ORGANIZATION
+# Translations template for PROJECT.
+# Copyright (C) 2017 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-09-29 13:38+0200\n"
-"PO-Revision-Date: 2016-04-28 14:08+0200\n"
-"Last-Translator: \n"
-"Language: ar\n"
-"Language-Team: ar <LL@li.org>\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n>=3 "
-"&& n<=10 ? 3 : n>=11 && n<=99 ? 4 : 5)\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -173,7 +171,7 @@ msgstr ""
 
 #: webapp/templates/map.html:151
 msgid "Selected building"
-msgstr "بناء مختار"
+msgstr ""
 
 #: webapp/templates/rrvsform.html:53
 msgid "Mat."
@@ -181,7 +179,7 @@ msgstr ""
 
 #: webapp/templates/rrvsform.html:70
 msgid "LLRS"
-msgstr "نوع من نظام مقاومة للتحميل الجانبي"
+msgstr ""
 
 #: webapp/templates/rrvsform.html:83
 msgid "H"
@@ -189,7 +187,7 @@ msgstr ""
 
 #: webapp/templates/rrvsform.html:104
 msgid "Age"
-msgstr "التقوية الزلزالية أو الإنشاء تاريخ"
+msgstr ""
 
 #: webapp/templates/rrvsform.html:117
 msgid "Occ."
@@ -222,64 +220,4 @@ msgstr ""
 #: webapp/templates/rrvsform.html:229
 msgid "Optional"
 msgstr ""
-
-#~ msgid "BuildingID"
-#~ msgstr "بناء ID"
-
-#~ msgid "Height Value"
-#~ msgstr "الارتفاع لقيمة"
-
-#~ msgid "Construction Date"
-#~ msgstr "التقوية الزلزالية أو الإنشاء تاريخ"
-
-#~ msgid "Material Type"
-#~ msgstr "المادة نوع"
-
-#~ msgid "Material Technology"
-#~ msgstr "المادة تقنيه"
-
-#~ msgid "Material Property"
-#~ msgstr "المادة خاصية"
-
-#~ msgid "Lat. Load Res. Sys."
-#~ msgstr "من نظام مقاومة للتحميل الجانبي"
-
-#~ msgid "Height Type"
-#~ msgstr "نوع الارتفاع"
-
-#~ msgid "Construction Date Type"
-#~ msgstr "التقوية الزلزالية أو الإنشاء تاريخ"
-
-#~ msgid "Occupancy Type"
-#~ msgstr "بشكل عام - المبنى شغالإ تصنيف"
-
-#~ msgid "Occupancy Detail"
-#~ msgstr "المبنى- تفاصيل  إشغالتصنيف"
-
-#~ msgid "Exterior Walls Material"
-#~ msgstr "لخارجيةا الجدران"
-
-#~ msgid "Completed"
-#~ msgstr "مكتملة"
-
-#~ msgid "Update building"
-#~ msgstr "حفظ بناء"
-
-#~ msgid "UserID"
-#~ msgstr "لمستعمل ID"
-
-#~ msgid "TaskID"
-#~ msgstr "مهمة ID"
-
-#~ msgid "Material"
-#~ msgstr "المادة "
-
-#~ msgid "Height"
-#~ msgstr "الارتفاع"
-
-#~ msgid "Occupancy"
-#~ msgstr "تملك"
-
-#~ msgid "Exterior Walls"
-#~ msgstr "لخارجيةا الجدران"
 

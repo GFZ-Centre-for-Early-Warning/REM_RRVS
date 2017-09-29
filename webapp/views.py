@@ -11,7 +11,7 @@ Description: The main views file setting up the flask application layout, defini
 import flask
 from webapp import app, db
 from models import t_object, object_attribute, ve_object, dic_attribute_value, pan_imgs,gps, User, task, tasks_users
-from forms import RrvsForm, RrvsForm_ar,LoginForm
+from forms import RrvsForm, LoginForm,RrvsForm_es,RrvsForm_ar
 from flask.ext.security import login_required, login_user, logout_user
 import geoalchemy2.functions as func
 import json
@@ -205,11 +205,14 @@ def update_rrvsform():
 @login_required
 def rrvsform():
     """
-	This renders a template that displays all of the form objects if it's
-	a Get request. If the user is attempting to Post then this view will push
-	the data to the database.
-	"""
-    if flask.session['lang']=='ar':
+    This renders a template that displays all of the form objects if it's
+    a Get request. If the user is attempting to Post then this view will push
+    the data to the database.
+    """
+    lang=flask.session['lang']
+    if lang == 'es':
+        rrvs_form = RrvsForm_es()
+    elif lang == 'ar':
         rrvs_form = RrvsForm_ar()
     else:
         rrvs_form = RrvsForm()

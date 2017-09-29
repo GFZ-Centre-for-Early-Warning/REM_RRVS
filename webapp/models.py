@@ -90,6 +90,7 @@ class dic_attribute_value(db.Model):
     attribute_value = db.Column(db.String(254), unique=True)
     description = db.Column(db.String(254))
     description_ar = db.Column(db.String(254))
+    description_es = db.Column(db.String(254))
     extended_description = db.Column(db.String(1024))
 
 class ve_object(db.Model):
