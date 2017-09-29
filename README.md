@@ -1,21 +1,21 @@
 
-#Remote Rapid Visual Screening (RRVS) Tool
+# Remote Rapid Visual Screening (RRVS) Tool
 
 Contact: Marc Wieland marc.wieland@gfz-potsdam.de 
          Michael Haas michael.haas@gfz-potsdam.de
 
-##Structure
+## Structure
 The main application is in the folder webapp. In the root directory are the
 scripts for running the application (rrvs.wsgi/runserver.py and rrvs_config.py).
 In scripts are some useful scripts for the application (creation of the database,
 populating the database and creating tasks).
 
-##Installation
+## Installation
 
 The installation as described here for Ubuntu 14.04, but should be similar on other linux distributions.
 In order to run the application locally do the following:
 
-###A) Setup the project source code
+### A) Setup the project source code
 We recommend using a virtual python environment, but you can also skip step 2-4.
 1. Get a copy of the source code git clone https://github.com/GFZ-Centre-for-Early-Warning/REM_RRVS
 2. $ sudo pip install virtualenv
@@ -28,7 +28,7 @@ We recommend using a virtual python environment, but you can also skip step 2-4.
 6. Use $pip install -r python-requirements.txt 
 7. Adjust the rrvs_config.py.example and save it as rrvs_config.py
 
-###B) Setup the database
+### B) Setup the database
 For production:
 1. Create and connect to a database e.g. called rem on the server (or adjust the name accordingly in the rrvs_config.py)
 2. run the templating script for a rem database from within the database (https://github.com/GFZ-Centre-for-Early-Warning/REM_DBschema)
@@ -44,7 +44,7 @@ For demo:
    and run rrvstool_db.sql
 2. Populate the database tables (you can use the rrvstool_testdata.sql script to add some testdata)
 
-###C) OPTIONAL BUT RECOMMENDED: Run the application on an apache2 server with mod_wsgi
+### C) OPTIONAL BUT RECOMMENDED: Run the application on an apache2 server with mod_wsgi
 1.Install mod_wsgi for apache2 
    ```
    sudo apt-get install libapache2-mod-wsgi
@@ -118,12 +118,12 @@ If for example your images are at /path/to/your/directory/survey image.img.repos
 
 You can enter the site via the port you defined int the virtual host, e.g. localhost:8080 in a webbrowser
 
-###D) If not implemented as recommended via wsgi you can have to run the application via
+### D) If not implemented as recommended via wsgi you have to run the application via
    ```
    python runserver.py
    ```
 
-##Modifying the dataentry form
+## Modifying the dataentry form
 
 A short step-by-step guideline on how to add a new QuerySelectField to the dataentry form:
 
@@ -173,7 +173,7 @@ A short step-by-step guideline on how to add a new QuerySelectField to the datae
    ve_resolution1.mat_type: rrvs_form.mat_type_field.data.attribute_value,
    ```
 
-##Known issues
+## Known issues
 1. Each asset in a rem db asset.object_attribute.height_1 has to have an initial value (fp2rem_db.py assigns 99) in order 
    for the application to work properly.
 2. Panoramic images are limited in size, if too large they will show up black in the pannellum viewer 

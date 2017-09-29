@@ -15,8 +15,8 @@ rm(list=ls(all.names=TRUE))
 
 
 #idct database snapshot
-setwd("pass/to/idct_csvfile")
-data <- read.csv("IDCTDO_survey_points_....csv")
+setwd("/home/sysop/REM_RRVS/scripts")
+data <- read.csv("IDCTDO_survey_points_20170525_040121.csv")
 
 
 #longitudinal or transverse preferred
@@ -29,14 +29,14 @@ order2 <- c("MAS_MORT","STEELCON")
 #mapping
 #mapping <- read.csv("mapping.csv")
 #database settings
-host <- 'host'
-dbuser <- 'user'
-password <- 'password'
+host <- 'localhost'
+dbuser <- 'postgres'
+password <- 'postgres'
 dbname <- 'rem'
 
 
 #Which survey
-survey_gid=1
+survey_gid=5
 status = "UNMODIFIED"
 
 ############################

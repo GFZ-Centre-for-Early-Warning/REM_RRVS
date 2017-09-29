@@ -10,10 +10,10 @@
 #############################
 import os
 
-shapefile = '/home/mhaas/PhD/DESTRESS/GRVS_Survey_France/osm_buildings_soultz_area_test.shp'
+shapefile = '/home/sysop/survey/data/santiago/osm/osm_santiago_buildings.shp'
 sql_out = 'fp2rem.sql'
 source = 'OSM'
-survey_name='destress_google_france2017'
+survey_name='santiago2017'
 
 #create a table with the shapefile layer containing postgis geometry
 cmd = "shp2pgsql -s 4326 -W LATIN1 -g the_geom {} temporary_footprint_data > {}".format(shapefile,sql_out)
