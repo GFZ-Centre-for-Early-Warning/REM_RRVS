@@ -15,7 +15,7 @@ host = 'localhost'
 translation = pandas.read_csv(fn,encoding='utf-8')
 
 #db conn
-engine = sqlalchemy.create_engine('postgresql://{}:{}@{}:5432/test'.format(user,password,host),encoding='utf-8')
+engine = sqlalchemy.create_engine('postgresql://{}:{}@{}:5432/rem'.format(user,password,host),encoding='utf-8')
 
 #get table as is
 taxonomy = pandas.read_sql("select * from taxonomy.dic_attribute_value;", engine)
