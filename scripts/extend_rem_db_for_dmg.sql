@@ -11,7 +11,8 @@ INSERT INTO dic_attribute_type (gid, code, description) VALUES (30,'HEIGHT2','Se
 INSERT INTO dic_attribute_type (gid, code, description) VALUES (31,'STR_IRREG_2','Second structural irregularity');
 INSERT INTO dic_attribute_type (gid, code, description) VALUES (32,'STR_IRREG_DT_2','Second structural irregularity detail');
 INSERT INTO dic_attribute_type (gid, code, description) VALUES (33,'STR_IRREG_TYPE_2','Second structural irregularity type');
-INSERT INTO dic_attribute_type (gid, code, description) VALUES (34,'DMG','EMS-98 damage grade');
+INSERT INTO dic_attribute_type (gid, code, description) VALUES (34,'VULN_EMS98','EMS-98 vulnerability classes');
+INSERT INTO dic_attribute_type (gid, code, description) VALUES (35,'DMG','EMS-98 damage grade');
 
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (386,'RRVS_STATUS','UNMODIFIED','Default RRVS processing status');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (387,'RRVS_STATUS','MODIFIED','Asset has been modified by RRVS');
@@ -22,19 +23,20 @@ INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, desc
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (390,'OCCUPY','VAC','Vacant building');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (391,'COMMENT','COMMENT','Comment by the analyst');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (392,'HEIGHT','HB99','Number of storeys below ground unknown');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (393,'VULN','A','EMS-98 Class A');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (394,'VULN','B','EMS-98 Class B');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (395,'VULN','C','EMS-98 Class C');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (396,'VULN','D','EMS-98 Class D');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (397,'VULN','E','EMS-98 Class E');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (398,'VULN','F','EMS-98 Class F');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (399,'DMG','0','EMS-98 Damage Grade 0');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (400,'DMG','1','EMS-98 Damage Grade 1');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (401,'DMG','2','EMS-98 Damage Grade 2');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (402,'DMG','3','EMS-98 Damage Grade 3');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (403,'DMG','4','EMS-98 Damage Grade 4');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (404,'DMG','5','EMS-98 Damage Grade 5');
-INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (405,'DMG','99','EMS-98 Damage Grade unknown');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (393,'VULN_EMS98','A','EMS-98 Class A');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (394,'VULN_EMS98','B','EMS-98 Class B');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (395,'VULN_EMS98','C','EMS-98 Class C');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (396,'VULN_EMS98','D','EMS-98 Class D');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (397,'VULN_EMS98','E','EMS-98 Class E');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (398,'VULN_EMS98','F','EMS-98 Class F');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (399,'VULN_EMS98','V99','Unknown EMS-98 Class');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (400,'DMG','0','EMS-98 Damage Grade 0');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (401,'DMG','1','EMS-98 Damage Grade 1');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (402,'DMG','2','EMS-98 Damage Grade 2');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (403,'DMG','3','EMS-98 Damage Grade 3');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (404,'DMG','4','EMS-98 Damage Grade 4');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (405,'DMG','5','EMS-98 Damage Grade 5');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (406,'DMG','99','EMS-98 Damage Grade unknown');
 
 ---
 

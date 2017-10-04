@@ -24,6 +24,7 @@ INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, desc
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (396,'VULN_EMS98','D','EMS-98 Class D');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (397,'VULN_EMS98','E','EMS-98 Class E');
 INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (398,'VULN_EMS98','F','EMS-98 Class F');
+INSERT INTO dic_attribute_value (gid, attribute_type_code, attribute_value, description) VALUES (399,'VULN_EMS98','V99','Unknown EMS-98 Class');
 
 ---
 
