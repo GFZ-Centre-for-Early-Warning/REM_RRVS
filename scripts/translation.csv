@@ -1,341 +1,341 @@
 gid,attribute_type_code,attribute_value,description,translation
-92,LLRS,LH,LH - Hybrid lateral load-resisting system,Sistema sismorresistente híbrido
-93,LLRS,LO,LO - Other lateral load-resisting system,Otro sistema sismorresistente
-94,LLRS_DUCT,DU99,DU99 - Ductility unknown,Ductilidad desconocida
-95,LLRS_DUCT,DUC,DUC - Ductile,Dúctil
-96,LLRS_DUCT,DNO,DNO - Non-ductile,Frágil
-97,LLRS_DUCT,DBD,DBD - Equipped with base isolation and/or energy dissipation devices,Equipado con dispositivos de aislamiento en la base y/o de disipación de energía
-1,MAT_TYPE,MAT99,MAT99 - Unknown material,Material desconocido
-2,MAT_TYPE,C99,"C99 - Concrete, unknown reinforcement","Concreto, refuerzo desconocido"
-3,MAT_TYPE,CU,"CU - Concrete, unreinforced","Concreto no reforzado"
-4,MAT_TYPE,CR,"CR - Concrete, reinforced","Concreto reforzado"
-5,MAT_TYPE,SRC,"SRC - Concrete, composite with steel section","Sección compuesta de concreto y perfil de acero"
-6,MAT_TYPE,S,S - Steel,Acero
-7,MAT_TYPE,ME,ME - Metal (except steel),Metal (excepto acero)
-8,MAT_TYPE,M99,"M99 - Masonry, unknown reinforcement","Mampostería, refuerzo desconocido"
-9,MAT_TYPE,MUR,"MUR - Masonry, unreinforced","Mampostería no reforzada"
-10,MAT_TYPE,MCF,"MCF - Masonry, confined","Mampostería confinada"
-11,MAT_TYPE,MR,"MR - Masonry, reinforced","Mampostería reforzada"
-12,MAT_TYPE,E99,"E99 - Earth, unknown reinforcement","Tierra, refuerzo desconocido"
-13,MAT_TYPE,EU,"EU - Earth, unreinforced","Tierra, no reforzada"
-14,MAT_TYPE,ER,"ER - Earth, reinforced","Tierra reforzada"
-15,MAT_TYPE,W,W - Wood,Madera
-32,MAT_TECH,STRUB,STRUB - Rubble (field stone) or semi-dressed stone,Escombros o piedras semi-labradas
-16,MAT_TYPE,MATO,MATO - Other material,Otro material
-31,MAT_TECH,ST99,"ST99 - Stone, unknown technology","Piedra, tecnología desconocida"
-30,MAT_TECH,ADO,ADO - Adobe blocks,Bloques de adobe
-29,MAT_TECH,MUN99,"MUN99 - Masonry unit, unknown","Unidad de mampostería desconocida"
-33,MAT_TECH,STDRE,STDRE - Dressed stone,Piedras labradas
-34,MAT_TECH,CL99,"CL99 - Fired clay unit, unknown type","Unidad de arcilla cocida, tipo desconocido"
-35,MAT_TECH,CLBRS,CLBRS - Fired clay solid bricks,Bloques macizos de arcilla cocida
-36,MAT_TECH,CLBRH,CLBRH - Fired clay hollow bricks,Bloques huecos de arcilla cocida
-37,MAT_TECH,CLBLH,CLBLH - Fired clay hollow blocks or tiles,Bloque o baldosa de arcilla cocida
-38,MAT_TECH,CB99,"CB99 - Concrete blocks, unknown type","Bloques de concreto, tipo desconocido"
-98,HEIGHT,H99,H99 - Number of storeys unknown,Número de pisos desconocido
-17,MAT_TECH,CT99,CT99 - Unknown concrete technology,Tecnología del concreto desconocida
-18,MAT_TECH,CIP,CIP - Cast-in-place concrete,Concreto colado en sitio
-19,MAT_TECH,PC,PC - Precast concrete,Concreto prefabricado
-20,MAT_TECH,CIPPS,CIPPS - Cast-in-place prestressed concrete,Concreto presforzado colado en sitio
-21,MAT_TECH,PCPS,PCPS - Precast prestressed concrete,Concreto prefabricado presforzado
-22,MAT_TECH,S99,"S99 - Steel, unknown","Acero, desconocido"
-23,MAT_TECH,SL,SL - Cold-formed steel members,Elementos de acero laminado en frío
-24,MAT_TECH,SR,SR - Hot-rolled steel members,Elementos de acero laminado en caliente
-25,MAT_TECH,SO,"SO - Steel, other","Acero, otro"
-26,MAT_TECH,ME99,"ME99 - Metal, unknown","Matal desconocido"
-27,MAT_TECH,MEIR,MEIR - Iron,Hierro
-28,MAT_TECH,MEO,"MEO - Metal, other","Metal, otro"
-39,MAT_TECH,CBS,"CBS - Concrete blocks, solid","Bloques macizos de concreto"
-40,MAT_TECH,CBH,"CBH - Concrete blocks, hollow","Bloques huecos de concreto"
-41,MAT_TECH,MO,"MO - Masonry unit, other","Unidad de mampostería, otro"
-42,MAT_TECH,MR99,"MR99 - Masonry reinforcement, unknown","Refuerzo de mampostería, desconocido"
-43,MAT_TECH,RS,RS - Steel reinforced,Acero de refuerzo
-99,HEIGHT,H,H - Number of storeys above ground,Número de pisos sobre el nivel de terreno
-44,MAT_TECH,RW,RW - Wood-reinforced,"Madera, reforzada"
-45,MAT_TECH,RB,"RB - Bamboo-, cane- or rope-reinforcement","Refuerzo de bambú, caña o cuerda"
-46,MAT_TECH,RCM,RCM - Fibre reinforcing mesh, Malla de refuerzo de fibras
-100,HEIGHT,HB,HB - Number of storeys below ground,Número de pisos bajo el nivel de terreno
-47,MAT_TECH,RCB,RCB - Reinforced concrete bands,Bandas de concreto reforzado
-48,MAT_TECH,ET99,ET99 - Unknown earth technology,Tecnología en tierra desconocida
-49,MAT_TECH,ETR,ETR - Rammed earth,Tierra amasada
-101,HEIGHT,HF,HF - Height of ground floor level above grade,Altura del primer piso sobre el nivel de terreno
-50,MAT_TECH,ETC,ETC - Cob or wet construction,Contrucción con tierra y fibras orgánicas
-51,MAT_TECH,ETO,"ETO - Earth technology, other","Tecnología en tierra, otra"
-52,MAT_TECH,W99,"W99 - Wood, unknown","Madera, desconocida"
-53,MAT_TECH,WHE,WHE - Heavy wood, Maderas pesadas
-54,MAT_TECH,WLI,WLI - Light wood members, Elementos de madera liviana
-55,MAT_TECH,WS,WS - Solid wood, Madera maciza
-56,MAT_TECH,WWD,WWD - Wattle and daub,Tierra con fibra natural
-57,MAT_TECH,WBB,WBB - Bamboo,Bambú
-58,MAT_TECH,WO,"WO - Wood, other","Madera, otra"
-103,YR_BUILT,Y99,Y99 - Year unknown,Año desconocido
-104,YR_BUILT,YEX,YEX - Exact  date of construction or retrofit,Fecha exacta de construcción o reforzamiento estructural
-106,YR_BUILT,YPRE,YPRE - Latest possible date of construction or retrofit,Última posible fecha de construcción o reforzamiento estructural
-60,MAT_PROP,SC99,"SC99 - Steel connections, unknown","Conexiones de acero, desconocidas"
-62,MAT_PROP,WEL,WEL - Welded connections,Conexiones soldadas
-63,MAT_PROP,RIV,RIV - Riveted connections,Conexiones remachadas
-64,MAT_PROP,BOL,BOL - Bolted connections,Conexiones apernadas
-65,MAT_PROP,MO99,MO99 - Mortar type unknown,Tipo de mortero desconocido
-66,MAT_PROP,MON,MON - No mortar,Sin mortero
-67,MAT_PROP,MOM,MOM - Mud mortar,Mortero de barro
-68,MAT_PROP,MOL,MOL - Lime mortar,Mortero con cal
-69,MAT_PROP,MOC,MOC - Cement mortar,Mortero con cemento
-70,MAT_PROP,MOCL,MOCL - Cement: lime mortar,Mortero con cemento y cal
-71,MAT_PROP,SP99,"SP99 - Stone, unknown type","Piedra, tipo desconocido"
-109,OCCUPY,RES,RES - Residential,Residencial
-72,MAT_PROP,SPLI,SPLI - Limestone,Piedra caliza
-73,MAT_PROP,SPSA,SPSA - Sandstone,Piedra arenisca
-74,MAT_PROP,SPTU,SPTU - Tuff,Toba
-75,MAT_PROP,SPSL,SPSL - Slate,Pizarra
-76,MAT_PROP,SPGR,SPGR - Granite,Granito
-77,MAT_PROP,SPBA,SPBA - Basalt,Basalto
-78,MAT_PROP,SPO,"SPO - Stone, other type","Piedra, otro tipo"
-80,MAT_TECH,MATT99,MATT99 - Unknown material technology,Tecnología de material desconocida
-81,MAT_PROP,MATP99,MATP99 - Unknown material property,Propiedad del material desconocida
-84,LLRS,LFM,LFM - Moment frame,Marcos de momento
-82,LLRS,L99,L99 - Unknown lateral load-resisting system,Sistema sismorresistente desconocido
-83,LLRS,LN,LN - No lateral load-resisting system,Sistema sismorresistente inexistente
-85,LLRS,LFINF,LFINF - Infilled frame,Marco relleno
-86,LLRS,LFBR,LFBR - Braced frame,Marco arriostrado
-87,LLRS,LPB,LPN - Post and beam,Poste y viga
-88,LLRS,LWAL,LWAL - Wall,Muro
-89,LLRS,LDUAL,LDUAL - Dual frame-wall system,Sistema dual
-90,LLRS,LFLS,LFLS - Flat slab/plate or infilled waffle slab,Losa plana o con nervaduras
-91,LLRS,LFLSINF,LFLSINF - Infilled flat slab/plate or infilled waffle slab,Losa plana o con nervaduras con marcos rellenos
-105,YR_BUILT,YBET,YBET - Upper and lower bound for the date of construction or retrofit,Límite superior e inferior de la fecha de construcción o reforzamiento estructural
-107,YR_BUILT,YAPP,YAPP - Approximate date of construction or retrofit,Fecha aproximada de construcción o reforzamiento estructural
-235,ROOFCOVMAT,RMT99,RMT99 - Unknown roof covering,Cubierta de techo desconocida
-147,OCCUPY_DT,MIX4,MIX4 - Mostly residential and industrial,Principalmente residencial e industrial
-148,OCCUPY_DT,MIX5,MIX5 - Mostly industrial and commercial,Principalmente industrial y comercial
-149,OCCUPY_DT,MIX6,MIX6 - Mostly industrial and residential,Principalmente industrial y residencial
-150,OCCUPY_DT,IND99,"IND99 - Industiral, unknown type","Industrial, tipo desconocido"
-236,ROOFCOVMAT,RMN,RMN - Concrete roof without additional covering,Azotea de concreto sin cubierta adicional
-151,OCCUPY_DT,IND1,IND1 - Heavy industrial,Industria pesada
-152,OCCUPY_DT,IND2,IND2 - Light industrial,Industria ligera
-153,OCCUPY_DT,AGR99,"AGR99 - Agriculture, unknown type","Agricultura, tipo desconocido"
-154,OCCUPY_DT,AGR1,AGR1 - Produce storage,Almacenaje de productos
-155,OCCUPY_DT,AGR2,AGR2 - Animal shelter,Refugio para animales
-156,OCCUPY_DT,AGR3,AGR3 - Agricultural processing,Procesamiento agrícola
-157,OCCUPY_DT,ASS99,"ASS99 - Assembly, unknown type","Ensamblado, tipo desconocido"
-158,OCCUPY_DT,ASS1,ASS1 - Religious gathering,Templo religioso
-159,OCCUPY_DT,ASS2,ASS2 - Arena,Plaza
-160,OCCUPY_DT,ASS3,ASS3 - Cinema or concert hall,Cine o sala de conciertos
-161,OCCUPY_DT,ASS4,ASS4 - Other gatherings,Otro centro de reunión
-162,OCCUPY_DT,GOV99,"GOV99 - Government, unknown type","Gobierno, tipo desconocido"
-163,OCCUPY_DT,GOV1,"GOV1 - Government, general services","Gobierno, servicios generales"
-164,OCCUPY_DT,GOV2,"GOV2 - Government, emergency services","Gobierno, cuerpos de emergencia"
-165,OCCUPY_DT,EDU99,"EDU99 - Education, unknown type","Educación, tipo desconocido"
-166,OCCUPY_DT,EDU1,EDU1 - Pre-school facility,Instalación para preescolar
-167,OCCUPY_DT,EDU2,EDU2 - School,Escuela
-196,STR_IRREG,IRIR,IRIR - Irregular structure,Estructura irregular
-170,POSITION,BPD,BPD - Detached building,Edificio independiente
-171,POSITION,BP1,BP1 - Adjoining building(s) on one side,Edificio(s) contiguos en un lado
-197,STR_IRREG_DT,IRPP,IRPP - Plan irregularity - primary,Irregularidad en planta - primaria
-172,POSITION,BP2,BP2 - Adjoining building(s) on two sides,Edificio(s) contiguos en dos lados
-173,POSITION,BP3,BP3 - Adjoining building(s) on three sides,Edificio(s) contiguos en tres lados
-198,STR_IRREG_DT,IRPS,IRPS - Plan irregularity - secondary,Irregularidad en planta - secundaria
-199,STR_IRREG_DT,IRVP,IRVP - Vertical irregularity - primary,Irregularidad vertical - primaria
-200,STR_IRREG_DT,IRVS,IRVS - Vertical irregularity - secondary,Irregularidad vertical - secundaria
-201,STR_IRREG_TYPE,IRN,INR - No irregularity,Sin irregularidad
-202,STR_IRREG_TYPE,TOR,TOR - Torsion eccentricity,Excentricidad torsional
-203,STR_IRREG_TYPE,REC,REC - Re-entrant corner,Esquina entrante
-204,STR_IRREG_TYPE,IRHO,IRHO - Other plan irregularity,Otra irregularidad en planta
-237,ROOFCOVMAT,RMT1,RMT1 - Clay or concrete tile roof covering,Cubierta de teja de arcilla o concreto
-205,STR_IRREG_TYPE,SOS,SOS - Soft storey,Piso balndo
-206,STR_IRREG_TYPE,CRW,CRW - Cripple wall,Muros cortos
-207,STR_IRREG_TYPE,SHC,SHC - Short column,Columna corta
-208,STR_IRREG_TYPE,POP,POP - Pounding potential,Potencial de golpeteo
-209,STR_IRREG_TYPE,SET,SET - Setback,Entrante
-210,STR_IRREG_TYPE,CHV,CHV - Change in vertical structure (includes large overhangs),Cambio en estructura vertical (incluye voladizos largos)
-211,STR_IRREG_TYPE,IRVO,IRVO - Other vertical irregularity,Otra irregularidad vertical
-238,ROOFCOVMAT,RMT2,RMT2 - Fibre cement or metal tile roof covering,Cubierta de teja de con fibra o metal
-239,ROOFCOVMAT,RMT3,RMT3 - Membrane roof covering,Cubierta de membrana
-240,ROOFCOVMAT,RMT4,RMT4 - Slate roof covering,Cubierta de pizarra
-212,NONSTRCEXW,EW99,EW99 - Unknown material of exterior walls,Muros exteriores de material desconocido
-213,NONSTRCEXW,EWC,EWC - Concrete exterior walls,Muros exteriores de concreto
-214,NONSTRCEXW,EWG,EWG - Glass exterior walls,Muros exteriores de vidrio
-215,NONSTRCEXW,EWE,EWE - Earthen exterior walls,Muros exteriores de tierra
-216,NONSTRCEXW,EWMA,EWMA - Masonry exterior walls,Muros exteriores de mampostería
-241,ROOFCOVMAT,RMT5,RMT5 - Stone slab roof covering,Cubierta de losa de piedra
-242,ROOFCOVMAT,RMT6,RMT6 - Metal or asbestos sheet roof covering,Cubierta de lámina de metal o asbesto
-243,ROOFCOVMAT,RMT7,RMT7 - Wooden or asphalt shingle roof covering,Cubierta de teja de madera o asfalto
-244,ROOFCOVMAT,RMT8,RMT8 - Vegetative roof covering,Cubierta vegetal
-245,ROOFCOVMAT,RMT9,RMT9 - Earthen roof covering,Cubierta en tierra
-228,ROOF_SHAPE,RSH4,RSH4 - Pitched with dormers,Inclinado con salientes
-229,ROOF_SHAPE,RSH5,RSH5 - Monopitch,A una agua
-230,ROOF_SHAPE,RSH6,RSH6 - Sawtooth,Tipo sierra
-231,ROOF_SHAPE,RSH7,RSH7 - Curved,Curvo
-232,ROOF_SHAPE,RSH8,RSH8 - Complex regular,Regular complejo
-233,ROOF_SHAPE,RSH9,RSH9 - Complex irregular,Irregular complejo
-234,ROOF_SHAPE,RSHO,"RSHO - Roof shape, other","Forma del techo, otra"
-246,ROOFCOVMAT,RMT10,RMT10 - Solar panelled roofs,Techos con páneles solares
-247,ROOFCOVMAT,RMT11,RMT11 - Tensile membrane or fabric roof,Techo en membrana tensada o tela
-248,ROOFCOVMAT,RMTO,"RMTO - Roof covering, other","Cubierta de techo, otra"
-249,ROOFSYSMAT,RM,RM - Masonry roof,Azotea de mampostería
-250,ROOFSYSMAT,RE,RE - Earthen roof,Techo de tierra
-251,ROOFSYSMAT,RC,RC - Concrete roof,Azotea de concreto
-252,ROOFSYSMAT,RME,RME - Metal roof,Techo de metal
-253,ROOFSYSMAT,RWO,RWO - Wooden roof,Techo de madera
-254,ROOFSYSMAT,RFA,RFA - Fabric roof,Techo de tela
-255,ROOFSYSMAT,RO,"RO - Roof material, other","Material de techo/azotea, otro"
-256,ROOFSYSTYP,RM99,"RM99 - Masonry roof, unknown","Azotea de mampostería, desconocida"
-257,ROOFSYSTYP,RM1,RM1 - Vaulted masonry roof,Azotea abovedada de mampostería
-258,ROOFSYSTYP,RM2,RM2 - Shallow-arched masonry roof,Azotea de mampostería en arco bajo
-259,ROOFSYSTYP,RM3,RM3 - Composite masonry and concrete roof system,Azotea en sección compuesta de mampostería y concreto
-260,ROOFSYSTYP,RE99,"RE99 - Earthen roof, unknown","Techo de tierra, desconocido"
-261,ROOFSYSTYP,RE1,"RE1 - Vaulted earthen roof, unknown","Techo abovedado de tierra, desconocido"
-281,ROOF_CONN,RWCP,RWCP - Roof-wall diaphragm connection present,Conexión de diafragma entre muro y techo/azotea presente
-283,ROOF_CONN,RTDN,RTDN - Roof tie-down not provided,Sin anclaje de techo
-282,ROOF_CONN,RTD99,RTD99 - Roof tie-down unknown,Anclaje de techo desconocido
-284,ROOF_CONN,RTDP,RTDP - Roof tie-down present,Anclaje de techo presente
-285,FLOOR_MAT,FN,FN - No elevated or suspended floor,"Sin piso falso, elevado o suspendido"
-286,FLOOR_MAT,F99,"F99 - Floor material, unknown","Material del piso, desconocido"
-288,FLOOR_MAT,FE,FE - Earthen floor,Piso de tierra
-290,FLOOR_MAT,FME,FME - Metal floor,Piso de metal
-294,FLOOR_TYPE,FM1,FM1 - Vaulted masonry floor,Piso abovedado de mampostería
-297,FLOOR_TYPE,FE99,"FE99 - Earthen floor, unknown","Piso de tierra, desconocido"
-298,FLOOR_TYPE,FC99,"FC99 - Concrete floor, unknown","Piso de concreto, desconocido"
-134,OCCUPY_DT,COM3,"COM3 - Offices, professional/technical services","Oficinas, servicios profesionales/técnicos"
-135,OCCUPY_DT,COM4,COM4 - Hospital/medical clinic,Hospital/clínica médica
-136,OCCUPY_DT,COM5,COM5 - Entertainment,Entretenimiento
-137,OCCUPY_DT,COM6,COM6 - Public building,Edificio público
-138,OCCUPY_DT,COM7,COM7 - Covered parking garage,Garaje para parqueos bajo techo
-139,OCCUPY_DT,COM8,COM8 - Bus station,Estación de bus
-108,OCCUPY,OC99,OC99 - Unknown occupancy,Ocupación desconocida
-110,OCCUPY,COM,COM - Commercial and public,Comercial y público
-111,OCCUPY,MIX,MIX - Mixed use,Uso mixto
-112,OCCUPY,IND,IND - Industrial,Industrial
-113,OCCUPY,AGR,AGR - Agriculture,Agricultura
-114,OCCUPY,ASS,ASS - Assembly,Lugar de reunión
-115,OCCUPY,GOV,GOV - Government,Gobierno
-116,OCCUPY,EDU,EDU - Education,Educación
-117,OCCUPY,OCO,OCO - Other occupancy type,Otro tipo de ocupación
-140,OCCUPY_DT,COM9,COM9 - Railway station,Estación de tren
-141,OCCUPY_DT,COM10,COM10 - Airport,Aeropuerto
-142,OCCUPY_DT,COM11,COM11 - Recreation and leisure,Recreación y ocio
-143,OCCUPY_DT,MIX99,"MIX99 - Mixed, unknown type","Mixto, tipo desconocido"
-144,OCCUPY_DT,MIX1,MIX1 - Mostly residential and commercial,Principalmente residencial y comercial
-145,OCCUPY_DT,MIX2,MIX2 - Mostly commercial and residential,Principalmente comercial y residencial
-146,OCCUPY_DT,MIX3,MIX3 - Mostly commercial and industrial,Principalmente comercial e industrial
-176,PLAN_SHAPE,PLFSQO,"PLFSQO - Square, with an opening in plan","Cuadrada, con una abertura"
-177,PLAN_SHAPE,PLFR,"PLFR - Rectangular, solid","Rectangular, sólida"
-178,PLAN_SHAPE,PLFRO,"PLFRO - Rectangular, with an opening in plan","Rectangular, con una abertura"
-179,PLAN_SHAPE,PLFL,PLFL - L-shape,Forma de L
-180,PLAN_SHAPE,PLFC,"PLFC - Curved, solid","Curva, sólida"
-181,PLAN_SHAPE,PLFCO,"PLFCO - Curved, with an opening in plan","Curva, con una abertura"
-182,PLAN_SHAPE,PLFD,"PLFD - Triangular, solid","Triangular, sólida"
-118,OCCUPY_DT,RES99,"RES99 - Residential, unknown type","Residencial, tipo desconocido"
-119,OCCUPY_DT,RES1,RES1 - Single dwelling,Vivienda individual
-120,OCCUPY_DT,RES2,"RES2 - Multi-unit, unknown type","Varias unidades, tipo desconocido"
-121,OCCUPY_DT,RES2A,RES2A - 2 Units (duplex),2 unidades (duplex)
-122,OCCUPY_DT,RES2B,RES2B - 3-4 Units,3-4 unidades
-123,OCCUPY_DT,RES2C,RES2C - 5-9 Units,5-9 unidades
-124,OCCUPY_DT,RES2D,RES2D - 10-19 Units,10-19 unidades
-168,OCCUPY_DT,EDU3,EDU3 - College/university offices and/or classrooms,Aulas y/u oficinas universitarias
-125,OCCUPY_DT,RES2E,RES2E - 20-49 Units,20-49 unidades
-126,OCCUPY_DT,RES2F,RES2F - 50+ Units,50+ unidades
-127,OCCUPY_DT,RES3,RES3 - Temporary lodging,Alojamiento temporal
-128,OCCUPY_DT,RES4,RES4 - Institutional housing,Vivienda institucional
-129,OCCUPY_DT,RES5,RES5 - Mobile home,Casa móvil
-130,OCCUPY_DT,RES6,RES6 - Informal housing,Vivienda informal
-131,OCCUPY_DT,COM99,"COM99 - Commercial and public, unknown type","Comercial y público, tipo desconocido"
-132,OCCUPY_DT,COM1,COM1 - Retail trade,Venta al por menor
-133,OCCUPY_DT,COM2,COM2 - Wholesale trade and storage (warehouse),Venta al por mayor y almacenaje
-169,OCCUPY_DT,EDU4,EDU4 - College/university research facilities and/or labs,Instalaciones para investigación y/o laboratorios universitarios
-183,PLAN_SHAPE,PLFDO,"PLFDO - Triangular, with an opening in plan","Triangular, con una abertura"
-184,PLAN_SHAPE,PLFP,"PLFP - Polygonal, solid (e.g. trapezoid, pentagon, hexagon)","Poligonal, sólida (e.g. trapecio, pentágono, hexágono)"
-262,ROOFSYSTYP,RC99,"RC99 - Concrete roof, unknown","Azotea de concreto, desconocido"
-263,ROOFSYSTYP,RC1,RC1 - Cast-in-place beamless reinforced concrete roof,Azotea de losa plana de concreto colada en sitio
-174,PLAN_SHAPE,PLF99,PLF99 - Unknown plan shape,Forma de la planta desconocida
-175,PLAN_SHAPE,PLFSQ,"PLFSQ - Square, solid","Cuadrada, sólida"
-185,PLAN_SHAPE,PLFPO,"PLFPO - Polygonal, with an opening in plan","Poligonal, con una abertura"
-217,NONSTRCEXW,EWME,EWME - Metal exterior walls,Muros exteriores de metal
-186,PLAN_SHAPE,PLFE,PLFE - E-shape,Forma de E
-187,PLAN_SHAPE,PLFH,PLFH - H-shape,Forma de H
-188,PLAN_SHAPE,PLFS,PLFS - S-shape,Forma de S
-189,PLAN_SHAPE,PLFT,PLFT - T-shape,Forma de T
-190,PLAN_SHAPE,PLFU,PLFU - U- or C-shape,Forma de U o C
-191,PLAN_SHAPE,PLFX,PLFX - X-shape,Forma de X
-192,PLAN_SHAPE,PLFY,PLFY - Y-shape,Forma de Y
-193,PLAN_SHAPE,PLFI,PLFI - Irregular plan shape,Forma de la planta irregular
-264,ROOFSYSTYP,RC2,RC2 - Cast-in-place beam-supported reinforced concrete roof,"Azotea de losa de concreto apoyada en vigas de concreto, ambas coladas en sitio"
-265,ROOFSYSTYP,RC3,RC3 - Precast concrete roof with reinforced concrete topping,Azotea de losas prefabricadas de concreto con sobrelosa de concreto reforzado
-194,STR_IRREG,IR99,IR99 - Unknown structural irregularity,Irregularidad estructural desconocida
-195,STR_IRREG,IRRE,IRRE - Regular structure,Estructura regular
-266,ROOFSYSTYP,RC4,RC4 - Precast concrete roof without reinforced concrete topping,Azotea de losas prefabricadas de concreto sin sobrelosa de concreto reforzado
-267,ROOFSYSTYP,RME99,"RME99 - Metal roof, unknown","Techo de metal, desconocido"
-268,ROOFSYSTYP,RME1,RME1 - Metal beams or trusses supporting light roofing,Vigas o armaduras de metal soportando cubierta liviana
-269,ROOFSYSTYP,RME2,RME2 - Metal roof beams supporting precast concrete slabs,Vigas de techo de metal aoportando losas prefabricadas de concreto 
-270,ROOFSYSTYP,RME3,RME3 - Composite steel roof deck and concrete slab,Azotea en sección compuesta de lámina de acero y losa de concreto
-271,ROOFSYSTYP,RWO99,"RWO99 - Wooden roof, unknown","Techo de madera, desconocido"
-218,NONSTRCEXW,EWV,EWV - Vegetative exterior walls,Muros exteriores de vegetación
-219,NONSTRCEXW,EWW,EWW - Wooden exterior walls,Muros exteriores de madera
-220,NONSTRCEXW,EWSL,EWSL - Stucco finish on light framing for exterior walls,Muros exteriores en perfilería liviana acabados con estuco
-221,NONSTRCEXW,EWPL,"EWPL - Plastic/vinyl exterior walls, various","Muros exteriores plásticos/vinilo, varios"
-222,NONSTRCEXW,EWCB,EWCB - Cement-based boards for exterior walls,Muros exteriores en láminas a base de cemento
-223,NONSTRCEXW,EWO,"EWO - Material of exterior walls, other","Material de muros exteriores, otro"
-272,ROOFSYSTYP,RWO1,RWO1 - Wooden structure with roof covering,Estructura de madera con cubierta de techo
-273,ROOFSYSTYP,RWO2,RWO2 - Wooden beams or trusses with heavy roof covering,Vigas o armaduras de madera con cubierta de techo pesada
-274,ROOFSYSTYP,RWO3,RWO3 - Wood-based sheets on rafters or purlins,Láminas a base de madera sobre vigas o elementos de acero laminados en frío
-224,ROOF_SHAPE,R99,R99 - Unknown roof shape,Forma de azotea desconocida
-225,ROOF_SHAPE,RSH1,RSH1 - Flat,Plana
-226,ROOF_SHAPE,RSH2,RSH2 - Pitched with gable ends,Inclinado a dos aguas con tapicheles
-227,ROOF_SHAPE,RSH3,RSH3 - Pitched and hipped,Inclinado a cuatro aguas
-275,ROOFSYSTYP,RWO4,RWO4 - Plywood panels or other light-weight panels for roof,Páneles de madera contrachapada u otros páneles livianos
-276,ROOFSYSTYP,RWO5,"RWO5 - Bamboo, straw or thatch roof","Techo de bambú o paja"
-277,ROOFSYSTYP,RFA1,RFA1 - Inflatable or tensile membrane roof,Techo inflable o de membrana tensada
-278,ROOFSYSTYP,RFAO,"RFAO - Fabric roof, other","Techo de tela, otro"
-279,ROOF_CONN,RWC99,RWC99 - Roof-wall diaphragm connection unknown,Conexión de diafragma entre muro y techo/azotea desconocida
-280,ROOF_CONN,RWCN,RWCN - Roof-wall diaphragm connection not provided,Sin conexión de diafragma entre muro y techo/azotea
-287,FLOOR_MAT,FM,FM - Masonry floor,Piso de mampostería
-289,FLOOR_MAT,FC,FC - Concrete floor,Piso de concreto
-291,FLOOR_MAT,FW,FW - Wooden floor,Piso de madera
-292,FLOOR_MAT,FO,"FO - Floor material, other","Material de piso, otro"
-304,FLOOR_TYPE,FME1,"FME1 - Metal beams, trusses or joists supporting light flooring","Vigas, viguetas o armaduras soportando piso liviano"
-305,FLOOR_TYPE,FME2,FME2 - Metal floor beams supporting precast concrete slabs,Vigas de metal de entrepiso soportando losas prefabricadas de concreto
-306,FLOOR_TYPE,FME3,FME3 - Composite steel deck and concrete slab,Sección compuesta de lámina de acero y losa de concreto
-293,FLOOR_TYPE,FM99,"FM99 - Masonry floor, unknown","Piso de mampostería, desconocido"
-295,FLOOR_TYPE,FM2,FM2 - Shallow-arched masonry floor,Piso de mampostería en arco bajo
-296,FLOOR_TYPE,FM3,FM3 - Composite cast-in-place reinforced concrete and masonry floor system,Sistema de piso de sección compuesta de concreto colado en sitio y  mampostería
-299,FLOOR_TYPE,FC1,FC1 - Cast-in-place beamless reinforced concrete floor,Piso de losa plana de concreto reforzado colado en sitio
-300,FLOOR_TYPE,FC2,FC2 - Cast-in-place beam-supported reinforced concrete floor,"Piso de losa de concreto reforzado apoyada en vigas de concreto, ambas coladas en sitio"
-301,FLOOR_TYPE,FC3,FC3 - Precast concrete floor with reinforced concrete topping,Piso de losas prefabricadas de concreto con sobrelosa de concreto reforzado
-302,FLOOR_TYPE,FC4,FC4 - Precast concrete floor without reinforced concrete topping,Piso de losas prefabricadas de concreto sin sobrelosa de concreto reforzado
-303,FLOOR_TYPE,FME99,"FME99 - Metal floor, unknown","Piso metálico, desconocido"
-307,FLOOR_TYPE,FW99,"FW99 - Wooden floor, unknown","Piso de madera, desconocido"
-308,FLOOR_TYPE,FW1,FW1 - Wooden beams or trusses and joists supporting light flooring,Vigas o armaduras de madera soportando piso liviano
-309,FLOOR_TYPE,FW2,FW2 - Wooden beams or trusses and joists supporting heavy flooring,Vigas o armaduras de madera soportando piso pesado
-310,FLOOR_TYPE,FW3,FW3 - Wood-based sheets on joists or beams,Láminas a base de madera sobre vigas
-311,FLOOR_TYPE,FW4,FW4 - Plywood panels or other light-weight panels for floor,Páneles de madera contrachapada u otros páneles livianos para pisos
-312,FLOOR_CONN,FWC99,FWC99 - Floor-wall diaphragm connection unknown,Conexión de diafragma entre muro y piso desconocido
-313,FLOOR_CONN,FWCN,FWCN - Floor-wall diaphragm connection not provided,Sin conexión de diafragma entre muro y piso
-314,FLOOR_CONN,FWCP,FWCP - Floor-wall diaphragm connection present,Conexión de diafragma entre muro y piso presente
-315,FOUNDN_SYS,FOS99,FOS99 - Unknown foundation system,Sistema de cimentación desconocido
-316,FOUNDN_SYS,FOSSL,"FOSSL - Shallow foundation, with lateral capacity","Cimentación superficial, con capacidad lateral"
-317,FOUNDN_SYS,FOSN,"FOSN - Shallow foundation, no lateral capacity","Cimentación superficial, sin capacidad lateral"
-318,FOUNDN_SYS,FOSDL,"FOSDL - Deep foundation, with lateral capacity","Cimentación profunda, con capacidad lateral"
-319,FOUNDN_SYS,FOSDN,"FOSDN - Deep foundation, no lateral capacity","Cimentación profunda, sin capacidad lateral"
-320,FOUNDN_SYS,FOSO,"FOSO - Foundation, other","Cimentación, otra"
-321,OCCUPY_DT,OCCDT99,"OCCDT99 - Occupancy detail, unknown","Detalle de ocupación, desconocido"
-322,POSITION,BP99,"BP99 - Position, unknown","Posición, desconocida"
-324,STR_IRREG_TYPE,IRT99,"IRT99 - Structural irregularity type, unknown","Tipo de irregularidad estructural, desconocida"
-323,STR_IRREG_DT,IRP99,"IRP99 - Structural irregularity detail, unknown","Detalle de irreguralidad estructural, desconocido"
-357,ROOFSYSMAT,RSM99,"RSM99 - Roof system material, unknown","Material del sistema de techo/azotea, desconocido"
-358,ROOFSYSTYP,RST99,"RST99 - Roof system type, unknown","Tipo del sistema de techo/azotea, desconocido"
-360,ROOF_CONN,RCN99,"RCN99 - Roof connection, unknown","Conexión de techo/azotea, desconocida"
-361,FLOOR_TYPE,FT99,"FT99 - Floor type, unknown","Tipo de piso, desconocido"
-384,VULN,VULN_EX,Exact vulnerability class,Clase exacta de vulnerabilidad
-385,VULN,VULN_BET,Lower and upper class of vulnerability,Límite inferior y superior de clase de vulnerabilidad
-386,RRVS_STATUS,UNMODIFIED,Default RRVS processing status,Estatus del procesamiento del RRVS por defecto
-387,RRVS_STATUS,MODIFIED,Asset has been modified by RRVS,El activo ha sido modificado por RRVS
-388,RRVS_STATUS,COMPLETED,Asset has been completed by RRVS,El activo ha sido completado por RRVS
-389,OCCUPY,CON,CON - Under construction,En construcción
-390,OCCUPY,VAC,VAC - Vacant building,Edificio vacante
-391,COMMENT,COMMENT,Comment by the analyst,Comentario del analista
-392,HEIGHT,HB99,Number of storeys below ground unknown,Número de pisos bajo el nivel de terreno desconocido
-393,VULN,A,EMS-98 Class A,EMS-98 Clase A
-394,VULN,B,EMS-98 Class B,EMS-98 Clase B
-395,VULN,C,EMS-98 Class C,EMS-98 Clase C
-396,VULN,D,EMS-98 Class D,EMS-98 Clase D
-397,VULN,E,EMS-98 Class E,EMS-98 Clase E
-398,VULN,F,EMS-98 Class F,EMS-98 Clase F
-399,VULN,V99,Unknown Vulnerability Class,Clase de vulnerabilidad desconocida
+92,LLRS,LH,LH - Hybrid lateral load-resisting system,LH - Sistema sismorresistente híbrido
+93,LLRS,LO,LO - Other lateral load-resisting system,LO - Otro sistema sismorresistente
+94,LLRS_DUCT,DU99,DU99 - Ductility unknown,DU99 - Ductilidad desconocida
+95,LLRS_DUCT,DUC,DUC - Ductile,DUC - Dúctil
+96,LLRS_DUCT,DNO,DNO - Non-ductile,DNO - Frágil
+97,LLRS_DUCT,DBD,DBD - Equipped with base isolation and/or energy dissipation devices,DBD - Equipado con dispositivos de aislamiento en la base y/o de disipación de energía
+1,MAT_TYPE,MAT99,MAT99 - Unknown material,MAT99 - Material desconocido
+2,MAT_TYPE,C99,"C99 - Concrete, unknown reinforcement","C99 - Concreto, refuerzo desconocido"
+3,MAT_TYPE,CU,"CU - Concrete, unreinforced",CU - Concreto no reforzado
+4,MAT_TYPE,CR,"CR - Concrete, reinforced",CR - Concreto reforzado
+5,MAT_TYPE,SRC,"SRC - Concrete, composite with steel section",SRC - Sección compuesta de concreto y perfil de acero
+6,MAT_TYPE,S,S - Steel,S - Acero
+7,MAT_TYPE,ME,ME - Metal (except steel),ME - Metal (excepto acero)
+8,MAT_TYPE,M99,"M99 - Masonry, unknown reinforcement","M99 - Mampostería, refuerzo desconocido"
+9,MAT_TYPE,MUR,"MUR - Masonry, unreinforced",MUR - Mampostería no reforzada
+10,MAT_TYPE,MCF,"MCF - Masonry, confined",MCF - Mampostería confinada
+11,MAT_TYPE,MR,"MR - Masonry, reinforced",MR - Mampostería reforzada
+12,MAT_TYPE,E99,"E99 - Earth, unknown reinforcement","E99 - Tierra, refuerzo desconocido"
+13,MAT_TYPE,EU,"EU - Earth, unreinforced","EU - Tierra, no reforzada"
+14,MAT_TYPE,ER,"ER - Earth, reinforced",ER - Tierra reforzada
+15,MAT_TYPE,W,W - Wood,W - Madera
+32,MAT_TECH,STRUB,STRUB - Rubble (field stone) or semi-dressed stone,STRUB - Escombros o piedras semi-labradas
+16,MAT_TYPE,MATO,MATO - Other material,MATO - Otro material
+31,MAT_TECH,ST99,"ST99 - Stone, unknown technology","ST99 - Piedra, tecnología desconocida"
+30,MAT_TECH,ADO,ADO - Adobe blocks,ADO - Bloques de adobe
+29,MAT_TECH,MUN99,"MUN99 - Masonry unit, unknown",MUN99 - Unidad de mampostería desconocida
+33,MAT_TECH,STDRE,STDRE - Dressed stone,STDRE - Piedras labradas
+34,MAT_TECH,CL99,"CL99 - Fired clay unit, unknown type","CL99 - Unidad de arcilla cocida, tipo desconocido"
+35,MAT_TECH,CLBRS,CLBRS - Fired clay solid bricks,CLBRS - Bloques macizos de arcilla cocida
+36,MAT_TECH,CLBRH,CLBRH - Fired clay hollow bricks,CLBRH - Bloques huecos de arcilla cocida
+37,MAT_TECH,CLBLH,CLBLH - Fired clay hollow blocks or tiles,CLBLH - Bloque o baldosa de arcilla cocida
+38,MAT_TECH,CB99,"CB99 - Concrete blocks, unknown type","CB99 - Bloques de concreto, tipo desconocido"
+98,HEIGHT,H99,H99 - Number of storeys unknown,H99 - Número de pisos desconocido
+17,MAT_TECH,CT99,CT99 - Unknown concrete technology,CT99 - Tecnología del concreto desconocida
+18,MAT_TECH,CIP,CIP - Cast-in-place concrete,CIP - Concreto colado en sitio
+19,MAT_TECH,PC,PC - Precast concrete,PC - Concreto prefabricado
+20,MAT_TECH,CIPPS,CIPPS - Cast-in-place prestressed concrete,CIPPS - Concreto presforzado colado en sitio
+21,MAT_TECH,PCPS,PCPS - Precast prestressed concrete,PCPS - Concreto prefabricado presforzado
+22,MAT_TECH,S99,"S99 - Steel, unknown","S99 - Acero, desconocido"
+23,MAT_TECH,SL,SL - Cold-formed steel members,SL - Elementos de acero laminado en frío
+24,MAT_TECH,SR,SR - Hot-rolled steel members,SR - Elementos de acero laminado en caliente
+25,MAT_TECH,SO,"SO - Steel, other","SO - Acero, otro"
+26,MAT_TECH,ME99,"ME99 - Metal, unknown",ME99 - Matal desconocido
+27,MAT_TECH,MEIR,MEIR - Iron,MEIR - Hierro
+28,MAT_TECH,MEO,"MEO - Metal, other","MEO - Metal, otro"
+39,MAT_TECH,CBS,"CBS - Concrete blocks, solid",CBS - Bloques macizos de concreto
+40,MAT_TECH,CBH,"CBH - Concrete blocks, hollow",CBH - Bloques huecos de concreto
+41,MAT_TECH,MO,"MO - Masonry unit, other","MO - Unidad de mampostería, otro"
+42,MAT_TECH,MR99,"MR99 - Masonry reinforcement, unknown","MR99 - Refuerzo de mampostería, desconocido"
+43,MAT_TECH,RS,RS - Steel reinforced,RS - Acero de refuerzo
+99,HEIGHT,H,H - Number of storeys above ground,H - Número de pisos sobre el nivel de terreno
+44,MAT_TECH,RW,RW - Wood-reinforced,"RW - Madera, reforzada"
+45,MAT_TECH,RB,"RB - Bamboo-, cane- or rope-reinforcement","RB - Refuerzo de bambú, caña o cuerda"
+46,MAT_TECH,RCM,RCM - Fibre reinforcing mesh,RCM -  Malla de refuerzo de fibras
+100,HEIGHT,HB,HB - Number of storeys below ground,HB - Número de pisos bajo el nivel de terreno
+47,MAT_TECH,RCB,RCB - Reinforced concrete bands,RCB - Bandas de concreto reforzado
+48,MAT_TECH,ET99,ET99 - Unknown earth technology,ET99 - Tecnología en tierra desconocida
+49,MAT_TECH,ETR,ETR - Rammed earth,ETR - Tierra amasada
+101,HEIGHT,HF,HF - Height of ground floor level above grade,HF - Altura del primer piso sobre el nivel de terreno
+50,MAT_TECH,ETC,ETC - Cob or wet construction,ETC - Contrucción con tierra y fibras orgánicas
+51,MAT_TECH,ETO,"ETO - Earth technology, other","ETO - Tecnología en tierra, otra"
+52,MAT_TECH,W99,"W99 - Wood, unknown","W99 - Madera, desconocida"
+53,MAT_TECH,WHE,WHE - Heavy wood,WHE -  Maderas pesadas
+54,MAT_TECH,WLI,WLI - Light wood members,WLI -  Elementos de madera liviana
+55,MAT_TECH,WS,WS - Solid wood,WS -  Madera maciza
+56,MAT_TECH,WWD,WWD - Wattle and daub,WWD - Tierra con fibra natural
+57,MAT_TECH,WBB,WBB - Bamboo,WBB - Bambú
+58,MAT_TECH,WO,"WO - Wood, other","WO - Madera, otra"
+103,YR_BUILT,Y99,Y99 - Year unknown,Y99 - Año desconocido
+104,YR_BUILT,YEX,YEX - Exact  date of construction or retrofit,YEX - Fecha exacta de construcción o reforzamiento estructural
+106,YR_BUILT,YPRE,YPRE - Latest possible date of construction or retrofit,YPRE - Última posible fecha de construcción o reforzamiento estructural
+60,MAT_PROP,SC99,"SC99 - Steel connections, unknown","SC99 - Conexiones de acero, desconocidas"
+62,MAT_PROP,WEL,WEL - Welded connections,WEL - Conexiones soldadas
+63,MAT_PROP,RIV,RIV - Riveted connections,RIV - Conexiones remachadas
+64,MAT_PROP,BOL,BOL - Bolted connections,BOL - Conexiones apernadas
+65,MAT_PROP,MO99,MO99 - Mortar type unknown,MO99 - Tipo de mortero desconocido
+66,MAT_PROP,MON,MON - No mortar,MON - Sin mortero
+67,MAT_PROP,MOM,MOM - Mud mortar,MOM - Mortero de barro
+68,MAT_PROP,MOL,MOL - Lime mortar,MOL - Mortero con cal
+69,MAT_PROP,MOC,MOC - Cement mortar,MOC - Mortero con cemento
+70,MAT_PROP,MOCL,MOCL - Cement: lime mortar,MOCL - Mortero con cemento y cal
+71,MAT_PROP,SP99,"SP99 - Stone, unknown type","SP99 - Piedra, tipo desconocido"
+109,OCCUPY,RES,RES - Residential,RES - Residencial
+72,MAT_PROP,SPLI,SPLI - Limestone,SPLI - Piedra caliza
+73,MAT_PROP,SPSA,SPSA - Sandstone,SPSA - Piedra arenisca
+74,MAT_PROP,SPTU,SPTU - Tuff,SPTU - Toba
+75,MAT_PROP,SPSL,SPSL - Slate,SPSL - Pizarra
+76,MAT_PROP,SPGR,SPGR - Granite,SPGR - Granito
+77,MAT_PROP,SPBA,SPBA - Basalt,SPBA - Basalto
+78,MAT_PROP,SPO,"SPO - Stone, other type","SPO - Piedra, otro tipo"
+80,MAT_TECH,MATT99,MATT99 - Unknown material technology,MATT99 - Tecnología de material desconocida
+81,MAT_PROP,MATP99,MATP99 - Unknown material property,MATP99 - Propiedad del material desconocida
+84,LLRS,LFM,LFM - Moment frame,LFM - Marcos de momento
+82,LLRS,L99,L99 - Unknown lateral load-resisting system,L99 - Sistema sismorresistente desconocido
+83,LLRS,LN,LN - No lateral load-resisting system,LN - Sistema sismorresistente inexistente
+85,LLRS,LFINF,LFINF - Infilled frame,LFINF - Marco relleno
+86,LLRS,LFBR,LFBR - Braced frame,LFBR - Marco arriostrado
+87,LLRS,LPB,LPN - Post and beam,LPB - Poste y viga
+88,LLRS,LWAL,LWAL - Wall,LWAL - Muro
+89,LLRS,LDUAL,LDUAL - Dual frame-wall system,LDUAL - Sistema dual
+90,LLRS,LFLS,LFLS - Flat slab/plate or infilled waffle slab,LFLS - Losa plana o con nervaduras
+91,LLRS,LFLSINF,LFLSINF - Infilled flat slab/plate or infilled waffle slab,LFLSINF - Losa plana o con nervaduras con marcos rellenos
+105,YR_BUILT,YBET,YBET - Upper and lower bound for the date of construction or retrofit,YBET - Límite superior e inferior de la fecha de construcción o reforzamiento estructural
+107,YR_BUILT,YAPP,YAPP - Approximate date of construction or retrofit,YAPP - Fecha aproximada de construcción o reforzamiento estructural
+235,ROOFCOVMAT,RMT99,RMT99 - Unknown roof covering,RMT99 - Cubierta de techo desconocida
+147,OCCUPY_DT,MIX4,MIX4 - Mostly residential and industrial,MIX4 - Principalmente residencial e industrial
+148,OCCUPY_DT,MIX5,MIX5 - Mostly industrial and commercial,MIX5 - Principalmente industrial y comercial
+149,OCCUPY_DT,MIX6,MIX6 - Mostly industrial and residential,MIX6 - Principalmente industrial y residencial
+150,OCCUPY_DT,IND99,"IND99 - Industiral, unknown type","IND99 - Industrial, tipo desconocido"
+236,ROOFCOVMAT,RMN,RMN - Concrete roof without additional covering,RMN - Azotea de concreto sin cubierta adicional
+151,OCCUPY_DT,IND1,IND1 - Heavy industrial,IND1 - Industria pesada
+152,OCCUPY_DT,IND2,IND2 - Light industrial,IND2 - Industria ligera
+153,OCCUPY_DT,AGR99,"AGR99 - Agriculture, unknown type","AGR99 - Agricultura, tipo desconocido"
+154,OCCUPY_DT,AGR1,AGR1 - Produce storage,AGR1 - Almacenaje de productos
+155,OCCUPY_DT,AGR2,AGR2 - Animal shelter,AGR2 - Refugio para animales
+156,OCCUPY_DT,AGR3,AGR3 - Agricultural processing,AGR3 - Procesamiento agrícola
+157,OCCUPY_DT,ASS99,"ASS99 - Assembly, unknown type","ASS99 - Ensamblado, tipo desconocido"
+158,OCCUPY_DT,ASS1,ASS1 - Religious gathering,ASS1 - Templo religioso
+159,OCCUPY_DT,ASS2,ASS2 - Arena,ASS2 - Plaza
+160,OCCUPY_DT,ASS3,ASS3 - Cinema or concert hall,ASS3 - Cine o sala de conciertos
+161,OCCUPY_DT,ASS4,ASS4 - Other gatherings,ASS4 - Otro centro de reunión
+162,OCCUPY_DT,GOV99,"GOV99 - Government, unknown type","GOV99 - Gobierno, tipo desconocido"
+163,OCCUPY_DT,GOV1,"GOV1 - Government, general services","GOV1 - Gobierno, servicios generales"
+164,OCCUPY_DT,GOV2,"GOV2 - Government, emergency services","GOV2 - Gobierno, cuerpos de emergencia"
+165,OCCUPY_DT,EDU99,"EDU99 - Education, unknown type","EDU99 - Educación, tipo desconocido"
+166,OCCUPY_DT,EDU1,EDU1 - Pre-school facility,EDU1 - Instalación para preescolar
+167,OCCUPY_DT,EDU2,EDU2 - School,EDU2 - Escuela
+196,STR_IRREG,IRIR,IRIR - Irregular structure,IRIR - Estructura irregular
+170,POSITION,BPD,BPD - Detached building,BPD - Edificio independiente
+171,POSITION,BP1,BP1 - Adjoining building(s) on one side,BP1 - Edificio(s) contiguos en un lado
+197,STR_IRREG_DT,IRPP,IRPP - Plan irregularity - primary,IRPP - Irregularidad en planta - primaria
+172,POSITION,BP2,BP2 - Adjoining building(s) on two sides,BP2 - Edificio(s) contiguos en dos lados
+173,POSITION,BP3,BP3 - Adjoining building(s) on three sides,BP3 - Edificio(s) contiguos en tres lados
+198,STR_IRREG_DT,IRPS,IRPS - Plan irregularity - secondary,IRPS - Irregularidad en planta - secundaria
+199,STR_IRREG_DT,IRVP,IRVP - Vertical irregularity - primary,IRVP - Irregularidad vertical - primaria
+200,STR_IRREG_DT,IRVS,IRVS - Vertical irregularity - secondary,IRVS - Irregularidad vertical - secundaria
+201,STR_IRREG_TYPE,IRN,INR - No irregularity,IRN - Sin irregularidad
+202,STR_IRREG_TYPE,TOR,TOR - Torsion eccentricity,TOR - Excentricidad torsional
+203,STR_IRREG_TYPE,REC,REC - Re-entrant corner,REC - Esquina entrante
+204,STR_IRREG_TYPE,IRHO,IRHO - Other plan irregularity,IRHO - Otra irregularidad en planta
+237,ROOFCOVMAT,RMT1,RMT1 - Clay or concrete tile roof covering,RMT1 - Cubierta de teja de arcilla o concreto
+205,STR_IRREG_TYPE,SOS,SOS - Soft storey,SOS - Piso balndo
+206,STR_IRREG_TYPE,CRW,CRW - Cripple wall,CRW - Muros cortos
+207,STR_IRREG_TYPE,SHC,SHC - Short column,SHC - Columna corta
+208,STR_IRREG_TYPE,POP,POP - Pounding potential,POP - Potencial de golpeteo
+209,STR_IRREG_TYPE,SET,SET - Setback,SET - Entrante
+210,STR_IRREG_TYPE,CHV,CHV - Change in vertical structure (includes large overhangs),CHV - Cambio en estructura vertical (incluye voladizos largos)
+211,STR_IRREG_TYPE,IRVO,IRVO - Other vertical irregularity,IRVO - Otra irregularidad vertical
+238,ROOFCOVMAT,RMT2,RMT2 - Fibre cement or metal tile roof covering,RMT2 - Cubierta de teja de con fibra o metal
+239,ROOFCOVMAT,RMT3,RMT3 - Membrane roof covering,RMT3 - Cubierta de membrana
+240,ROOFCOVMAT,RMT4,RMT4 - Slate roof covering,RMT4 - Cubierta de pizarra
+212,NONSTRCEXW,EW99,EW99 - Unknown material of exterior walls,EW99 - Muros exteriores de material desconocido
+213,NONSTRCEXW,EWC,EWC - Concrete exterior walls,EWC - Muros exteriores de concreto
+214,NONSTRCEXW,EWG,EWG - Glass exterior walls,EWG - Muros exteriores de vidrio
+215,NONSTRCEXW,EWE,EWE - Earthen exterior walls,EWE - Muros exteriores de tierra
+216,NONSTRCEXW,EWMA,EWMA - Masonry exterior walls,EWMA - Muros exteriores de mampostería
+241,ROOFCOVMAT,RMT5,RMT5 - Stone slab roof covering,RMT5 - Cubierta de losa de piedra
+242,ROOFCOVMAT,RMT6,RMT6 - Metal or asbestos sheet roof covering,RMT6 - Cubierta de lámina de metal o asbesto
+243,ROOFCOVMAT,RMT7,RMT7 - Wooden or asphalt shingle roof covering,RMT7 - Cubierta de teja de madera o asfalto
+244,ROOFCOVMAT,RMT8,RMT8 - Vegetative roof covering,RMT8 - Cubierta vegetal
+245,ROOFCOVMAT,RMT9,RMT9 - Earthen roof covering,RMT9 - Cubierta en tierra
+228,ROOF_SHAPE,RSH4,RSH4 - Pitched with dormers,RSH4 - Inclinado con salientes
+229,ROOF_SHAPE,RSH5,RSH5 - Monopitch,RSH5 - A una agua
+230,ROOF_SHAPE,RSH6,RSH6 - Sawtooth,RSH6 - Tipo sierra
+231,ROOF_SHAPE,RSH7,RSH7 - Curved,RSH7 - Curvo
+232,ROOF_SHAPE,RSH8,RSH8 - Complex regular,RSH8 - Regular complejo
+233,ROOF_SHAPE,RSH9,RSH9 - Complex irregular,RSH9 - Irregular complejo
+234,ROOF_SHAPE,RSHO,"RSHO - Roof shape, other","RSHO - Forma del techo, otra"
+246,ROOFCOVMAT,RMT10,RMT10 - Solar panelled roofs,RMT10 - Techos con páneles solares
+247,ROOFCOVMAT,RMT11,RMT11 - Tensile membrane or fabric roof,RMT11 - Techo en membrana tensada o tela
+248,ROOFCOVMAT,RMTO,"RMTO - Roof covering, other","RMTO - Cubierta de techo, otra"
+249,ROOFSYSMAT,RM,RM - Masonry roof,RM - Azotea de mampostería
+250,ROOFSYSMAT,RE,RE - Earthen roof,RE - Techo de tierra
+251,ROOFSYSMAT,RC,RC - Concrete roof,RC - Azotea de concreto
+252,ROOFSYSMAT,RME,RME - Metal roof,RME - Techo de metal
+253,ROOFSYSMAT,RWO,RWO - Wooden roof,RWO - Techo de madera
+254,ROOFSYSMAT,RFA,RFA - Fabric roof,RFA - Techo de tela
+255,ROOFSYSMAT,RO,"RO - Roof material, other","RO - Material de techo/azotea, otro"
+256,ROOFSYSTYP,RM99,"RM99 - Masonry roof, unknown","RM99 - Azotea de mampostería, desconocida"
+257,ROOFSYSTYP,RM1,RM1 - Vaulted masonry roof,RM1 - Azotea abovedada de mampostería
+258,ROOFSYSTYP,RM2,RM2 - Shallow-arched masonry roof,RM2 - Azotea de mampostería en arco bajo
+259,ROOFSYSTYP,RM3,RM3 - Composite masonry and concrete roof system,RM3 - Azotea en sección compuesta de mampostería y concreto
+260,ROOFSYSTYP,RE99,"RE99 - Earthen roof, unknown","RE99 - Techo de tierra, desconocido"
+261,ROOFSYSTYP,RE1,"RE1 - Vaulted earthen roof, unknown","RE1 - Techo abovedado de tierra, desconocido"
+281,ROOF_CONN,RWCP,RWCP - Roof-wall diaphragm connection present,RWCP - Conexión de diafragma entre muro y techo/azotea presente
+283,ROOF_CONN,RTDN,RTDN - Roof tie-down not provided,RTDN - Sin anclaje de techo
+282,ROOF_CONN,RTD99,RTD99 - Roof tie-down unknown,RTD99 - Anclaje de techo desconocido
+284,ROOF_CONN,RTDP,RTDP - Roof tie-down present,RTDP - Anclaje de techo presente
+285,FLOOR_MAT,FN,FN - No elevated or suspended floor,"FN - Sin piso falso, elevado o suspendido"
+286,FLOOR_MAT,F99,"F99 - Floor material, unknown","F99 - Material del piso, desconocido"
+288,FLOOR_MAT,FE,FE - Earthen floor,FE - Piso de tierra
+290,FLOOR_MAT,FME,FME - Metal floor,FME - Piso de metal
+294,FLOOR_TYPE,FM1,FM1 - Vaulted masonry floor,FM1 - Piso abovedado de mampostería
+297,FLOOR_TYPE,FE99,"FE99 - Earthen floor, unknown","FE99 - Piso de tierra, desconocido"
+298,FLOOR_TYPE,FC99,"FC99 - Concrete floor, unknown","FC99 - Piso de concreto, desconocido"
+134,OCCUPY_DT,COM3,"COM3 - Offices, professional/technical services","COM3 - Oficinas, servicios profesionales/técnicos"
+135,OCCUPY_DT,COM4,COM4 - Hospital/medical clinic,COM4 - Hospital/clínica médica
+136,OCCUPY_DT,COM5,COM5 - Entertainment,COM5 - Entretenimiento
+137,OCCUPY_DT,COM6,COM6 - Public building,COM6 - Edificio público
+138,OCCUPY_DT,COM7,COM7 - Covered parking garage,COM7 - Garaje para parqueos bajo techo
+139,OCCUPY_DT,COM8,COM8 - Bus station,COM8 - Estación de bus
+108,OCCUPY,OC99,OC99 - Unknown occupancy,OC99 - Ocupación desconocida
+110,OCCUPY,COM,COM - Commercial and public,COM - Comercial y público
+111,OCCUPY,MIX,MIX - Mixed use,MIX - Uso mixto
+112,OCCUPY,IND,IND - Industrial,IND - Industrial
+113,OCCUPY,AGR,AGR - Agriculture,AGR - Agricultura
+114,OCCUPY,ASS,ASS - Assembly,ASS - Lugar de reunión
+115,OCCUPY,GOV,GOV - Government,GOV - Gobierno
+116,OCCUPY,EDU,EDU - Education,EDU - Educación
+117,OCCUPY,OCO,OCO - Other occupancy type,OCO - Otro tipo de ocupación
+140,OCCUPY_DT,COM9,COM9 - Railway station,COM9 - Estación de tren
+141,OCCUPY_DT,COM10,COM10 - Airport,COM10 - Aeropuerto
+142,OCCUPY_DT,COM11,COM11 - Recreation and leisure,COM11 - Recreación y ocio
+143,OCCUPY_DT,MIX99,"MIX99 - Mixed, unknown type","MIX99 - Mixto, tipo desconocido"
+144,OCCUPY_DT,MIX1,MIX1 - Mostly residential and commercial,MIX1 - Principalmente residencial y comercial
+145,OCCUPY_DT,MIX2,MIX2 - Mostly commercial and residential,MIX2 - Principalmente comercial y residencial
+146,OCCUPY_DT,MIX3,MIX3 - Mostly commercial and industrial,MIX3 - Principalmente comercial e industrial
+176,PLAN_SHAPE,PLFSQO,"PLFSQO - Square, with an opening in plan","PLFSQO - Cuadrada, con una abertura"
+177,PLAN_SHAPE,PLFR,"PLFR - Rectangular, solid","PLFR - Rectangular, sólida"
+178,PLAN_SHAPE,PLFRO,"PLFRO - Rectangular, with an opening in plan","PLFRO - Rectangular, con una abertura"
+179,PLAN_SHAPE,PLFL,PLFL - L-shape,PLFL - Forma de L
+180,PLAN_SHAPE,PLFC,"PLFC - Curved, solid","PLFC - Curva, sólida"
+181,PLAN_SHAPE,PLFCO,"PLFCO - Curved, with an opening in plan","PLFCO - Curva, con una abertura"
+182,PLAN_SHAPE,PLFD,"PLFD - Triangular, solid","PLFD - Triangular, sólida"
+118,OCCUPY_DT,RES99,"RES99 - Residential, unknown type","RES99 - Residencial, tipo desconocido"
+119,OCCUPY_DT,RES1,RES1 - Single dwelling,RES1 - Vivienda individual
+120,OCCUPY_DT,RES2,"RES2 - Multi-unit, unknown type","RES2 - Varias unidades, tipo desconocido"
+121,OCCUPY_DT,RES2A,RES2A - 2 Units (duplex),RES2A - 2 unidades (duplex)
+122,OCCUPY_DT,RES2B,RES2B - 3-4 Units,RES2B - 3-4 unidades
+123,OCCUPY_DT,RES2C,RES2C - 5-9 Units,RES2C - 5-9 unidades
+124,OCCUPY_DT,RES2D,RES2D - 10-19 Units,RES2D - 10-19 unidades
+168,OCCUPY_DT,EDU3,EDU3 - College/university offices and/or classrooms,EDU3 - Aulas y/u oficinas universitarias
+125,OCCUPY_DT,RES2E,RES2E - 20-49 Units,RES2E - 20-49 unidades
+126,OCCUPY_DT,RES2F,RES2F - 50+ Units,RES2F - 50+ unidades
+127,OCCUPY_DT,RES3,RES3 - Temporary lodging,RES3 - Alojamiento temporal
+128,OCCUPY_DT,RES4,RES4 - Institutional housing,RES4 - Vivienda institucional
+129,OCCUPY_DT,RES5,RES5 - Mobile home,RES5 - Casa móvil
+130,OCCUPY_DT,RES6,RES6 - Informal housing,RES6 - Vivienda informal
+131,OCCUPY_DT,COM99,"COM99 - Commercial and public, unknown type","COM99 - Comercial y público, tipo desconocido"
+132,OCCUPY_DT,COM1,COM1 - Retail trade,COM1 - Venta al por menor
+133,OCCUPY_DT,COM2,COM2 - Wholesale trade and storage (warehouse),COM2 - Venta al por mayor y almacenaje
+169,OCCUPY_DT,EDU4,EDU4 - College/university research facilities and/or labs,EDU4 - Instalaciones para investigación y/o laboratorios universitarios
+183,PLAN_SHAPE,PLFDO,"PLFDO - Triangular, with an opening in plan","PLFDO - Triangular, con una abertura"
+184,PLAN_SHAPE,PLFP,"PLFP - Polygonal, solid (e.g. trapezoid, pentagon, hexagon)","PLFP - Poligonal, sólida (e.g. trapecio, pentágono, hexágono)"
+262,ROOFSYSTYP,RC99,"RC99 - Concrete roof, unknown","RC99 - Azotea de concreto, desconocido"
+263,ROOFSYSTYP,RC1,RC1 - Cast-in-place beamless reinforced concrete roof,RC1 - Azotea de losa plana de concreto colada en sitio
+174,PLAN_SHAPE,PLF99,PLF99 - Unknown plan shape,PLF99 - Forma de la planta desconocida
+175,PLAN_SHAPE,PLFSQ,"PLFSQ - Square, solid","PLFSQ - Cuadrada, sólida"
+185,PLAN_SHAPE,PLFPO,"PLFPO - Polygonal, with an opening in plan","PLFPO - Poligonal, con una abertura"
+217,NONSTRCEXW,EWME,EWME - Metal exterior walls,EWME - Muros exteriores de metal
+186,PLAN_SHAPE,PLFE,PLFE - E-shape,PLFE - Forma de E
+187,PLAN_SHAPE,PLFH,PLFH - H-shape,PLFH - Forma de H
+188,PLAN_SHAPE,PLFS,PLFS - S-shape,PLFS - Forma de S
+189,PLAN_SHAPE,PLFT,PLFT - T-shape,PLFT - Forma de T
+190,PLAN_SHAPE,PLFU,PLFU - U- or C-shape,PLFU - Forma de U o C
+191,PLAN_SHAPE,PLFX,PLFX - X-shape,PLFX - Forma de X
+192,PLAN_SHAPE,PLFY,PLFY - Y-shape,PLFY - Forma de Y
+193,PLAN_SHAPE,PLFI,PLFI - Irregular plan shape,PLFI - Forma de la planta irregular
+264,ROOFSYSTYP,RC2,RC2 - Cast-in-place beam-supported reinforced concrete roof,"RC2 - Azotea de losa de concreto apoyada en vigas de concreto, ambas coladas en sitio"
+265,ROOFSYSTYP,RC3,RC3 - Precast concrete roof with reinforced concrete topping,RC3 - Azotea de losas prefabricadas de concreto con sobrelosa de concreto reforzado
+194,STR_IRREG,IR99,IR99 - Unknown structural irregularity,IR99 - Irregularidad estructural desconocida
+195,STR_IRREG,IRRE,IRRE - Regular structure,IRRE - Estructura regular
+266,ROOFSYSTYP,RC4,RC4 - Precast concrete roof without reinforced concrete topping,RC4 - Azotea de losas prefabricadas de concreto sin sobrelosa de concreto reforzado
+267,ROOFSYSTYP,RME99,"RME99 - Metal roof, unknown","RME99 - Techo de metal, desconocido"
+268,ROOFSYSTYP,RME1,RME1 - Metal beams or trusses supporting light roofing,RME1 - Vigas o armaduras de metal soportando cubierta liviana
+269,ROOFSYSTYP,RME2,RME2 - Metal roof beams supporting precast concrete slabs,RME2 - Vigas de techo de metal aoportando losas prefabricadas de concreto 
+270,ROOFSYSTYP,RME3,RME3 - Composite steel roof deck and concrete slab,RME3 - Azotea en sección compuesta de lámina de acero y losa de concreto
+271,ROOFSYSTYP,RWO99,"RWO99 - Wooden roof, unknown","RWO99 - Techo de madera, desconocido"
+218,NONSTRCEXW,EWV,EWV - Vegetative exterior walls,EWV - Muros exteriores de vegetación
+219,NONSTRCEXW,EWW,EWW - Wooden exterior walls,EWW - Muros exteriores de madera
+220,NONSTRCEXW,EWSL,EWSL - Stucco finish on light framing for exterior walls,EWSL - Muros exteriores en perfilería liviana acabados con estuco
+221,NONSTRCEXW,EWPL,"EWPL - Plastic/vinyl exterior walls, various","EWPL - Muros exteriores plásticos/vinilo, varios"
+222,NONSTRCEXW,EWCB,EWCB - Cement-based boards for exterior walls,EWCB - Muros exteriores en láminas a base de cemento
+223,NONSTRCEXW,EWO,"EWO - Material of exterior walls, other","EWO - Material de muros exteriores, otro"
+272,ROOFSYSTYP,RWO1,RWO1 - Wooden structure with roof covering,RWO1 - Estructura de madera con cubierta de techo
+273,ROOFSYSTYP,RWO2,RWO2 - Wooden beams or trusses with heavy roof covering,RWO2 - Vigas o armaduras de madera con cubierta de techo pesada
+274,ROOFSYSTYP,RWO3,RWO3 - Wood-based sheets on rafters or purlins,RWO3 - Láminas a base de madera sobre vigas o elementos de acero laminados en frío
+224,ROOF_SHAPE,R99,R99 - Unknown roof shape,R99 - Forma de azotea desconocida
+225,ROOF_SHAPE,RSH1,RSH1 - Flat,RSH1 - Plana
+226,ROOF_SHAPE,RSH2,RSH2 - Pitched with gable ends,RSH2 - Inclinado a dos aguas con tapicheles
+227,ROOF_SHAPE,RSH3,RSH3 - Pitched and hipped,RSH3 - Inclinado a cuatro aguas
+275,ROOFSYSTYP,RWO4,RWO4 - Plywood panels or other light-weight panels for roof,RWO4 - Páneles de madera contrachapada u otros páneles livianos
+276,ROOFSYSTYP,RWO5,"RWO5 - Bamboo, straw or thatch roof",RWO5 - Techo de bambú o paja
+277,ROOFSYSTYP,RFA1,RFA1 - Inflatable or tensile membrane roof,RFA1 - Techo inflable o de membrana tensada
+278,ROOFSYSTYP,RFAO,"RFAO - Fabric roof, other","RFAO - Techo de tela, otro"
+279,ROOF_CONN,RWC99,RWC99 - Roof-wall diaphragm connection unknown,RWC99 - Conexión de diafragma entre muro y techo/azotea desconocida
+280,ROOF_CONN,RWCN,RWCN - Roof-wall diaphragm connection not provided,RWCN - Sin conexión de diafragma entre muro y techo/azotea
+287,FLOOR_MAT,FM,FM - Masonry floor,FM - Piso de mampostería
+289,FLOOR_MAT,FC,FC - Concrete floor,FC - Piso de concreto
+291,FLOOR_MAT,FW,FW - Wooden floor,FW - Piso de madera
+292,FLOOR_MAT,FO,"FO - Floor material, other","FO - Material de piso, otro"
+304,FLOOR_TYPE,FME1,"FME1 - Metal beams, trusses or joists supporting light flooring","FME1 - Vigas, viguetas o armaduras soportando piso liviano"
+305,FLOOR_TYPE,FME2,FME2 - Metal floor beams supporting precast concrete slabs,FME2 - Vigas de metal de entrepiso soportando losas prefabricadas de concreto
+306,FLOOR_TYPE,FME3,FME3 - Composite steel deck and concrete slab,FME3 - Sección compuesta de lámina de acero y losa de concreto
+293,FLOOR_TYPE,FM99,"FM99 - Masonry floor, unknown","FM99 - Piso de mampostería, desconocido"
+295,FLOOR_TYPE,FM2,FM2 - Shallow-arched masonry floor,FM2 - Piso de mampostería en arco bajo
+296,FLOOR_TYPE,FM3,FM3 - Composite cast-in-place reinforced concrete and masonry floor system,FM3 - Sistema de piso de sección compuesta de concreto colado en sitio y  mampostería
+299,FLOOR_TYPE,FC1,FC1 - Cast-in-place beamless reinforced concrete floor,FC1 - Piso de losa plana de concreto reforzado colado en sitio
+300,FLOOR_TYPE,FC2,FC2 - Cast-in-place beam-supported reinforced concrete floor,"FC2 - Piso de losa de concreto reforzado apoyada en vigas de concreto, ambas coladas en sitio"
+301,FLOOR_TYPE,FC3,FC3 - Precast concrete floor with reinforced concrete topping,FC3 - Piso de losas prefabricadas de concreto con sobrelosa de concreto reforzado
+302,FLOOR_TYPE,FC4,FC4 - Precast concrete floor without reinforced concrete topping,FC4 - Piso de losas prefabricadas de concreto sin sobrelosa de concreto reforzado
+303,FLOOR_TYPE,FME99,"FME99 - Metal floor, unknown","FME99 - Piso metálico, desconocido"
+307,FLOOR_TYPE,FW99,"FW99 - Wooden floor, unknown","FW99 - Piso de madera, desconocido"
+308,FLOOR_TYPE,FW1,FW1 - Wooden beams or trusses and joists supporting light flooring,FW1 - Vigas o armaduras de madera soportando piso liviano
+309,FLOOR_TYPE,FW2,FW2 - Wooden beams or trusses and joists supporting heavy flooring,FW2 - Vigas o armaduras de madera soportando piso pesado
+310,FLOOR_TYPE,FW3,FW3 - Wood-based sheets on joists or beams,FW3 - Láminas a base de madera sobre vigas
+311,FLOOR_TYPE,FW4,FW4 - Plywood panels or other light-weight panels for floor,FW4 - Páneles de madera contrachapada u otros páneles livianos para pisos
+312,FLOOR_CONN,FWC99,FWC99 - Floor-wall diaphragm connection unknown,FWC99 - Conexión de diafragma entre muro y piso desconocido
+313,FLOOR_CONN,FWCN,FWCN - Floor-wall diaphragm connection not provided,FWCN - Sin conexión de diafragma entre muro y piso
+314,FLOOR_CONN,FWCP,FWCP - Floor-wall diaphragm connection present,FWCP - Conexión de diafragma entre muro y piso presente
+315,FOUNDN_SYS,FOS99,FOS99 - Unknown foundation system,FOS99 - Sistema de cimentación desconocido
+316,FOUNDN_SYS,FOSSL,"FOSSL - Shallow foundation, with lateral capacity","FOSSL - Cimentación superficial, con capacidad lateral"
+317,FOUNDN_SYS,FOSN,"FOSN - Shallow foundation, no lateral capacity","FOSN - Cimentación superficial, sin capacidad lateral"
+318,FOUNDN_SYS,FOSDL,"FOSDL - Deep foundation, with lateral capacity","FOSDL - Cimentación profunda, con capacidad lateral"
+319,FOUNDN_SYS,FOSDN,"FOSDN - Deep foundation, no lateral capacity","FOSDN - Cimentación profunda, sin capacidad lateral"
+320,FOUNDN_SYS,FOSO,"FOSO - Foundation, other","FOSO - Cimentación, otra"
+321,OCCUPY_DT,OCCDT99,"OCCDT99 - Occupancy detail, unknown","OCCDT99 - Detalle de ocupación, desconocido"
+322,POSITION,BP99,"BP99 - Position, unknown","BP99 - Posición, desconocida"
+324,STR_IRREG_TYPE,IRT99,"IRT99 - Structural irregularity type, unknown","IRT99 - Tipo de irregularidad estructural, desconocida"
+323,STR_IRREG_DT,IRP99,"IRP99 - Structural irregularity detail, unknown","IRP99 - Detalle de irreguralidad estructural, desconocido"
+357,ROOFSYSMAT,RSM99,"RSM99 - Roof system material, unknown","RSM99 - Material del sistema de techo/azotea, desconocido"
+358,ROOFSYSTYP,RST99,"RST99 - Roof system type, unknown","RST99 - Tipo del sistema de techo/azotea, desconocido"
+360,ROOF_CONN,RCN99,"RCN99 - Roof connection, unknown","RCN99 - Conexión de techo/azotea, desconocida"
+361,FLOOR_TYPE,FT99,"FT99 - Floor type, unknown","FT99 - Tipo de piso, desconocido"
+384,VULN,VULN_EX,Exact vulnerability class,VULN_EX - Clase exacta de vulnerabilidad
+385,VULN,VULN_BET,Lower and upper class of vulnerability,VULN_BET - Límite inferior y superior de clase de vulnerabilidad
+386,RRVS_STATUS,UNMODIFIED,Default RRVS processing status,UNMODIFIED - Estatus del procesamiento del RRVS por defecto
+387,RRVS_STATUS,MODIFIED,Asset has been modified by RRVS,MODIFIED - El activo ha sido modificado por RRVS
+388,RRVS_STATUS,COMPLETED,Asset has been completed by RRVS,COMPLETED - El activo ha sido completado por RRVS
+389,OCCUPY,CON,CON - Under construction,CON - En construcción
+390,OCCUPY,VAC,VAC - Vacant building,VAC - Edificio vacante
+391,COMMENT,COMMENT,Comment by the analyst,COMMENT - Comentario del analista
+392,HEIGHT,HB99,Number of storeys below ground unknown,HB99 - Número de pisos bajo el nivel de terreno desconocido
+393,VULN,A,EMS-98 Class A,A - EMS-98 Clase A
+394,VULN,B,EMS-98 Class B,B - EMS-98 Clase B
+395,VULN,C,EMS-98 Class C,C - EMS-98 Clase C
+396,VULN,D,EMS-98 Class D,D - EMS-98 Clase D
+397,VULN,E,EMS-98 Class E,E - EMS-98 Clase E
+398,VULN,F,EMS-98 Class F,F - EMS-98 Clase F
+399,VULN,V99,Unknown Vulnerability Class,V99 - Clase de vulnerabilidad desconocida
