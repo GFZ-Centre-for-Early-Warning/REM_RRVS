@@ -12,27 +12,111 @@
 <body>
 	<div id="map"></div>	
 	<script>
-		//add map object
-		var map = L.map('map');
+	    	//Function to get active layers
+	    	L.Control.Layers.include({
+	    	    getActiveLayers: function () {
+	    	
+	    	        // Create array for holding active layers
+	    	        var active = [];
+			var layers = this._layers;
+	    	
+	    	        // Iterate all layers in control
+			for (var key in layers){
+			    if (layers.hasOwnProperty(key)){
+		    	    	var obj = layers[key];//['layer'];
+	    	            	// Check if it's added to the map
+	    	            	if (map.hasLayer(obj.layer)) {
+				    //console.log(obj);
+	    	            	    // Push layer to active array
+	    	            	    active.push(obj.name);
+	    	            	}
+			    }
+			};
+	    	
+	    	        // Return array
+	    	        return active;
+	    	    }
+	    	});
+
+		//function that given a list of names of leaflet layers adds them (after they have been created)
+		function addLayersByName(names) {
+			//basemap+overlay layers	
+			console.log('names:'+names)
+			//both layer groups
+			layers = [baseLayers,overlayLayers]
+			for (i in layers ){
+				//get active group
+				group = layers[i]
+				console.log('group:'+group)
+				for (key in group){
+					console.log('key:'+key)
+					if (names.includes(key)){
+						console.log('valid key:'+key);
+						group[key].addTo(map);
+					}
+					
+				}
+			}
+		}
+		
 		
 		//define layer variables
 		var gpsJSON;
 		var buildingsJSON;
 	
 		//add baselayer
-        var basemap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy; Mapbox &copy; OpenStreetMap</a> <a class='mapbox-improve-map' href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map </a><span id=latlon>&nbsp;</span>",
-            maxZoom: 17,
-            id: 'mapbox.streets-satellite',
-            accessToken: 'pk.eyJ1IjoibWhhYXMiLCJhIjoiY2lqbjU0dWdsMDA0NHZobTNkNHhoNG41YiJ9.b3KQYD4pgNv91lJK9mcN5w'
-        }).addTo(map);
-	//	var basemap = L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
-	//		maxZoom: 18,
-	//		attribution: 'Processing &copy; <a href="http://www.gfz-potsdam.de/en/section/ews/">GFZ Potsdam - Centre for Early Warning Systems</a>' +
-	//					 ' | Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, ',
-	//		subdomains: ['otile1','otile2','otile3','otile4']
-	//	}).addTo(map);
+        	var mapboxLink = "<a href='http://www.mapbox.com/about/maps/'</a>",
+	            snitLink = '<a href="http://www.snitcr.go.cr"</a>';
+        
+        	var mapboxUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+		    mapboxAttrib = "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy; Mapbox &copy; OpenStreetMap</a> <a class='mapbox-improve-map' href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map </a><span id=latlon>&nbsp;</span>"
+            	    snitUrl = 'http://geos0.snitcr.go.cr/cgi-bin/web?map=ortofoto.map&SERVICE=WMS&version=1.1.1?',
+            	    snitAttrib = '&copy; '+snitLink+' Contributors';
 
+        	var mapboxMap = L.tileLayer(mapboxUrl, {attribution: mapboxAttrib, maxZoom: 20, id: 'mapbox.streets-satellite', accessToken: 'NOTE:add toke here'}),
+            	    snitMap = L.tileLayer.wms(snitUrl, {attribution: snitAttrib, layers: 'Mosaico1000',maxZoom: 20});
+		
+		//console.log(mapboxMap);
+
+
+		var baseLayers = {
+			"Mapbox Satellite": mapboxMap,
+			"SNIT": snitMap
+		};
+		
+		//variable for dynamic gps point layer style and get-feature-info
+		var gpsDefaultStyle = {
+				radius: 4,
+				fillColor: '#0B0B3B',
+				color: '#0B0B3B',
+				opacity: 0.8,
+				fillOpacity: 0.6
+		}		
+
+		//add gps layer
+		gpsJSON = L.geoJson({{gps|safe}},{
+			style: gpsDefaultStyle,
+			onEachFeature: onEachFeatureGps,
+			pointToLayer: function (feature, latlng) {  
+				return L.circleMarker(latlng)
+				}
+			});	
+			
+		//add buildings layer
+		buildingsJSON = L.geoJson({{bdgs|safe}},{
+		style: building_style,
+		onEachFeature: onEachFeatureBuilding
+		});
+
+		var overlayLayers = {"PanoImages": gpsJSON,
+			       	     "Buildings": buildingsJSON};
+
+		//add map object
+		var map = L.map('map', {layers:[mapboxMap,buildingsJSON,gpsJSON]});
+
+		//add layer control
+		var control = L.control.layers(baseLayers, overlayLayers).addTo(map);
+		
 		//functions for dynamic building polygon styles
 		function getColor(feature) {
 			var status = feature.properties.rrvs_status;
@@ -69,87 +153,76 @@ attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy;
 			buildingsJSON.setStyle(building_style);		
 		}
 		
-		//variable for dynamic gps point layer style and get-feature-info
-		var gpsDefaultStyle = {
-				radius: 4,
-				fillColor: '#0B0B3B',
-				color: '#0B0B3B',
-				opacity: 0.8,
-				fillOpacity: 0.6
-		}		
 
-        //variable with highlighted GPS img marker style
-        var gpsHighlightStyle = {
-				radius: 8,
-				fillColor: '#0B0B3B',
-				color: '#2E9AFE',
-				opacity: 1,
-				fillOpacity: 0.6
-        }
+        	//variable with highlighted GPS img marker style
+        	var gpsHighlightStyle = {
+					radius: 8,
+					fillColor: '#0B0B3B',
+					color: '#2E9AFE',
+					opacity: 1,
+					fillOpacity: 0.6
+        	}
 
-        //variable to keep track of highlighted gps img marker
-        var highlightedGPS = null;
+        	//variable to keep track of highlighted gps img marker
+        	var highlightedGPS = null;
 
-	    //function removing highlight from GPS image marker if set
-		function resetHighlightGPS() {
-            if (highlightedGPS != null){
-                highlightedGPS.setStyle(gpsDefaultStyle);
-                highlightedGPS = null;
-            }
-		}
-        
-        //object to keep gps location, azimuth of selected image and location of selected bdg
-        var imgBdgData = Object.create(null);
+		    //function removing highlight from GPS image marker if set
+			function resetHighlightGPS() {
+        	    if (highlightedGPS != null){
+        	        highlightedGPS.setStyle(gpsDefaultStyle);
+        	        highlightedGPS = null;
+        	    }
+			}
+        	
+        	//object to keep gps location, azimuth of selected image and location of selected bdg
+        	var imgBdgData = Object.create(null);
 
-        //object to keep panoramic image configuration
-        var configPano = new Object();
-        configPano.autoLoad=true;
-        //Temporary Fix
-        configPano.ignoreGPanoXMP=true;
+        	//object to keep panoramic image configuration
+        	var configPano = new Object();
+        	configPano.autoLoad=true;
+        	//Temporary Fix
+        	configPano.ignoreGPanoXMP=true;
 
-        //update image related parameters
-        function updateImgParams(e){
-            //update imgBdgData object
-            imgBdgData.imgLoc = e.getLatLng();
-            imgBdgData.imgAzi = e.feature.properties.azimuth;
-            //update configPano
-            //configPano.panorama = "/panellum/../static/panoimg/ladybug_panoramic_" + imgBdgData.img_id + ".jpg";
-            configPano.panorama = "/pano/"+e.feature.properties.repository + "/"+ e.feature.properties.filename;
-            configPano.title = "FrameID: " + e.feature.properties.frame_id;
-            //Google Streetview link
-            var gsv = "http://maps.google.com?layer=c&cbll="+imgBdgData.imgLoc.lat+','+imgBdgData.imgLoc.lng+"&cbp=12,"+imgBdgData.imgAzi+","+"0,5";
-            configPano.author = gsv;
-        }
-        
+        	//update image related parameters
+        	function updateImgParams(e){
+        	    //update imgBdgData object
+        	    imgBdgData.imgLoc = e.getLatLng();
+        	    imgBdgData.imgAzi = e.feature.properties.azimuth;
+        	    //update configPano
+        	    //configPano.panorama = "/panellum/../static/panoimg/ladybug_panoramic_" + imgBdgData.img_id + ".jpg";
+        	    configPano.panorama = "/pano/"+e.feature.properties.repository + "/"+ e.feature.properties.filename;
+        	    configPano.title = "FrameID: " + e.feature.properties.frame_id;
+        	    //Google Streetview link
+        	    var gsv = "http://maps.google.com?layer=c&cbll="+imgBdgData.imgLoc.lat+','+imgBdgData.imgLoc.lng+"&cbp=12,"+imgBdgData.imgAzi+","+"0,5";
+        	    configPano.author = gsv;
+        	}
+        	
 		//function for interaction between gps layer and panoImg iframe
 		function updatePanoImg() {
-			// zoom to feature in map
-			//map.fitBounds(highlightedGPS.getBounds(), {maxZoom: 18});
-			// update src of iframe 1 (panoImg)
-            // distinguish between frame mode or multi window mode
-            if(self==top){
-			    var ifrm = opener.document.getElementById('ifrm1');
-            }else{
-			    var ifrm = parent.document.getElementById('ifrm1');
-            }
-            //convert json to URI
-            var config_json = JSON.stringify(configPano);
-            config_json = encodeURIComponent(config_json);
-            //reset panellum image source
-            ifrm.src = "{{ url_for('pannellum') }}?config="+config_json;
+        	    	// distinguish between frame mode or multi window mode
+        	    	if(self==top){
+		    	    	    var ifrm = opener.document.getElementById('ifrm1');
+        	    	}else{
+		    	    	    var ifrm = parent.document.getElementById('ifrm1');
+        	    	}
+        	    	//convert json to URI
+        	    	var config_json = JSON.stringify(configPano);
+        	    	config_json = encodeURIComponent(config_json);
+        	    	//reset panellum image source
+        	    	ifrm.src = "{{ url_for('pannellum') }}?config="+config_json;
 		}
 
-        //function to calculate angle between two points in degrees p1 to p2
-        var angleDeg = function (p1,p2){
-            return Math.atan2(p2.lat - p1.lat, p2.lng - p1.lng) * 180 / Math.PI;
-        }
+        	//function to calculate angle between two points in degrees p1 to p2
+        	var angleDeg = function (p1,p2){
+        	    return Math.atan2(p2.lat - p1.lat, p2.lng - p1.lng) * 180 / Math.PI;
+        	}
 
-        // function to calculate image building location parameters
-        function imgBdgInteraction(){
-            var ang = angleDeg(imgBdgData.imgLoc,imgBdgData.bdgLoc);
-            configPano.yaw = (90-ang)-imgBdgData.imgAzi;
-            configPano.hotSpots = [{pitch:'0',yaw:configPano.yaw,type:'info',text:'{{_('Selected building')}}'}];
-        }
+        	// function to calculate image building location parameters
+        	function imgBdgInteraction(){
+        	    var ang = angleDeg(imgBdgData.imgLoc,imgBdgData.bdgLoc);
+        	    configPano.yaw = (90-ang)-imgBdgData.imgAzi;
+        	    configPano.hotSpots = [{pitch:'0',yaw:configPano.yaw,type:'info',text:'{{_('Selected building')}}'}];
+        	}
 
 		//function for refreshing rrvsForm iframe and pannellum iframe based on map iframe action
 		function updateForm(e) {
@@ -162,78 +235,96 @@ attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy;
 			// update building map styles
 			resetHighlightBuilding();
 			highlightBuilding(e);
-            //store the building location
-            imgBdgData.bdgLoc=e.latlng;
-            // update panoramic image
-            // find closest img 
-            //var closestImg = L.GeometryUtil.closestLayer(map, [gpsJSON], imgBdgData.bdgLoc);
-            var closestImg = leafletKnn(gpsJSON).nearestLayer(imgBdgData.bdgLoc,1);
-            closestImg = closestImg[0].layer;
-            //update gps map styles
-            resetHighlightGPS();
-            closestImg.setStyle(gpsHighlightStyle);
-            highlightedGPS=closestImg;
-            //set configPano and imgBdgData accordingly
-            updateImgParams(closestImg);
-            imgBdgInteraction();
-            //update the image
-            updatePanoImg();
-		}
+        		//store the building location
+        		imgBdgData.bdgLoc=e.latlng;
+        		// update panoramic image
+        		// find closest img 
+        		//var closestImg = L.GeometryUtil.closestLayer(map, [gpsJSON], imgBdgData.bdgLoc);
+        		var closestImg = leafletKnn(gpsJSON).nearestLayer(imgBdgData.bdgLoc,1);
+        		closestImg = closestImg[0].layer;
+        		//update gps map styles
+        		resetHighlightGPS();
+        		closestImg.setStyle(gpsHighlightStyle);
+        		highlightedGPS=closestImg;
+        		//set configPano and imgBdgData accordingly
+        		updateImgParams(closestImg);
+        		imgBdgInteraction();
+        		//update the image
+        		updatePanoImg();
+ 		    }
+	
         
-        //function for refreshing map iframe and pannellum iframe based on rrvsForm iframe action
-		function updateMap(gid) {
+            //function for refreshing map iframe and pannellum iframe based on rrvsForm iframe action
+	    function updateMap(gid) {
+			//get active layers
+			active = control.getActiveLayers();
+			//console.log('active:'+active);
 			// get feature by id
 			var e = buildingsJSON.getLayer(gid);
-            //get zoom level and layer bounds
-            //var zl = map.getZoom();
-            //map.setView([e.latLng.lat, e.latLng.lng], zl);
-            map.fitBounds(e.getBounds());
-			// update building map styles
-			resetHighlightBuilding();
-			e.setStyle({
-				weight: 3,
-                opacity: 1,
-                color: '#008000'
-			});
-			//store the building location
-            //imgBdgData.bdgLoc=([e.feature.geometry.coordinates[0][0][0][0], e.feature.geometry.coordinates[0][0][0][1]]);
-            imgBdgData.bdgLoc=L.latLng(e.feature.geometry.coordinates[0][0][0][1], e.feature.geometry.coordinates[0][0][0][0]);
-            // update panoramic image
-            // find closest img 
-            var closestImg = leafletKnn(gpsJSON).nearestLayer(imgBdgData.bdgLoc,1);
-            closestImg = closestImg[0].layer;
-            //update gps map styles
-            resetHighlightGPS();
-            closestImg.setStyle(gpsHighlightStyle);
-            highlightedGPS=closestImg;
-            //set configPano and imgBdgData accordingly
-            updateImgParams(closestImg);
-            //imgBdgData.bdgLoc=L.latLng(e.feature.geometry.coordinates[0][0][0][0], e.feature.geometry.coordinates[0][0][0][1]);
-            imgBdgInteraction();
-            //update the image
-            updatePanoImg();
+			//Only execute if building selected
+			if (typeof e != 'undefined'){
+				//zoom to building
+	            		map.fitBounds(e.getBounds());
+
+				//update map selected layers
+				//remove layers
+				map.eachLayer(function(layer){
+					//console.log(layer);
+			    		map.removeLayer(layer);
+				});
+				
+                        	//add layers
+				addLayersByName(active);
+
+				// update building map styles
+				resetHighlightBuilding();
+				e.setStyle({
+					weight: 3,
+                			opacity: 1,
+ 		                	color: '#008000'
+				});
+
+				//store the building location
+            			//imgBdgData.bdgLoc=([e.feature.geometry.coordinates[0][0][0][0], e.feature.geometry.coordinates[0][0][0][1]]);
+            			imgBdgData.bdgLoc=L.latLng(e.feature.geometry.coordinates[0][0][0][1], e.feature.geometry.coordinates[0][0][0][0]);
+            			// update panoramic image
+            			// find closest img 
+            			var closestImg = leafletKnn(gpsJSON).nearestLayer(imgBdgData.bdgLoc,1);
+            			closestImg = closestImg[0].layer;
+            			//update gps map styles
+            			resetHighlightGPS();
+            			closestImg.setStyle(gpsHighlightStyle);
+            			highlightedGPS=closestImg;
+            			//set configPano and imgBdgData accordingly
+            			updateImgParams(closestImg);
+            			//imgBdgData.bdgLoc=L.latLng(e.feature.geometry.coordinates[0][0][0][0], e.feature.geometry.coordinates[0][0][0][1]);
+            			imgBdgInteraction();
+            			//update the image
+            			updatePanoImg();
+			};
+			
 		}
         
-        //function to highlight clicked img and update panellum frame
-        function clickedImg(e){
-            resetHighlightGPS(); 
-            e.target.setStyle(gpsHighlightStyle);
-            highlightedGPS=e.target;
-            //update the image related parameters
-            updateImgParams(highlightedGPS);
-            //In case a building was selected before calculate yaw
-            if(imgBdgData.bdgLoc != undefined){
-                imgBdgInteraction();
-            }
-            updatePanoImg();
-        }
+        	//function to highlight clicked img and update panellum frame
+        	function clickedImg(e){
+        	    resetHighlightGPS(); 
+        	    e.target.setStyle(gpsHighlightStyle);
+        	    highlightedGPS=e.target;
+        	    //update the image related parameters
+        	    updateImgParams(highlightedGPS);
+        	    //In case a building was selected before calculate yaw
+        	    if(imgBdgData.bdgLoc != undefined){
+        	        imgBdgInteraction();
+        	    }
+        	    updatePanoImg();
+        	}
 
 		//function for adding actions to mouse events on gps layer
 		function onEachFeatureGps(feature, layer) {
 			layer.on({
 				//mouseover: highlightFeature,
 				//mouseout: resetHighlight,
-                click: clickedImg
+                		click: clickedImg
 			});
 		}
 		
@@ -245,22 +336,6 @@ attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy;
 			});
 		}
 		
-		//add gps layer
-		gpsJSON = L.geoJson({{gps|safe}},{
-			style: gpsDefaultStyle,
-			onEachFeature: onEachFeatureGps,
-			pointToLayer: function (feature, latlng) {  
-				return L.circleMarker(latlng)
-				}
-			});	
-		gpsJSON.addTo(map);
-			
-		//add buildings layer
-		buildingsJSON = L.geoJson({{bdgs|safe}},{
-		style: building_style,
-		onEachFeature: onEachFeatureBuilding
-		});
-		buildingsJSON.addTo(map);
 		
 		//focus map on layer extent
 		map.fitBounds(gpsJSON.getBounds());
@@ -279,35 +354,29 @@ attribution: "<a href='http://www.mapbox.com/about/maps/' target='_blank'>&copy;
 		//};
 		//info.addTo(map);
     
-        //adding lat lon display when moving with the mouse on the map, and when clicking
-        var latlon = jQuery("#latlon");
-        var setLatLon = function (e) {
-            var lat = "--.---";
-            var lng = "--.---";
-            if (e && e.latlng) {
-                var l = e.latlng;
-                lat = l.lat.toFixed(4);
-                lng = l.lng.toFixed(4);
-            }
-            latlon.html("lat: " + lat + " lng: " + lng);
-        };
+        	//adding lat lon display when moving with the mouse on the map, and when clicking
+        	var latlon = jQuery("#latlon");
+        	var setLatLon = function (e) {
+        	    var lat = "--.---";
+        	    var lng = "--.---";
+        	    if (e && e.latlng) {
+        	        var l = e.latlng;
+        	        lat = l.lat.toFixed(4);
+        	        lng = l.lng.toFixed(4);
+        	    }
+        	    latlon.html("lat: " + lat + " lng: " + lng);
+        	};
 
-        //add event listener for mouse moving:
-        map.on('mousemove', function (e) {
-            setLatLon(e);
-        });
-        map.on('click', function (e) {
-            setLatLon(e);
-        });
-        //set default:
-        setLatLon();
+        	//add event listener for mouse moving:
+        	map.on('mousemove', function (e) {
+        	    setLatLon(e);
+        	});
+        	map.on('click', function (e) {
+        	    setLatLon(e);
+        	});
+        	//set default:
+        	setLatLon();
 
-		//add layer control
-		L.control.layers({'OpenStreetMap': basemap},
-						 {"PanoImages": gpsJSON,
-						 "Buildings": buildingsJSON},
-						 {collapsed:true}).addTo(map);
-		
 		//add scale
 		L.control.scale({options: {position: 'bottomleft',maxWidth: 100,metric: true,imperial: false,updateWhenIdle: false}}).addTo(map);
 	</script>
