@@ -272,9 +272,9 @@
 			//$('input[name="gid_field"]').focus();	
 			$('#rrvs_status_field').focus();
 			// update map and panoviewer
-			console.log('rrvsform: ' + $('input[name="gid_field"]').val());
 			var ifrm = parent.document.getElementById('ifrm2');
-			ifrm.contentWindow.updateMap($('input[name="gid_field"]').val());
+	        	var layers = ifrm.contentWindow.control.getActiveLayers();
+			ifrm.contentWindow.updateMap($('input[name="gid_field"]').val(),layers);
 		} );
 	} );
 					
@@ -336,15 +336,17 @@
 	// trigger map update on click of the submit button
 	// note: needed to refresh map layer rendering after data was modified by rrvsform
 	// note: a timeout of 1 ms is needed before the refresh
-	$("#submit").click(setTimeout(function() {
-		var ifrm = parent.document.getElementById('ifrm2');
-		ifrm.contentWindow.updateMap($('input[name="gid_field"]').val());
-		//ifrm.src = ifrm.src;
-	  }), 1);
+ 	var ifrm = parent.document.getElementById('ifrm2');
+	if (typeof ifrm.contentWindow.control !='undefined'){
+		var layers = ifrm.contentWindow.control.getActiveLayers();
+	}
+ 	$("#submit").click(setTimeout(function() {
+		ifrm.src = ifrm.src;
+ 	  }), 1);
 	$(parent.document.getElementById('ifrm2')).on("load", function () {
-		var ifrm = parent.document.getElementById('ifrm2');
-		ifrm.contentWindow.updateMap($('input[name="gid_field"]').val());
-	});
+		ifrm.contentWindow.updateMap($('input[name="gid_field"]').val(),layers);
+		}
+	);
 	</script>
 </body>
 </html>

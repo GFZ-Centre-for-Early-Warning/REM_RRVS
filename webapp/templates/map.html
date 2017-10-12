@@ -73,7 +73,7 @@
             	    snitUrl = 'http://geos0.snitcr.go.cr/cgi-bin/web?map=ortofoto.map&SERVICE=WMS&version=1.1.1?',
             	    snitAttrib = '&copy; '+snitLink+' Contributors';
 
-        	var mapboxMap = L.tileLayer(mapboxUrl, {attribution: mapboxAttrib, maxZoom: 20, id: 'mapbox.streets-satellite', accessToken: 'NOTE:add toke here'}),
+        	var mapboxMap = L.tileLayer(mapboxUrl, {attribution: mapboxAttrib, maxZoom: 20, id: 'mapbox.streets-satellite', accessToken: 'Note: Add token here'}),
             	    snitMap = L.tileLayer.wms(snitUrl, {attribution: snitAttrib, layers: 'Mosaico1000',maxZoom: 20});
 		
 		//console.log(mapboxMap);
@@ -132,8 +132,8 @@
 				fillColor: getColor(feature),
 				fillOpacity: 0.5,
 				weight: 1,
-                opacity: 0.5,
-                color: getColor(feature)
+                		opacity: 0.5,
+                		color: getColor(feature)
 			};
 		}
 		
@@ -255,14 +255,15 @@
 	
         
             //function for refreshing map iframe and pannellum iframe based on rrvsForm iframe action
-	    function updateMap(gid) {
-			//get active layers
-			active = control.getActiveLayers();
+	    function updateMap(gid,active) {
+			console.log('here:'+gid)
+			//active = control.getActiveLayers();
 			//console.log('active:'+active);
 			// get feature by id
 			var e = buildingsJSON.getLayer(gid);
 			//Only execute if building selected
 			if (typeof e != 'undefined'){
+		//		e.setStyle(building_style);
 				//zoom to building
 	            		map.fitBounds(e.getBounds());
 
