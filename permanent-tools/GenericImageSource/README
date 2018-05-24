@@ -1,0 +1,9 @@
+Instructions
+
+1. Specify survey name and other configuration parameters in the config.ini
+2. Adjust the parameters in the parameters section of googleStreetview.py
+3. Provided a shape file with streets, run the googleStreetview.py with the config
+it generates a metadata.csv which can be converted to a REM style sql i
+4. using sql.py of permanent.
+5. import the resulting sql file to the REM database (this might take quite long since inserts are
+slow and probably - depending on the size of the region of interest locations might me plenty) 
