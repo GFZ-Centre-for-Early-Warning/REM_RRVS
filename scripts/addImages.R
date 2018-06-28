@@ -59,8 +59,8 @@ for (i in length(buildings$tasks)){
   #union
   new_img_ids <- union(img_ids$id,add_img$id)
   #insert back into users.tasks
-  array <- paste0(img_ids,sep=',',collapse='')
-  array <- substr(array,1,nchar(array)-1)
+  array <- paste(img_ids,sep=',',collapse='')
+  array <- substr(array,3,nchar(array)-1)
   query <- paste("UPDATE users.tasks SET img_ids='{",array,"}' WHERE id=",task_id,";",sep='')
   sql_query(query)
 }
